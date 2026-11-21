@@ -186,6 +186,7 @@ class ParamsAktif(BaseModel):
     urutan_cadangan_hujan_hulu: list[str]
     jadwal_dummy: dict[str, Any]
     demo: dict[str, Any]
+    uji_balik: dict[str, Any] = Field(default_factory=dict)
     nyata: dict[str, Any]
     mentah: dict[str, Any] = Field(repr=False)
 
@@ -264,6 +265,7 @@ def selesaikan_preset(mentah: dict[str, Any], preset: str) -> ParamsAktif:
         urutan_cadangan_hujan_hulu=m["urutan_cadangan_hujan_hulu"],
         jadwal_dummy=m["jadwal_dummy"],
         demo=m["demo"],
+        uji_balik=m.get("uji_balik", {}),
         nyata=m["_nyata"],
         mentah=mentah,
     )

@@ -80,7 +80,14 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 .venv/Scripts/python -m simulation.jalankan --preset base --n 300 --seed 42      # 6 kebijakan, 300 episode
 .venv/Scripts/python -m simulation.jalankan --semua-preset --loeo 100 --sensitivitas --simpan-db
 .venv/Scripts/python -m simulation.episode muat     # episode demo (nyata 24 Jan 2025, cadangan, sintetis) ke database
+.venv/Scripts/python -m simulation.uji_balik        # uji balik pada hujan IMERG Late vs kejadian kandidat (~40 detik)
 ```
+
+Uji balik (`simulation/uji_balik.py`, hasil di `data/processed/uji_balik/`) memutar model pada hujan
+nyata IMERG Late untuk sembilan kejadian kandidat dari berita (`data/manual/kejadian_kandidat.csv`,
+lihat `docs/kejadian-kandidat.md`), menguji kepekaan terhadap bias IMERG, dan memindai setiap hari
+2024–2026. Ringkasan dan batas klaimnya ada di `docs/uji-balik.md` (AUC hari kejadian vs hari lain
+0,83, tetapi peluang absolut rendah karena model dilatih pada data sintetis).
 
 Hasil disimpan di `data/processed/simulasi/` (CSV biaya per episode dan JSON ringkasan) serta tabel
 `hasil_simulasi` dan `simulasi_run`. Seed yang sama memberi hasil yang sama.
@@ -179,7 +186,7 @@ bias +17% terhadap rerata dua stasiun, korelasi bulanan 0,82; selisih antarstasi
 - **Fitur hujan** (`features/hujan.py`): `hujan_lokal_1d/3d/5d`, `hujan_hulu_3d`,
   `hujan_gundih_1d/3d`; per zona dipakai BMKG bila ada, selain itu IMERG Late (sumber dicatat).
 - **TMA Glapan sintetis** (`inputs/glapan_synth.py`): dua waduk linear (aliran dasar ala API dan
-  lonjakan banjir) dengan anchoring opsional ke titik nyata (1970 pada 24 Jan 2025);
+  lonjakan banjir) dengan anchoring opsional ke titik nyata (1970 pada 25 Jan 2025 00.00 WIB, rilis BNPB);
   `status_data = sintetis`. Fitur `glapan_relatif` (TMA − 1905) dan `tren_glapan_6j`
   ada di `features/glapan.py`.
 

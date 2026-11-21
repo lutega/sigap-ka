@@ -389,6 +389,16 @@ def simpan_laporan(sesi: Session, baris: Iterable[dict]) -> int:
     return n
 
 
+def hapus_seri_episode(sesi: Session, episode_id: str) -> None:
+    """Menghapus seri hujan, prakiraan, dan muka air milik satu episode (dipakai saat episode
+    dibangun ulang, agar baris lama dengan jam berbeda tidak tertinggal). Observasi umum
+    (episode_id kosong) tidak pernah dihapus."""
+    if not episode_id:
+        raise ValueError("episode_id kosong: observasi umum tidak boleh dihapus lewat fungsi ini")
+    for tabel in (ObsHujan, PrakiraanHujan, ObsMukaAir):
+        sesi.execute(delete(tabel).where(tabel.episode_id == episode_id))
+
+
 def hapus_laporan_episode(sesi: Session, episode_id: str) -> None:
     """Menghapus laporan lapangan satu episode (dipakai saat episode dibangun ulang)."""
     sesi.execute(delete(LaporanLapangan).where(LaporanLapangan.episode_id == episode_id))

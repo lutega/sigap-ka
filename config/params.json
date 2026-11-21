@@ -349,9 +349,20 @@
     "episode_nyata": {
       "id": "NYATA-20250124",
       "nama": "Banjir malam 24 Januari 2025",
-      "t0": "2025-01-24T21:00:00",
-      "status_t0": "asumsi: 'malam 24 Januari 2025' ditafsirkan pukul 21.00 WIB",
+      "t0": "2025-01-24T22:25:00",
+      "status_t0": "T-0 = jam tutup sementara 22.25 WIB menurut detikTravel (26/1/2025) dan Liputan6 (25/1/2025) yang mengutip KAI; kandidat K03, perlu verifikasi tim (A-014)",
       "hasil": "belum terkonfirmasi"
     }
+  },
+  "uji_balik": {
+    "status": "konvensi",
+    "keterangan": "Uji balik model pada hujan nyata IMERG Late terhadap katalog kejadian kandidat (A-055, A-057). Skala bias dari validasi IMERG vs BMKG Semarang (A-054): 1/1,174 dan 1/1,266.",
+    "jam_pindai": 12,
+    "jeda_hari_kontrol": 3,
+    "prakiraan_utama": "persistensi",
+    "varian_prakiraan": ["persistensi", "sintetis", "kosong"],
+    "skala_bias": [1.0, 0.852, 0.79, 0.8, 1.2],
+    "jam_dilaporkan": [48, 24, 12, 6, 0],
+    "ambang_peluang_laporan": [0.3, 0.5]
   }
 }

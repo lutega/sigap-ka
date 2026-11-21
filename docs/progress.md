@@ -340,3 +340,34 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Hasil tes:** `pytest -m "not db"` → 210 lulus (5 tes baru: format bulanan multi-lembar seperti berkas asli, bulanan tidak masuk fitur harian, validasi IMERG).
 
 **Keputusan manusia:** data BMKG harian/per jam (bila bisa diminta lewat PTSP) dan pos hujan BBWS di Grobogan/hulu Tuntang tetap dibutuhkan untuk koreksi IMERG di koridor.
+
+---
+
+## Perbaikan lanjutan 22 Nov 2026 · Langkah 1–3: kejadian kandidat, uji balik, kepekaan bias
+
+**Yang dikerjakan**
+- **Katalog kejadian kandidat** `data/manual/kejadian_kandidat.csv` (K01–K09, Feb 2024–Apr 2026) dari berita publik dan rilis BNPB/KAI yang dikutip media. Setiap baris memuat kutipan mekanisme, dampak KA, penyebab, tautan yang dibaca, tautan yang gagal dibuka, dan status `kandidat`. E1–E6 tidak diubah. Pembaca dan validator ada di `src/sigap_ka/inputs/kejadian_kandidat.py`; ringkasan katalog di `docs/kejadian-kandidat.md`.
+- **Titik Glapan 1970** kini berjam 25/1/2025 00.00 WIB sesuai rilis BNPB (A-056). Sumber manual sekarang **mengganti** berkas olahan (`simpan_olahan(..., ganti=True)`), tidak lagi digabung.
+- **T−0 episode nyata 24 Jan 2025 = 22.25 WIB** (jam tutup menurut detikTravel/Liputan6, A-014).
+- **Pembangun episode umum** `bangun_episode_hujan_nyata(t0, ...)` untuk T−0 sembarang. Ada skala hujan dan tiga mode prakiraan: sintetis, persistensi (tanpa informasi masa depan, A-058), dan kosong.
+- **Uji balik** `simulation/uji_balik.py` menjalankan tiga analisis: kandidat × varian prakiraan, kepekaan bias IMERG (skala 0,79–1,2), dan pemindaian harian 2024–2026 dengan AUC. Hasil di `data/processed/uji_balik/`, ringkasan di `docs/uji-balik.md`.
+- **Dua bug laten diperbaiki.** Keduanya muncul hanya bila T−0 bermenit:
+  - batas jendela akumulasi hujan meleset karena galat titik mengambang (hujan 3 hari 8 mm, seharusnya 70 mm);
+  - grid per jam prakiraan sintetis tidak sejajar sehingga semua prakiraan bernilai nol.
+- **Menyimpan ulang episode ke database** kini menghapus seri lama episode itu lebih dulu (`hapus_seri_episode`).
+
+**Temuan utama** (rinci di `docs/uji-balik.md`)
+- Hari kejadian berpeluang lebih tinggi daripada hari lain (AUC 0,83 pada T−0), tetapi peluang absolutnya rendah (maksimum sekitar 0,2) karena model dilatih pada data sintetis.
+- Model hanya sedikit di atas hujan hulu mentah (AUC 0,79).
+- Hujan yang benar-benar turun memisahkan lebih baik (0,87). Batas utamanya latensi IMERG Late harian (14–38 jam, A-057).
+- Bias IMERG ±20% hanya menggeser tindakan yang dekat ambang.
+- K05 (tanggul jebol) dan K06 terjadi dengan hujan rendah, sehingga tidak terdeteksi dari hujan saja.
+
+**Berkas berubah:** `data/manual/kejadian_kandidat.csv`, `data/manual/muka_air_glapan.csv`, `src/sigap_ka/inputs/kejadian_kandidat.py`, `simulation/episode.py`, `simulation/uji_balik.py`, `inference/fitur.py`, `sensing/standar.py`, `sensing/jalankan.py`, `db/repositori.py`, `config/params.json` (`_nyata.glapan_24jan2025`, `demo.episode_nyata.t0`, blok `uji_balik`), `config/pengaturan.py`, tes baru (`test_kejadian_kandidat.py`, `test_uji_balik.py`, tambahan di `test_sensing_sumber.py` dan `test_simulasi.py`), `docs/kejadian-kandidat.md`, `docs/uji-balik.md`, `docs/asumsi.md` (A-014, A-022, A-051, A-055–A-060), `README.md`.
+
+**Hasil tes:** `pytest -m "not db"` → 229 lulus.
+
+**Keputusan manusia:**
+- Verifikasi K01–K09 dan pemetaannya ke E1–E6.
+- Konfirmasi T−0 22.25 untuk episode 24 Jan 2025.
+- Kalibrasi peluang dengan label nyata.

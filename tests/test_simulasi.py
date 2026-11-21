@@ -203,6 +203,27 @@ def test_episode_simpan_dan_muat_db(engine_sqlite):
     assert len(kembali.laporan) == len(ep.laporan)
 
 
+def test_episode_dibangun_ulang_tidak_meninggalkan_baris_lama(engine_sqlite):
+    """Menyimpan ulang episode dengan T-0 bergeser mengganti seluruh serinya (bukan menumpuk)."""
+    from datetime import timedelta
+
+    from db.koneksi import pabrik_sesi
+    ep = episode_sintetis(1, 3, "base")[0]
+    sesi = pabrik_sesi(engine_sqlite)()
+    simpan_ke_db(sesi, ep)
+    sesi.commit()
+    geser = timedelta(minutes=25)
+    ep.t0 += geser
+    ep.prakiraan = ep.prakiraan.assign(waktu_terbit=ep.prakiraan["waktu_terbit"] + geser,
+                                       waktu=ep.prakiraan["waktu"] + geser)
+    simpan_ke_db(sesi, ep)
+    sesi.commit()
+    kembali = muat_dari_db(sesi, ep.id)
+    sesi.close()
+    assert len(kembali.prakiraan) == len(ep.prakiraan)
+    assert (pd.to_datetime(kembali.prakiraan["waktu_terbit"]).dt.minute == 25).all()
+
+
 def test_simpan_hasil_simulasi_db(engine_sqlite):
     """Hasil simulasi tersimpan per episode per kebijakan beserta ringkasan run."""
     from sqlalchemy import func, select

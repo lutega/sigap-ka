@@ -49,7 +49,9 @@ class _SeriHujan:
         if not ada.any():
             return 0.0
         ujung = self.akhir[ada].max()
-        pilih = ada & (self.awal >= ujung - jendela_jam)
+        # toleransi 1e-6 jam: jam relatif dari T-0 bermenit (mis. 22.25) tidak bulat sehingga batas
+        # jendela bisa meleset satu bit dan membuang satu baris harian
+        pilih = ada & (self.awal >= ujung - jendela_jam - 1e-6)
         return float(np.nansum(self.nilai[pilih]))
 
 
