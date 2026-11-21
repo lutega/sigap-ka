@@ -75,11 +75,13 @@ Poin narasi:
 
 ## 4. Episode nyata 24 Januari 2025
 
-Pilih **Banjir malam 24 Januari 2025**. Hujan berasal dari NASA POWER (nyata), sedangkan prakiraan
-dan muka air per jam sintetis (label "campuran"). Hasil episode belum terkonfirmasi, jadi ringkasan
-T−0 menampilkan dua kemungkinan. Sampaikan temuan jujurnya: hujan NASA POWER di sel grid koridor
-pada 24 Jan hanya sekitar 6 mm, sehingga peluang model tetap rendah (sekitar 10–16%) dan muka air
-sintetis jauh di bawah nilai nyata 1970. Bukti hulu butuh IMERG/GSMaP atau data BBWS.
+Pilih **Banjir malam 24 Januari 2025**. Hujan berasal dari GPM IMERG Late (nyata, sel 0,1° sehingga
+hulu terpisah dari lokal), sedangkan prakiraan dan muka air per jam sintetis (label "campuran"). Hasil
+episode belum terkonfirmasi, jadi ringkasan T−0 menampilkan dua kemungkinan. Yang terlihat: hujan
+lebat 19–20 Jan (lokal sekitar 61 mm, hulu sekitar 54 mm pada 20 Jan); peluang model sekitar 34–43%
+sampai T−30 lalu sekitar 23%; SIGAP menyarankan T1 (T−42), T6 (T−18), T2 dan T5 (T−6). Muka air
+sintetis berpuncak 1875, masih di bawah nilai nyata 1970: satu sel grid belum mewakili seluruh
+daerah tangkapan Tuntang, sehingga data BBWS tetap dibutuhkan.
 
 ## 5. Pertanyaan penguji yang mungkin muncul
 

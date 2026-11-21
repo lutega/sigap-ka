@@ -72,6 +72,36 @@ def ambil_nasa_power(dari: date, sampai: date, daftar_lokasi=("lokal", "hulu", "
     return hasil
 
 
+def ambil_imerg(dari: date, sampai: date, daftar_lokasi=("lokal", "hulu", "gundih"),
+                daftar_produk=("late", "final"), sesi_http=None) -> pd.DataFrame:
+    """Mengunduh IMERG harian (Late dan Final) untuk beberapa lokasi, menyimpan raw/processed, mencatat log.
+
+    Token Earthdata tidak ikut tersimpan: yang dicatat hanya URL permintaan tanpa header.
+    """
+    from sensing import hujan_gpm_imerg
+    semua = []
+    for produk in daftar_produk:
+        for lok in daftar_lokasi:
+            sumber = hujan_gpm_imerg.SUMBER_PRODUK[produk]
+            try:
+                df, mentah = hujan_gpm_imerg.jalankan(lok, dari, sampai, produk, sesi_http=sesi_http)
+            except SumberTidakTersedia as galat:
+                catat_log(sumber, "gagal", dari, sampai, pesan=f"{lok}: {galat}")
+                print(f"  [gagal] {sumber} {lok}: {galat}")
+                continue
+            simpan_mentah(sumber, mentah if isinstance(mentah, dict) else {"harian": mentah})
+            tautan = mentah["url"] if isinstance(mentah, dict) else "GES DISC OPeNDAP per hari"
+            ada = df["nilai"].notna()
+            catat_log(sumber, "sukses", df.loc[ada, "waktu"].min(), df.loc[ada, "waktu"].max(), tautan, int(ada.sum()), lok)
+            print(f"  [sukses] {sumber} {lok}: {int(ada.sum())} hari berisi, sel {df['sel_grid'].iloc[0] if 'sel_grid' in df else '?'}")
+            semua.append(df[ada])
+    if not semua:
+        return pd.DataFrame()
+    hasil = pd.concat(semua, ignore_index=True)
+    simpan_olahan("hujan_gpm_imerg", hasil, KUNCI_HUJAN)
+    return hasil
+
+
 def ambil_bmkg(sesi_http=None) -> pd.DataFrame:
     """Mengunduh prakiraan BMKG terkini, menyimpan raw/processed, dan mencatat log."""
     try:
@@ -129,9 +159,11 @@ def muat_ke_db(engine=None) -> dict[str, int]:
     inisialisasi(engine)
     jumlah = {}
     with sesi_dari(engine) as sesi:
-        hujan = baca_olahan("hujan_nasa_power")
-        if not hujan.empty:
-            jumlah["obs_hujan"] = repo.simpan_obs_hujan(sesi, hujan)
+        jumlah["obs_hujan"] = 0
+        for berkas in ("hujan_nasa_power", "hujan_gpm_imerg"):
+            hujan = baca_olahan(berkas)
+            if not hujan.empty:
+                jumlah["obs_hujan"] += repo.simpan_obs_hujan(sesi, hujan)
         pk = baca_olahan("prakiraan_bmkg")
         if not pk.empty:
             jumlah["prakiraan_hujan"] = repo.simpan_prakiraan(sesi, pk)
@@ -181,6 +213,11 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--dari", type=date.fromisoformat, default=date(2024, 1, 1))
     p.add_argument("--sampai", type=date.fromisoformat, default=date.today())
     p.add_argument("--lokasi", nargs="+", default=["lokal", "hulu", "gundih"])
+    q = sub.add_parser("imerg", help="unduh hujan harian GPM IMERG (Late dan Final) lewat Giovanni")
+    q.add_argument("--dari", type=date.fromisoformat, default=date(2024, 1, 1))
+    q.add_argument("--sampai", type=date.fromisoformat, default=date.today())
+    q.add_argument("--lokasi", nargs="+", default=["lokal", "hulu", "gundih"])
+    q.add_argument("--produk", nargs="+", default=["late", "final"], choices=["late", "final"])
     sub.add_parser("bmkg", help="unduh prakiraan BMKG terkini")
     sub.add_parser("manual", help="proses berkas manual (Glapan, kejadian, jadwal)")
     sub.add_parser("muat", help="muat data/processed ke database")
@@ -189,6 +226,8 @@ def main(argv: list[str] | None = None) -> None:
 
     if arg.perintah == "nasa_power":
         ambil_nasa_power(arg.dari, arg.sampai, arg.lokasi)
+    elif arg.perintah == "imerg":
+        ambil_imerg(arg.dari, arg.sampai, arg.lokasi, arg.produk)
     elif arg.perintah == "bmkg":
         ambil_bmkg()
     elif arg.perintah == "manual":

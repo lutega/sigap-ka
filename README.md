@@ -52,6 +52,7 @@ docker compose up -d                                   # PostgreSQL 16 + Timesca
 ```bash
 .venv/Scripts/python -m sensing.jalankan status                       # kesiapan tiap sumber
 .venv/Scripts/python -m sensing.jalankan nasa_power --dari 2024-01-01  # unduh hujan harian (internet)
+.venv/Scripts/python -m sensing.jalankan imerg --dari 2024-01-01       # IMERG Late + Final lewat Giovanni (token Earthdata)
 .venv/Scripts/python -m sensing.jalankan bmkg                         # unduh prakiraan BMKG terkini (internet)
 .venv/Scripts/python -m sensing.jalankan manual                       # proses data/manual (Glapan, kejadian, jadwal)
 .venv/Scripts/python -m sensing.jalankan muat                         # muat data/processed ke database (offline)
@@ -65,7 +66,8 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 
 | Data | Status |
 | --- | --- |
-| Hujan harian NASA POWER 2024-01-01 s.d. 2026-11-20 (lokal, hulu, Gundih) | nyata (satu sel grid untuk ketiga titik) |
+| Hujan harian GPM IMERG Late 2024-01-01 s.d. 2026-11-18 dan Final s.d. 2025-09-30 (lokal, hulu, Gundih, sel 0,1°) | nyata; hulu terpisah dari lokal; Late dipakai episode nyata |
+| Hujan harian NASA POWER 2024-01-01 s.d. 2026-11-20 (lokal, hulu, Gundih) | nyata (satu sel grid untuk ketiga titik; cadangan) |
 | Prakiraan BMKG Desa Penadaran, Kec. Gubug | nyata, terkini saja (tanpa arsip) |
 | Muka air Glapan 1970 (24 Jan 2025), ambang Awas 1905 | nyata, satu titik |
 | Katalog E1–E6 | kerangka; jam tutup/buka/mekanisme belum terisi |
@@ -176,10 +178,10 @@ docker compose --profile uji run --rm uji      # pip install + pytest lengkap di
 ## Batas klaim (wajib disebut)
 
 1. Keunggulan SIGAP adalah batas atas menurut asumsi model sendiri; uji penentu butuh prakiraan nyata.
-2. Muka air dummy meleset: model lama 1768 dan model sintetis saat ini sekitar 1734 vs nyata 1970 pada
-   24 Jan 2025 (ambang Awas 1905).
-3. Dua kejadian (E3, E6) terjadi dengan hujan lokal rendah, sehingga perlu bukti dari hulu; di NASA
-   POWER titik hulu dan lokal jatuh di sel grid yang sama.
+2. Muka air dummy meleset: model lama 1768; model sintetis saat ini (hujan hulu IMERG) 1763 pada
+   24 Jan 2025 dengan puncak 1875 pada horizon episode, vs nyata 1970 (ambang Awas 1905).
+3. Dua kejadian (E3, E6) terjadi dengan hujan lokal rendah, sehingga perlu bukti dari hulu; IMERG
+   memisahkan hulu dari lokal, tetapi baru satu sel grid (belum rerata daerah tangkapan).
 4. Laporan memakai satu definisi episode hujan lebat (horizon 72 jam, keputusan tiap 6 jam).
 
 ## Struktur

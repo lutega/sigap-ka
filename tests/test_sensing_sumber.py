@@ -128,6 +128,44 @@ def test_imerg_pipeline_dengan_token():
     assert responses.calls[0].request.headers["Authorization"] == "Bearer uji"
 
 
+CSV_GIOVANNI = (
+    "prod_name,GPM_3IMERGDL.07\nunit,mm/day\nundef,-9999.9\nlat,-7.249999999999997\nlon,110.45\n\n"
+    "Timestamp (UTC),Data\n2025-01-20 00:00,53.5\n2025-01-21 00:00,-9999.9\n2025-01-22 00:00,12.7\n"
+)
+
+
+def test_imerg_urai_giovanni():
+    """CSV Giovanni: metadata dibaca, nilai pengisi menjadi kosong."""
+    from sensing.hujan_gpm_imerg import urai_giovanni
+    meta, tabel = urai_giovanni(CSV_GIOVANNI)
+    assert meta["lon"] == "110.45"
+    assert list(tabel["nilai"].isna()) == [False, True, False]
+    assert tabel["nilai"].iloc[0] == pytest.approx(53.5)
+
+
+@responses.activate
+def test_imerg_giovanni_late_ke_format_standar():
+    """Jalur utama Giovanni: satu permintaan, hari UTC dicatat 07.00 WIB, sumber gpm_imerg_late."""
+    import re
+    responses.add(responses.GET, re.compile(r"https://api\.giovanni\.earthdata\.nasa\.gov/timeseries.*"),
+                  body=CSV_GIOVANNI)
+    df, mentah = hujan_gpm_imerg.jalankan("hulu", date(2025, 1, 20), date(2025, 1, 22), "late", token="uji")
+    _cek_kontrak(df, simulasi=False)
+    assert len(responses.calls) == 1 and "GPM_3IMERGDL_07" in mentah["url"]
+    assert df["waktu"].iloc[0] == datetime(2025, 1, 20, 7)
+    assert set(df["sumber"]) == {"gpm_imerg_late"}
+    assert list(df["kualitas"]) == ["baik", "kosong", "baik"]
+
+
+@responses.activate
+def test_imerg_final_tidak_jatuh_ke_opendap():
+    """Bila Giovanni gagal untuk produk Final, tidak ada cadangan OPeNDAP (OPeNDAP hanya Late)."""
+    import re
+    responses.add(responses.GET, re.compile(r"https://api\.giovanni.*"), status=500, json={"message": None})
+    with pytest.raises(SumberTidakTersedia):
+        hujan_gpm_imerg.jalankan("hulu", date(2025, 1, 20), date(2025, 1, 21), "final", token="uji")
+
+
 @responses.activate
 def test_imerg_eula_belum_disetujui_memberi_tautan():
     """403 'EULA Acceptance Failure' diubah menjadi pesan berisi tautan persetujuan aplikasi."""

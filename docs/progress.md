@@ -291,3 +291,17 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 - Konfirmasi definisi kebijakan "jam tetap 24 jam" dan "reaktif" (A-035), label ringkasan (A-032), hak operator/admin (A-039).
 - Pemeriksaan visual konsol di peramban (agen tidak memiliki alat peramban di sesi ini).
 - Pemeriksaan jaringan Docker Desktop (restart Docker Desktop, VPN/antivirus, mode jaringan WSL) sebelum presentasi.
+
+---
+
+## Pembaruan 22 Nov 2026 · Data historis GPM IMERG
+
+**Yang dikerjakan**
+- Token Earthdata dipasang di `.env` (tidak di-commit). Akses GES DISC awalnya ditolak "EULA Acceptance Failure"; setelah pemilik akun menyetujui aplikasi NASA GESDISC DATA ARCHIVE, akses berhasil. Modul kini menampilkan tautan persetujuan bila penolakan itu terjadi.
+- `sensing/hujan_gpm_imerg.py` ditulis ulang: jalur utama Giovanni Time Series API (satu permintaan per titik untuk seluruh rentang), cadangan OPeNDAP per hari; produk Late (`gpm_imerg_late`) dan Final (`gpm_imerg_final`) disimpan terpisah; latensi masing-masing 14 dan 2520 jam di params.json.
+- CLI `python -m sensing.jalankan imerg`; `muat` ikut memuat IMERG.
+- **Data nyata baru:** IMERG Late 1053 hari (1 Jan 2024 s.d. 18 Nov 2026) dan Final 639 hari (s.d. 30 Sep 2025) untuk lokal, hulu, Gundih. Hulu kini terpisah dari lokal.
+- Episode nyata 24 Jan 2025 memakai IMERG Late: peluang model sekitar 34–43% (T−72 s.d. T−30) lalu sekitar 23% (sebelumnya 9–16% dengan NASA POWER); SIGAP menyarankan T1 (T−42), T6 (T−18), T2 dan T5 (T−6); muka air sintetis berpuncak 1875 (24 Jan: 1763) vs nyata 1970.
+- Konsol tab Data: pilihan sumber hujan (IMERG Late, IMERG Final, NASA POWER).
+
+**Hasil tes:** `pytest -m "not db"` → 187 lulus (5 tes baru: pengurai Giovanni, jalur Late, Final tanpa cadangan OPeNDAP, EULA, episode nyata berbasis IMERG); `npm test` → 7 lulus. Catatan: satu putaran sempat menggantung karena kebuntuan event loop anyio di Windows (sinyal bangun lewat soket localhost tidak sampai); putaran ulang lulus.

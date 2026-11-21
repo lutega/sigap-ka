@@ -105,3 +105,10 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | --- | --- | --- | --- |
 | A-046 | Cadangan presentasi tanpa Docker memakai berkas SQLite (`python -m simulation.cadangan_sqlite`) dengan isi yang sama; hanya untuk demo bila jaringan Docker bermasalah, bukan pengganti TimescaleDB. | Ketahanan demo | konvensi |
 | A-047 | Pengujian integrasi yang andal di Windows dijalankan di dalam jaringan Docker (`docker compose --profile uji run --rm uji`), karena jalur localhost:5432 lewat penerus port Docker Desktop di mesin pengembang lambat dan sesekali memutus koneksi. | Prosedur uji | konvensi |
+
+## Pembaruan 22 Nov 2026 · GPM IMERG
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-048 | Hujan IMERG diambil per titik (satu sel 0,1°): lokal (−7,05; 110,65), hulu (−7,25; 110,45), Gundih (−7,25; 110,95), lewat Giovanni Time Series API. Hari IMERG (UTC) dicatat mulai 07.00 WIB. Episode nyata memakai **IMERG Late** (latensi 14 jam, tersedia pada jam keputusan); **IMERG Final** (latensi sekitar 105 hari) hanya untuk analisis riwayat agar tidak mengintip masa depan. Satu sel belum mewakili rerata daerah tangkapan Tuntang. | Bukti hulu episode nyata | terbuka |
+| A-017 (pembaruan) | NASA POWER kini menjadi cadangan; masalah satu sel grid untuk lokal/hulu/Gundih tidak lagi memengaruhi episode nyata karena IMERG tersedia. | – | diperbarui |

@@ -167,6 +167,19 @@ def test_episode_nyata_24_januari_2025():
     assert np.all((papan_p >= 0) & (papan_p <= 1))
 
 
+def test_episode_nyata_memakai_imerg_late_bila_tersedia():
+    """Episode nyata memakai IMERG Late (versi yang tersedia pada jam keputusan): hulu terpisah dari lokal."""
+    from sensing.standar import baca_olahan
+    if baca_olahan("hujan_gpm_imerg").empty:
+        pytest.skip("data IMERG belum diunduh (python -m sensing.jalankan imerg)")
+    ep = bangun_episode_nyata()
+    assert set(ep.hujan["sumber"]) == {"gpm_imerg_late"}
+    lokal = ep.hujan[ep.hujan["lokasi"] == "lokal"]["nilai"].to_numpy()
+    hulu = ep.hujan[ep.hujan["lokasi"] == "hulu"]["nilai"].to_numpy()
+    assert len(lokal) == len(hulu) and not np.allclose(lokal, hulu)
+    assert "IMERG" in ep.keterangan
+
+
 def test_episode_cadangan_tetap_dan_terganggu():
     """Skenario cadangan presentasi selalu sama dan memperlihatkan gangguan."""
     a, b = episode_cadangan(), episode_cadangan()

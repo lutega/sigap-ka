@@ -156,7 +156,8 @@
       "keterangan": "Laporan petugas yang mengonfirmasi air di badan rel mengalikan odds gangguan."
     },
     "latensi_jam": {
-      "nasa_power": 72, "gpm_imerg": 4, "gsmap": 4, "bmkg_stasiun": 1,
+      "nasa_power": 72, "gpm_imerg": 14, "gpm_imerg_late": 14, "gpm_imerg_final": 2520,
+      "gsmap": 4, "bmkg_stasiun": 1,
       "glapan_bnpb": 2, "bbws": 1, "muka_air_sintetis": 0, "dummy_generator": 3
     },
     "latih": {"jumlah_episode": 400, "offset_seed": 100000, "sampel_monte_carlo": 200, "maks_iterasi": 50},
@@ -257,8 +258,11 @@
     },
     "gpm_imerg": {
       "jenis": "hujan", "kelompok": "inti", "opsional": true,
-      "akses": "NASA GES DISC OPeNDAP, token Earthdata (EARTHDATA_TOKEN)",
-      "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDL.07"
+      "akses": "Giovanni Time Series API (utama) / GES DISC OPeNDAP (cadangan), token Earthdata (EARTHDATA_TOKEN) dan persetujuan aplikasi NASA GESDISC DATA ARCHIVE",
+      "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDL.07",
+      "url_giovanni": "https://api.giovanni.earthdata.nasa.gov/timeseries",
+      "giovanni_data": {"late": "GPM_3IMERGDL_07_precipitation", "final": "GPM_3IMERGDF_07_precipitation"},
+      "catatan": "Late dipakai untuk memutar ulang episode (tersedia sekitar 14 jam); Final untuk analisis riwayat (terbit sekitar 3,5 bulan kemudian)."
     },
     "gsmap": {
       "jenis": "hujan", "kelompok": "inti", "opsional": true,

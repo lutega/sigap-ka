@@ -95,7 +95,8 @@ def bangun_episode_nyata(params: ParamsAktif | None = None, hujan_harian: pd.Dat
     prakiraan dan muka air sintetis berlabel.
 
     Parameter:
-        hujan_harian: tabel standar NASA POWER (bawaan data/processed/hujan_nasa_power.csv).
+        hujan_harian: tabel standar hujan harian; bawaan IMERG Late dari
+            data/processed/hujan_gpm_imerg.csv, atau NASA POWER bila IMERG belum ada.
         glapan: tabel standar Glapan nyata (bawaan data/processed/muka_air_glapan.csv).
     """
     params = params or muat_params()
@@ -104,12 +105,25 @@ def bangun_episode_nyata(params: ParamsAktif | None = None, hujan_harian: pd.Dat
     H, A = params.episode.horizon_jam, params.episode.antesedent_hari * 24
     sesudah = params.dummy["prakiraan"]["sesudah_t0_jam"]
     mulai = t0 - timedelta(hours=H + A)
-    hujan_harian = baca_olahan("hujan_nasa_power") if hujan_harian is None else hujan_harian
     glapan = baca_olahan("muka_air_glapan") if glapan is None else glapan
     hari_awal = pd.Timestamp(mulai).normalize()
-    hujan = hujan_harian[(hujan_harian["waktu"] >= hari_awal) &
-                         (hujan_harian["waktu"] <= pd.Timestamp(t0 + timedelta(hours=sesudah)))].copy()
+    batas = pd.Timestamp(t0 + timedelta(hours=sesudah))
+
+    def _jendela(df: pd.DataFrame) -> pd.DataFrame:
+        return df[(df["waktu"] >= hari_awal) & (df["waktu"] <= batas)].copy()
+
+    if hujan_harian is None:
+        # IMERG Late lebih dulu (hulu terpisah dari lokal; versi yang tersedia pada jam keputusan),
+        # NASA POWER sebagai cadangan bila IMERG belum diunduh.
+        imerg = baca_olahan("hujan_gpm_imerg")
+        if not imerg.empty:
+            imerg = _jendela(imerg[imerg["sumber"] == "gpm_imerg_late"])
+        lengkap = not imerg.empty and {"lokal", "hulu"} <= set(imerg["lokasi"])
+        hujan_harian = imerg if lengkap else baca_olahan("hujan_nasa_power")
+    hujan = _jendela(hujan_harian)
     hujan = hujan[["waktu", "lokasi", "nilai", "satuan", "sumber", "is_simulated", "resolusi_jam"]]
+    nama_sumber = {"gpm_imerg_late": "GPM IMERG Late (0,1 derajat)", "nasa_power": "NASA POWER"}
+    sumber_hujan = ", ".join(sorted({nama_sumber.get(s, s) for s in hujan["sumber"]}))
 
     # Seri per jam (dibagi rata) untuk prakiraan sintetis dan muka air sintetis
     jam = pd.date_range(mulai, t0 + timedelta(hours=sesudah - 1), freq="h")
@@ -135,7 +149,7 @@ def bangun_episode_nyata(params: ParamsAktif | None = None, hujan_harian: pd.Dat
         prakiraan=pk, muka_air=muka_air, laporan=pd.DataFrame(columns=KOLOM_LAPORAN),
         kebenaran={"terganggu": None, "mekanisme": None, "skenario_lama_tutup": None},
         is_simulated=False, status_hasil=konf["hasil"],
-        keterangan=("Hujan NASA POWER nyata; titik Glapan nyata (1970, jam tidak diketahui); "
+        keterangan=(f"Hujan nyata dari {sumber_hujan}; titik Glapan nyata (1970, jam tidak diketahui); "
                     "prakiraan dan muka air per jam sintetis berlabel. " + konf["status_t0"]),
         preset=params.preset,
     )

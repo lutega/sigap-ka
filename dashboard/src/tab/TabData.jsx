@@ -15,6 +15,7 @@ export default function TabData() {
   const [sumber, setSumber] = useState([]);
   const [dari, setDari] = useState("2025-01-10");
   const [sampai, setSampai] = useState("2025-01-31");
+  const [sumberHujan, setSumberHujan] = useState("gpm_imerg_late");
   const [hujan, setHujan] = useState([]);
   const [mukaAir, setMukaAir] = useState(null);
   const [kejadian, setKejadian] = useState([]);
@@ -29,8 +30,8 @@ export default function TabData() {
   }, []);
 
   useEffect(() => {
-    api.get(`/data/hujan?dari=${dari}&sampai=${sampai}T23:59:59`).then(setHujan).catch(setGalat);
-  }, [dari, sampai]);
+    api.get(`/data/hujan?dari=${dari}&sampai=${sampai}T23:59:59&sumber=${sumberHujan}`).then(setHujan).catch(setGalat);
+  }, [dari, sampai, sumberHujan]);
 
   const dataHujan = useMemo(() => {
     const per = {};
@@ -67,12 +68,21 @@ export default function TabData() {
       <section className="kartu baris-filter">
         <label className="isian">Dari <input type="text" value={dari} onChange={(e) => setDari(e.target.value)} placeholder="YYYY-MM-DD" /></label>
         <label className="isian">Sampai <input type="text" value={sampai} onChange={(e) => setSampai(e.target.value)} placeholder="YYYY-MM-DD" /></label>
-        <span className="muted" style={{ fontSize: 12 }}>Rentang berlaku untuk grafik hujan.</span>
+        <label className="isian">Sumber hujan
+          <select value={sumberHujan} onChange={(e) => setSumberHujan(e.target.value)}>
+            <option value="gpm_imerg_late">GPM IMERG Late (0,1°, tersedia saat keputusan)</option>
+            <option value="gpm_imerg_final">GPM IMERG Final (0,1°, analisis riwayat)</option>
+            <option value="nasa_power">NASA POWER (grid kasar)</option>
+          </select>
+        </label>
+        <span className="muted" style={{ fontSize: 12 }}>Rentang dan sumber berlaku untuk grafik hujan.</span>
       </section>
 
       <div className="grid-2">
-        <KartuGrafik judul="Hujan harian NASA POWER (mm)" label="nyata"
-          ket="Titik lokal dan hulu jatuh di sel grid NASA POWER yang sama sehingga nilainya identik (asumsi A-017); bukti hulu butuh IMERG/GSMaP/BBWS."
+        <KartuGrafik judul="Hujan harian (mm)" label="nyata"
+          ket={sumberHujan === "nasa_power"
+            ? "NASA POWER: titik lokal dan hulu jatuh di sel grid yang sama sehingga nilainya identik (A-017)."
+            : "GPM IMERG 0,1°: hujan hulu Tuntang terpisah dari hujan lokal. Hari IMERG dihitung dalam UTC (mulai 07.00 WIB)."}
           kolom={[{ kunci: "tanggal", judul: "Tanggal" }, { kunci: "lokal", judul: "Lokal (mm)", angka: true },
             { kunci: "hulu", judul: "Hulu (mm)", angka: true }, { kunci: "gundih", judul: "Gundih (mm)", angka: true }]}
           baris={dataHujan}>

@@ -130,8 +130,10 @@ def test_data_sumber_hujan_muka_air_kejadian(klien, admin):
     """Endpoint lapis S mengembalikan data berlabel dari database lokal."""
     sumber = _get(klien, "/data/sumber", admin)
     assert len(sumber) == 12 and {s["kelompok"] for s in sumber} == {"inti", "tambahan"}
-    hujan = _get(klien, "/data/hujan?lokasi=lokal&dari=2025-01-20&sampai=2025-01-24", admin)
+    hujan = _get(klien, "/data/hujan?lokasi=lokal&dari=2025-01-20&sampai=2025-01-24&sumber=nasa_power", admin)
     assert len(hujan) == 5 and all(h["is_simulated"] is False for h in hujan)
+    imerg = _get(klien, "/data/hujan?lokasi=hulu&dari=2025-01-20&sampai=2025-01-25&sumber=gpm_imerg_late", admin)
+    assert len(imerg) == 5 and all(h["is_simulated"] is False for h in imerg)
     ma = _get(klien, "/data/muka-air?titik=glapan", admin)
     assert any(s["nilai"] == 1970 for s in ma["seri"]) and ma["ambang_awas"] == 1905
     assert len(_get(klien, "/data/kejadian", admin)) == 6

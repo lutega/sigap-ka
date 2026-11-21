@@ -19,9 +19,9 @@ Aturan tetap: pada jam keputusan model hanya memakai data yang **sudah tersedia*
 
 | Seri | Sumber aktif → cadangan | Resolusi, satuan | Latensi | Status saat ini | Dipakai untuk |
 | --- | --- | --- | --- | --- | --- |
-| Hujan lokal Gubug–Karangjati | NASA POWER (episode nyata); generator dummy (episode sintetis) | harian (NASA POWER) atau per jam, mm | 72 jam (NASA POWER), 3 jam (dummy) | nyata 2024-01-01 s.d. 2026-11-20 | fitur hujan lokal 1/3/5 hari, indeks air di badan rel |
-| Hujan hulu DAS Tuntang | GPM IMERG → GSMaP → NASA POWER → dummy | harian/per jam, mm | 4 jam (IMERG, GSMaP), 72 jam (NASA POWER) | IMERG/GSMaP belum ada kredensial; NASA POWER nyata tetapi **satu sel grid dengan lokal** | fitur hujan hulu 3 hari, model muka air sintetis |
-| Hujan Gundih | NASA POWER / dummy | harian/per jam, mm | sama dengan di atas | nyata (sel grid sama) | hanya peringatan maladaptasi T3 |
+| Hujan lokal Gubug–Karangjati | GPM IMERG Late (episode nyata), NASA POWER (cadangan); generator dummy (episode sintetis) | harian, mm (IMERG: hari UTC mulai 07.00 WIB) | 14 jam (IMERG Late), 72 jam (NASA POWER), 3 jam (dummy) | nyata: IMERG Late 2024-01-01 s.d. 2026-11-18, Final s.d. 2025-09-30 | fitur hujan lokal 1/3/5 hari, indeks air di badan rel |
+| Hujan hulu DAS Tuntang | GPM IMERG Late → GSMaP → NASA POWER → dummy | harian, mm | 14 jam (IMERG Late), 4 jam (GSMaP), 72 jam (NASA POWER) | **nyata, terpisah dari lokal** (IMERG sel −7,25; 110,45); GSMaP belum ada kredensial | fitur hujan hulu 3 hari, model muka air sintetis |
+| Hujan Gundih | GPM IMERG Late / NASA POWER / dummy | harian, mm | sama dengan di atas | nyata (IMERG sel −7,25; 110,95) | hanya peringatan maladaptasi T3 |
 | Prakiraan hujan lokal dan hulu | BMKG (adm4 33.15.17.2001, Desa Penadaran); sintetis untuk episode riwayat | per 3 jam, mm, dengan waktu terbit | 0 (dipakai sejak terbit) | BMKG nyata hanya terbitan terkini (tanpa arsip); episode memakai prakiraan sintetis berlabel | fitur prakiraan lokal/hulu |
 | Muka air Bendung Glapan | rilis BNPB (manual) → BBWS (bersurat) → model sintetis | per jam (sintetis), elevasi (asumsi cm) | 2 jam (BNPB), 0 (sintetis) | nyata 1 titik (1970, 24 Jan 2025); seri per jam sintetis | fitur Glapan relatif dan tren |
 | Laporan petugas: air di badan rel | laporan lapangan (tabel `laporan_lapangan`) | kejadian bertanda waktu | 0 | hanya sintetis di episode generator | pembaruan peluang (rasio kemungkinan) |
@@ -106,7 +106,7 @@ Rp3,5 miliar untuk 124 perjalanan batal.
 
 | Data | Dampak | Cara memperoleh |
 | --- | --- | --- |
-| Hujan hulu terpisah dari lokal | bukti hulu (kasus E3/E6) tidak terlihat pada episode nyata | akun Earthdata (IMERG, arsip sejak 2000) atau JAXA (GSMaP) |
+| Rerata hujan seluruh daerah tangkapan Tuntang (bukan satu sel) dan pos hujan | muka air sintetis episode nyata masih di bawah nilai nyata | data BBWS atau beberapa sel IMERG |
 | Arsip prakiraan | episode riwayat memakai prakiraan sintetis | surat permohonan BMKG |
 | Seri muka air Glapan | muka air episode nyata sintetis (1734 vs nyata 1970) | surat permohonan BBWS Pemali Juana |
 | Jam tutup/buka dan mekanisme E1–E6 | model belum bisa dilatih/divalidasi pada kejadian nyata | berita, pengumuman KAI121/Daop 4, BNPB/BPBD |

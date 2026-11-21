@@ -54,13 +54,13 @@ def test_alur_api_dan_demo_menyeluruh(klien_pg):
     """Data -> prediksi -> papan -> keputusan -> demo sampai T-0 dengan ringkasan; tanpa klaim jalur aman."""
     c = klien_pg
     teks = []
-    for url in ("/data/sumber", "/data/hujan?lokasi=hulu&dari=2025-01-20&sampai=2025-01-24", "/data/kejadian",
+    for url in ("/data/sumber", "/data/hujan?lokasi=hulu&dari=2025-01-20&sampai=2025-01-24&sumber=nasa_power", "/data/kejadian",
                 "/episode", "/episode/NYATA-20250124/prediksi?jam=24", "/episode/DEMO-CADANGAN/papan?jam=36",
                 "/tindakan", "/kurva/T9", "/info"):
         r = c.get(url)
         assert r.status_code == 200, (url, r.text[:200])
         teks.append(r.text)
-    assert len(c.get("/data/hujan?lokasi=hulu&dari=2025-01-20&sampai=2025-01-24").json()) == 5
+    assert len(c.get("/data/hujan?lokasi=hulu&dari=2025-01-20&sampai=2025-01-24&sumber=nasa_power").json()) == 5
     k = c.post("/episode/DEMO-CADANGAN/keputusan",
                json={"tindakan": "T1", "jam_sebelum_t0": 36, "keputusan": "setujui", "alasan": "uji menyeluruh"})
     assert k.status_code == 201 and k.json()["username"] == "admin"

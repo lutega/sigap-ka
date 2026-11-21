@@ -7,3 +7,9 @@ bmkg_prakiraan,2026-11-21 20:46:09,sukses,2026-11-21 17:00:00,2026-11-23 20:00:0
 glapan_bnpb,2026-11-21 20:46:16,sukses,2025-01-24 23:00:00,2025-01-24 23:00:00,data/manual/muka_air_glapan.csv,1,
 kejadian_manual,2026-11-21 20:46:16,sukses,,,data/manual,6,metode manual
 jadwal_ka,2026-11-21 20:46:16,cadangan,,,,6,placeholder dummy
+gpm_imerg_late,2026-11-22 00:24:16,sukses,2024-01-01 07:00:00,2026-11-18 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDL_07_precipitation&location=[-7.08,110.66]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",1053,lokal
+gpm_imerg_late,2026-11-22 00:24:22,sukses,2024-01-01 07:00:00,2026-11-18 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDL_07_precipitation&location=[-7.25,110.47]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",1053,hulu
+gpm_imerg_late,2026-11-22 00:24:26,sukses,2024-01-01 07:00:00,2026-11-18 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDL_07_precipitation&location=[-7.21,110.9]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",1053,gundih
+gpm_imerg_final,2026-11-22 00:24:29,sukses,2024-01-01 07:00:00,2025-09-30 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDF_07_precipitation&location=[-7.08,110.66]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",639,lokal
+gpm_imerg_final,2026-11-22 00:24:32,sukses,2024-01-01 07:00:00,2025-09-30 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDF_07_precipitation&location=[-7.25,110.47]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",639,hulu
+gpm_imerg_final,2026-11-22 00:24:35,sukses,2024-01-01 07:00:00,2025-09-30 07:00:00,"https://api.giovanni.earthdata.nasa.gov/timeseries?data=GPM_3IMERGDF_07_precipitation&location=[-7.21,110.9]&time=2024-01-01T00:00:00/2026-11-21T23:59:59",639,gundih
