@@ -81,6 +81,7 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 .venv/Scripts/python -m simulation.jalankan --semua-preset --loeo 100 --sensitivitas --simpan-db
 .venv/Scripts/python -m simulation.episode muat     # episode demo (nyata 24 Jan 2025, cadangan, sintetis) ke database
 .venv/Scripts/python -m simulation.uji_balik        # uji balik pada hujan IMERG Late vs kejadian kandidat (~40 detik)
+.venv/Scripts/python -m simulation.realisme_generator   # episode latih sintetis vs hari nyata IMERG (sesudah uji_balik)
 ```
 
 Uji balik (`simulation/uji_balik.py`, hasil di `data/processed/uji_balik/`) memutar model pada hujan

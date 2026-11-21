@@ -1,0 +1,16 @@
+besaran,kelompok,n,q10,q25,q50,q75,q90,q99,persentil_nyata_median_sintetis
+hulu_72j,sintetis_latih,400,39.3,53.8,81.0,123.3,175.7,338.6,97.8
+hulu_72j,nyata_semua_hari,1044,0.0,0.9,12.5,35.2,51.7,91.8,
+hulu_72j,nyata_hari_kejadian,8,22.5,38.8,65.8,85.9,96.9,101.8,
+lokal_72j,sintetis_latih,400,32.5,46.1,71.3,103.2,161.5,270.0,95.0
+lokal_72j,nyata_semua_hari,1044,0.0,1.1,12.4,31.9,53.0,110.6,
+lokal_72j,nyata_hari_kejadian,8,23.8,29.7,47.8,76.8,112.7,128.6,
+hulu_3h_tersedia,sintetis_latih,400,38.9,54.2,80.2,119.6,171.3,330.2,97.4
+hulu_3h_tersedia,nyata_semua_hari,1044,0.0,0.6,12.0,35.5,53.2,92.5,
+hulu_3h_tersedia,nyata_hari_kejadian,8,9.6,28.7,41.5,74.3,93.2,96.0,
+lokal_3h_tersedia,sintetis_latih,400,31.8,44.8,69.4,98.3,153.2,248.4,94.3
+lokal_3h_tersedia,nyata_semua_hari,1044,0.0,0.7,10.9,32.1,53.9,117.6,
+lokal_3h_tersedia,nyata_hari_kejadian,8,16.5,17.8,44.1,58.7,67.6,69.5,
+glapan_relatif_T0,sintetis_latih,400,-143.0,-110.6,-63.0,19.0,109.7,544.2,99.4
+glapan_relatif_T0,nyata_semua_hari,1044,-205.0,-203.7,-187.4,-159.8,-134.4,-80.7,
+glapan_relatif_T0,nyata_hari_kejadian,8,-153.6,-137.9,-104.2,-89.7,-61.5,-47.5,

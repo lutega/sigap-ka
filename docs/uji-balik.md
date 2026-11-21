@@ -96,7 +96,59 @@ validasi Semarang (A-054).
    Semarang Tawang–Alastua (di luar koridor). Untuk koridor Brumbung–Karangjati belum ditemukan
    berita gangguan pada tanggal itu.
 
-## 5. Batas klaim
+## 5. Realisme generator dummy (penyebab peluang rendah)
+
+Perintah: `python -m simulation.realisme_generator` (jalankan sesudah uji balik). Hasil ditulis ke
+`data/processed/uji_balik/realisme_generator.csv` dan `realisme_kelas_hujan.csv`.
+
+Yang dibandingkan: 400 episode latih lapis I dari generator dummy, 1.044 hari nyata IMERG Late, dan
+8 hari kejadian kandidat. Median tiap besaran:
+
+| Besaran (median) | Episode latih sintetis | Semua hari nyata | Hari kejadian kandidat |
+| --- | --- | --- | --- |
+| Hujan hulu 72 jam (mm) | 81 | 12,5 | 66 |
+| Hujan hulu 3 hari tersedia pada T-0 (mm) | 80 | 12 | 42 |
+| Hujan lokal 3 hari tersedia pada T-0 (mm) | 69 | 11 | 44 |
+| Glapan relatif Awas pada T-0 (cm) | −63 | −187 | −104 |
+
+- **Episode latih jauh lebih basah daripada hari nyata.** Median hujan hulu 72 jam episode
+  sintetis (81 mm) setara persentil 98 hari nyata. Sebanyak 36% episode sintetis melewati 100 mm,
+  padahal hanya 2 hari nyata (0,2%) yang mencapainya.
+- **Kejadian nyata terjadi pada hujan sedang.** Pada hujan 40–100 mm, model kebenaran generator
+  hanya memberi peluang gangguan 6–29%. Akibatnya model belajar bahwa gangguan butuh hujan lebih
+  besar daripada yang terlihat pada kejadian nyata.
+- **Muka air sintetis dari hujan nyata tetap jauh di bawah Awas.** Medianya −104 cm pada hari
+  kejadian, sedangkan Glapan nyata 25 Jan 2025 mencapai +65 cm. Episode latih yang terganggu sering
+  melewati Awas.
+
+Frekuensi gangguan per kelas hujan hulu 72 jam (nyata = porsi hari dengan kejadian kandidat; hari
+"sekitar" dibuang):
+
+| Hujan hulu 72 jam | Episode sintetis (n) | Terganggu sintetis | Hari nyata (n) | Hari kejadian nyata |
+| --- | --- | --- | --- | --- |
+| 0–20 mm | 5 | 0% | 589 | 1 (0,2%) |
+| 20–40 mm | 37 | 0% | 233 | 1 (0,4%) |
+| 40–60 mm | 83 | 6% | 122 | 2 (1,6%) |
+| 60–80 mm | 72 | 15% | 39 | 1 (2,6%) |
+| 80–100 mm | 58 | 29% | 15 | 2 (13%) |
+| ≥ 100 mm | 145 | 55% | 2 | 1 (50%) |
+
+Satuannya berbeda: episode sintetis dihitung per kejadian, data nyata per hari. Data nyata hanya
+punya 8 kejadian. Karena itu tabel ini hanya menunjukkan arah. Pada hujan tinggi, frekuensi
+sintetis dan nyata mirip. Pada hujan sedang, generator memberi frekuensi lebih tinggi per episode,
+tetapi episode sedang itu jarang dilatihkan.
+
+Pilihan tindak lanjut, keduanya keputusan tim karena parameter generator berstatus dummy
+(A-001, A-010, A-061):
+
+- **(a) Kalibrasi ulang keluaran model.** Generator dipertahankan sebagai skenario uji tekanan,
+  lalu peluang keluaran model dikalibrasi ulang (mis. Platt/isotonik) dengan label nyata
+  terverifikasi.
+- **(b) Parameterisasi ulang generator.** Median badai disesuaikan dengan sebaran hari basah
+  IMERG, dan intersep model kebenaran diturunkan agar gangguan muncul pada 40–100 mm. Setelah itu
+  lapis I dilatih ulang dan simulasi kebijakan diulang.
+
+## 6. Batas klaim
 
 - n = 8 hari kejadian, semuanya kandidat.
 - Hari tanpa berita belum tentu tanpa gangguan.
