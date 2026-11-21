@@ -90,3 +90,11 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | --- | --- | --- | --- |
 | A-041 | Warna grafik memakai palet referensi tervalidasi (slot biru/oranye/aqua; diuji `validate_palette.js` di mode terang dan gelap); warna status hanya untuk status dan selalu disertai ikon dan label. Setiap grafik punya tampilan tabel. | Aksesibilitas konsol | konvensi |
 | A-042 | Kurva pada grafik Operasi dihitung dengan faktor L efektif jam berjalan (dari sebaran lama tutup) sehingga dapat bergeser antarjam; kurva adalah aturan keputusan, bukan data masa depan. | Tampilan kurva | konvensi |
+
+## Tahap 9 · Mode demo
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-043 | Laju putar otomatis demo diatur klien (pewaktu memanggil `/demo/{id}/langkah` tiap kecepatan × 6 detik selama status server "berjalan"); server menyimpan jam berjalan sehingga hasil tidak bergantung jam dinding. Keputusan demo hanya diterima pada jam yang sedang diputar. | Mode demo | konvensi |
+| A-044 | Skenario cadangan presentasi = episode terganggu pertama dari 20 episode seed 2025 (bukan dipilih agar SIGAP tampak baik); cuplikan dibulatkan 6 desimal sebelum dihitung sidik SHA-256. | Keterulangan demo | konvensi |
+| A-045 | Sesi demo hanya dapat dikendalikan pembuatnya atau admin; reset khusus admin. | Hak akses demo | terbuka |

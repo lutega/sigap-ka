@@ -226,3 +226,26 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Keputusan manusia:** tidak ada.
 
 **Hasil tes:** `npm test` → 6 lulus; `npm run build` sukses; `pytest tests/test_konsol.py` → 3 lulus; `export_dashboard.py` → 75/75 angka konsol = model.
+
+---
+
+## Tahap 9 · Mode demo dan skenario cadangan (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `simulation/demo.py`: mesin status sesi demo (mulai di T−72, langkah per jam keputusan, jeda/lanjut, kecepatan, reset yang hanya menghapus log demo sesi itu).
+- `api/routers/demo.py`: `POST /demo/mulai`, `POST /demo/{id}/langkah`, `POST /demo/{id}/jeda`, `GET /demo/{id}/status`, `POST /demo/{id}/reset` (admin), `POST /demo/{id}/kecepatan`. Status memuat papan, lintasan sampai jam berjalan, log demo, dan ringkasan di T−0. Keputusan demo hanya pada jam yang sedang diputar.
+- Konsol: panel mode demo di tab Operasi (mulai, lompat, jeda/lanjutkan, kecepatan, reset untuk admin, keluar).
+- `simulation/skenario_cadangan.py`: cuplikan deterministik skenario cadangan (seed 2025) dengan sidik SHA-256 di `data/processed/demo/skenario_cadangan.json`; `--periksa` membuktikan hasil sama.
+- `docs/naskah-demo.md`: persiapan, alur demo, tabel status per jam (dari cuplikan), episode nyata, pertanyaan penguji, penanganan gangguan.
+
+**Berkas berubah:** `simulation/demo.py`, `simulation/skenario_cadangan.py`, `api/routers/demo.py`, `dashboard/src/tab/PanelDemo.jsx`, `dashboard/src/__tests__/konsol.test.jsx`, `data/processed/demo/skenario_cadangan.json`, `tests/test_demo.py`, `docs/naskah-demo.md`, `README.md`.
+
+**Data masih dummy:** skenario cadangan sintetis; episode nyata memakai prakiraan dan muka air sintetis.
+
+**Asumsi baru:** A-043 s.d. A-045.
+
+**Hambatan:** tidak ada. Catatan: pada skenario cadangan, peluang model turun menjelang T−0 walau gangguan terjadi; disajikan apa adanya sebagai bahan diskusi keterbatasan.
+
+**Keputusan manusia:** tidak ada.
+
+**Hasil tes:** `pytest tests/test_demo.py` → 7 lulus (alur lengkap offline, tanpa intip masa depan, reset terbatas, hak akses, episode nyata, keterulangan cuplikan); `npm test` → 7 lulus; build sukses.

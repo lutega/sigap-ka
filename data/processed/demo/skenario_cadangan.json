@@ -1,0 +1,711 @@
+{
+ "episode": {
+  "id": "DEMO-CADANGAN",
+  "kebenaran": {
+   "mekanisme": "genangan",
+   "skenario_lama_tutup": "sedang",
+   "terganggu": true
+  },
+  "nama": "Skenario cadangan presentasi (seed 2025, #3)",
+  "preset": "base",
+  "seed": 2025,
+  "t0": "2100-01-21T21:00:00"
+ },
+ "per_jam": [
+  {
+   "jam_sebelum_t0": 72,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.305647,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.897408,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.950272,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.944574,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.946328,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.911328,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.930009,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.941521,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.957429,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.950395,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 66,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.21916,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.856782,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.943161,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.939037,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.941246,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.899058,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.918091,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.933773,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.953251,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.949719,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 60,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.453225,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.79378,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.932435,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.929318,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.932122,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.882253,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.89957,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.921455,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.946165,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.943882,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 54,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.200684,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.709156,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.920547,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.920821,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.924391,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.862595,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.879089,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.908855,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.939762,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.943518,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 48,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.276825,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.578017,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.901772,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.904423,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.909035,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.834806,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.845767,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.887499,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.927887,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.933637,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 42,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.299817,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.392882,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T2": {
+     "ambang": 0.879025,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.886755,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.892738,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.800714,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.804769,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.862582,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.91495,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.926909,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 36,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.489657,
+   "tindakan": {
+    "T1": {
+     "ambang": 0.088587,
+     "status": "Putuskan sekarang"
+    },
+    "T2": {
+     "ambang": 0.842086,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.85232,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.860071,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.751515,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.736279,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.819172,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.890332,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.896711,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 30,
+   "mekanisme_dominan": "gerusan",
+   "peluang": 0.541709,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": 0.787307,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.796933,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.806998,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.683711,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.631,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.752448,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.851216,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.825659,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 24,
+   "mekanisme_dominan": "gerusan",
+   "peluang": 0.47436,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": 0.722286,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.734029,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.747285,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.60132,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.490549,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T7": {
+     "ambang": 0.672688,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.80881,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": 0.647187,
+     "status": "Tunggu prakiraan berikutnya"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 18,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.357707,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": 0.639581,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.646542,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.664358,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.49732,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T6": {
+     "ambang": 0.21508,
+     "status": "Putuskan sekarang"
+    },
+    "T7": {
+     "ambang": 0.560888,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T8": {
+     "ambang": 0.757804,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": null,
+     "status": "Terlambat"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 12,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.360156,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": 0.502206,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T3": {
+     "ambang": 0.382197,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T4": {
+     "ambang": 0.404243,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T5": {
+     "ambang": 0.344736,
+     "status": "Putuskan sekarang"
+    },
+    "T6": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T7": {
+     "ambang": 0.27889,
+     "status": "Putuskan sekarang"
+    },
+    "T8": {
+     "ambang": 0.658586,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": null,
+     "status": "Terlambat"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 6,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.303468,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": 0.207341,
+     "status": "Putuskan sekarang"
+    },
+    "T3": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T4": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T5": {
+     "ambang": 0.095206,
+     "status": "Putuskan sekarang"
+    },
+    "T6": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T7": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T8": {
+     "ambang": 0.376536,
+     "status": "Tunggu prakiraan berikutnya"
+    },
+    "T9": {
+     "ambang": null,
+     "status": "Terlambat"
+    }
+   }
+  },
+  {
+   "jam_sebelum_t0": 0,
+   "mekanisme_dominan": "genangan",
+   "peluang": 0.261003,
+   "tindakan": {
+    "T1": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T2": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T3": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T4": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T5": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T6": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T7": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T8": {
+     "ambang": null,
+     "status": "Terlambat"
+    },
+    "T9": {
+     "ambang": null,
+     "status": "Terlambat"
+    }
+   }
+  }
+ ],
+ "ringkasan_t0_tanpa_keputusan": {
+  "faktor_L": 1.0,
+  "selisih_operator_minus_sigap": 960.3,
+  "terganggu": true,
+  "tindakan": [
+   {
+    "nama": "Informasi penumpang dan refund",
+    "operator": {
+     "biaya": 150.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 5.0,
+     "jam_sebelum_t0": 36,
+     "label": "tepat"
+    },
+    "tindakan": "T1"
+   },
+   {
+    "nama": "Menahan KA di stasiun asal",
+    "operator": {
+     "biaya": 300.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 40.0,
+     "jam_sebelum_t0": 6,
+     "label": "tepat"
+    },
+    "tindakan": "T2"
+   },
+   {
+    "nama": "Memutar via Gundih atau Solo",
+    "operator": {
+     "biaya": 400.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 400.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "tindakan": "T3"
+   },
+   {
+    "nama": "Mobilisasi bus pengganti",
+    "operator": {
+     "biaya": 250.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 250.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "tindakan": "T4"
+   },
+   {
+    "nama": "Siagakan petugas Dapsus dan AMUS",
+    "operator": {
+     "biaya": 200.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 14.7,
+     "jam_sebelum_t0": 12,
+     "label": "tepat"
+    },
+    "tindakan": "T5"
+   },
+   {
+    "nama": "Tindakan T6 (belum dikonfirmasi tim)",
+    "operator": {
+     "biaya": 200.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 30.0,
+     "jam_sebelum_t0": 18,
+     "label": "tepat"
+    },
+    "tindakan": "T6"
+   },
+   {
+    "nama": "Tindakan T7 (belum dikonfirmasi tim)",
+    "operator": {
+     "biaya": 250.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 50.0,
+     "jam_sebelum_t0": 12,
+     "label": "tepat"
+    },
+    "tindakan": "T7"
+   },
+   {
+    "nama": "Tindakan T8 (belum dikonfirmasi tim)",
+    "operator": {
+     "biaya": 220.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 220.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "tindakan": "T8"
+   },
+   {
+    "nama": "Pembatalan perjalanan",
+    "operator": {
+     "biaya": 1100.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "sigap": {
+     "biaya": 1100.0,
+     "jam_sebelum_t0": null,
+     "label": "terlambat"
+    },
+    "tindakan": "T9"
+   }
+  ],
+  "total_operator": 3070.0,
+  "total_sigap": 2109.7
+ },
+ "sidik_sha256": "54ce5dd742dc3ddddcd801b0571a8f1a95b7a1f7e83ca85615f235cfad71c66b"
+}

@@ -98,6 +98,22 @@ Setujui/Tolak, ringkasan T−0), **Data** (status sumber, hujan, muka air, kejad
 batas waktu), **Simulasi** (enam kebijakan, metrik deteksi, batas klaim). Admin juga melihat
 **Kelola pengguna**. Setiap grafik punya tampilan tabel; data nyata/dummy selalu berlabel.
 
+## Mode demo (ujian dan presentasi)
+
+Putar ulang episode jam demi jam secara offline dari tab Operasi → **Mulai mode demo** (kendali:
+lompat ke jam berikutnya, jeda/lanjutkan, kecepatan; reset khusus admin). Endpoint:
+`POST /demo/mulai`, `POST /demo/{id}/langkah`, `POST /demo/{id}/jeda`, `GET /demo/{id}/status`,
+`POST /demo/{id}/reset`. Log keputusan demo ditandai `mode=demo`.
+
+Skenario cadangan presentasi (seed tetap, hasil selalu sama):
+
+```bash
+.venv/Scripts/python -m simulation.skenario_cadangan            # bangun cuplikan + sidik SHA-256
+.venv/Scripts/python -m simulation.skenario_cadangan --periksa  # pastikan masih sama
+```
+
+Langkah lengkap presentasi ada di `docs/naskah-demo.md`.
+
 ## Menjalankan tes
 
 ```bash

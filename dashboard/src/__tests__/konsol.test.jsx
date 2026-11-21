@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App.jsx";
 import PapanTindakan from "../komponen/PapanTindakan.jsx";
+import PanelDemo from "../tab/PanelDemo.jsx";
 import { LabelData, StatusTindakan } from "../komponen/umum.jsx";
 import { simpanToken } from "../api.js";
 
@@ -95,6 +96,24 @@ describe("aplikasi", () => {
     fireEvent.change(screen.getByLabelText("Password"), { target: { value: "y" } });
     fireEvent.click(screen.getByRole("button", { name: "Masuk" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("username atau password salah");
+  });
+});
+
+describe("panel mode demo", () => {
+  it("tanpa sesi menawarkan mulai; dengan sesi menampilkan kendali, reset hanya untuk admin", () => {
+    const { rerender } = render(<PanelDemo episodeId="DEMO-CADANGAN" pengguna={{ level: "operator" }} demo={null}
+      setDemo={() => {}} setJam={() => {}} onGalat={() => {}} />);
+    expect(screen.getByRole("button", { name: "Mulai mode demo" })).toBeEnabled();
+    const sesi = { id: "demo-1", status: "jeda", jam_sebelum_t0: 48, detik_per_langkah: 12 };
+    rerender(<PanelDemo episodeId="DEMO-CADANGAN" pengguna={{ level: "operator" }} demo={sesi}
+      setDemo={() => {}} setJam={() => {}} onGalat={() => {}} />);
+    expect(screen.getByTestId("panel-demo")).toHaveTextContent("mode demo");
+    expect(screen.getByRole("button", { name: "Lanjutkan" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Reset demo" })).toBeNull();
+    rerender(<PanelDemo episodeId="DEMO-CADANGAN" pengguna={{ level: "admin" }} demo={{ ...sesi, status: "selesai", jam_sebelum_t0: 0 }}
+      setDemo={() => {}} setJam={() => {}} onGalat={() => {}} />);
+    expect(screen.getByRole("button", { name: "Reset demo" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Lompat ke jam berikutnya" })).toBeDisabled();
   });
 });
 
