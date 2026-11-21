@@ -27,6 +27,8 @@ cp .env.example .env          # lalu sesuaikan bila perlu
 
 # 3. Database
 docker compose up -d          # tunggu status healthy: docker ps
+.venv/Scripts/python -m db.inisialisasi          # buat tabel, hypertable, agregat (idempoten)
+# .venv/Scripts/python -m db.inisialisasi --reset  # hapus semua tabel lalu buat ulang
 ```
 
 ## Menjalankan tes

@@ -23,3 +23,9 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-013 | `sigap_data_proyek_minor.zip` tidak tersedia di repo, sehingga kode, nilai dummy, dan model sintetis dibangun ulang. Angka "SIGAP 14% lebih murah" dan "model sintetis 1768" berasal dari versi lama dan tidak direproduksi. | Perbandingan dengan versi lama | terbuka |
 | A-014 | Episode nyata 24 Jan 2025: "malam" ditafsirkan T−0 = pukul 21.00 WIB. Hasil episode (terganggu atau tidak) belum terkonfirmasi di katalog, sehingga ringkasan T−0 ditampilkan untuk kedua kemungkinan. | Demo episode nyata | terbuka |
 | A-015 | Latensi data: NASA POWER 72 jam, IMERG Early dan GSMaP NRT 4 jam, Glapan 2 jam, generator dummy 3 jam. | Informasi yang tersedia pada jam keputusan | terbuka |
+
+## Tahap 1 · Database
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-016 | Tabel di luar 14.5 ditambahkan: `pengguna` (bagian 15), `episode`, `laporan_lapangan` (laporan petugas dan jalan putus), `simulasi_run` (status tugas latar belakang), `sesi_demo` (bagian 16). Tabel time series diberi kolom `episode_id` ('' = observasi umum) agar episode sintetis tidak bercampur dengan observasi nyata. | Skema | konvensi |
