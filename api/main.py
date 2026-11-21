@@ -19,7 +19,7 @@ from fastapi.staticfiles import StaticFiles
 
 from action.penjaga_klaim import KlaimAmanTerlarang
 from api.deps import Konteks
-from api.routers import auth, data, kurva, pengguna, prediksi, simulasi, tindakan
+from api.routers import auth, data, info, kurva, pengguna, prediksi, simulasi, tindakan
 from auth.pengguna import pastikan_admin_awal
 from config import AKAR_REPO, muat_pengaturan
 from db.inisialisasi import inisialisasi
@@ -58,7 +58,7 @@ def buat_aplikasi(database_url: str | None = None, siapkan_db: bool = True) -> F
     app.state.konteks = Konteks(engine)
     app.add_middleware(CORSMiddleware, allow_origins=muat_pengaturan().daftar_cors,
                        allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
-    for r in (auth, pengguna, data, prediksi, kurva, tindakan, simulasi):
+    for r in (auth, pengguna, data, info, prediksi, kurva, tindakan, simulasi):
         app.include_router(r.router)
     try:
         from api.routers import demo
@@ -75,7 +75,7 @@ def buat_aplikasi(database_url: str | None = None, siapkan_db: bool = True) -> F
         """Pemeriksaan hidup layanan (tanpa token)."""
         return {"status": "berjalan", "layanan": "SIGAP-KA API"}
 
-    if DIR_DASHBOARD.exists():  # dashboard hasil build disajikan dari server yang sama
+    if (DIR_DASHBOARD / "assets").exists():  # dashboard hasil build disajikan dari server yang sama
         app.mount("/assets", StaticFiles(directory=DIR_DASHBOARD / "assets"), name="assets")
 
         @app.get("/", include_in_schema=False)

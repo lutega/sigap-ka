@@ -83,3 +83,10 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-038 | Parameter `jam` di API dinyatakan sebagai jam sebelum T−0 (mis. 24 = T−24) dan harus kelipatan interval keputusan. Endpoint detail dan lintasan episode memotong data pada jam yang diminta. | Kontrak API | konvensi |
 | A-039 | Operator dan admin sama-sama boleh mencatat keputusan; log normal dibagi per episode (bukan per pengguna), log demo per sesi. Simulasi, kelola pengguna, dan reset demo khusus admin. Hitung ulang kurva dengan slider boleh untuk semua pengguna karena tidak mengubah params.json. | Otorisasi | terbuka |
 | A-040 | Token JWT HS256 berlaku 480 menit; status aktif pengguna diperiksa ulang tiap permintaan sehingga pengguna yang dinonaktifkan langsung tertolak. | Keamanan prototipe | konvensi |
+
+## Tahap 8 · Konsol
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-041 | Warna grafik memakai palet referensi tervalidasi (slot biru/oranye/aqua; diuji `validate_palette.js` di mode terang dan gelap); warna status hanya untuk status dan selalu disertai ikon dan label. Setiap grafik punya tampilan tabel. | Aksesibilitas konsol | konvensi |
+| A-042 | Kurva pada grafik Operasi dihitung dengan faktor L efektif jam berjalan (dari sebaran lama tutup) sehingga dapat bergeser antarjam; kurva adalah aturan keputusan, bukan data masa depan. | Tampilan kurva | konvensi |

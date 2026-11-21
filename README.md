@@ -73,10 +73,36 @@ Hasil disimpan di `data/processed/simulasi/` (CSV biaya per episode dan JSON rin
 - Permintaan pertama per preset melatih model lapis I (sekitar 5 detik); episode dimuat sekali lalu
   disimpan di memori.
 
+## Konsol (dashboard React + Vite + Recharts)
+
+Satu perintah membangun konsol dan memeriksa bahwa angka konsol sama dengan model untuk tiap preset:
+
+```bash
+.venv/Scripts/python dashboard/export_dashboard.py      # npm install (sekali) + npm run build + cek kesesuaian
+.venv/Scripts/python -m uvicorn api.main:app --host 127.0.0.1 --port 8765
+# buka http://127.0.0.1:8765/  (login admin/admin)
+```
+
+Pengembangan antarmuka dengan muat ulang otomatis:
+
+```bash
+cd dashboard
+npm install
+npm run dev        # http://localhost:5173, permintaan API diteruskan ke port 8765
+npm test           # vitest
+```
+
+Lima tab: **Operasi** (putar ulang episode, peluang vs kurva pemicu, papan 9 tindakan dengan
+Setujui/Tolak, ringkasan T−0), **Data** (status sumber, hujan, muka air, kejadian, jadwal),
+**Prediksi** (peluang per mekanisme, lama tutup, bukti utama), **Kurva pemicu** (slider C, L, P,
+batas waktu), **Simulasi** (enam kebijakan, metrik deteksi, batas klaim). Admin juga melihat
+**Kelola pengguna**. Setiap grafik punya tampilan tabel; data nyata/dummy selalu berlabel.
+
 ## Menjalankan tes
 
 ```bash
 .venv/Scripts/python -m pytest
+cd dashboard && npm test
 ```
 
 Tes bertanda `db` membutuhkan database dari `docker compose`; bila database tidak terjangkau,

@@ -203,3 +203,26 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Keputusan manusia:** konfirmasi pembagian hak operator/admin (A-039).
 
 **Hasil tes:** `pytest tests/test_api.py` → 27 lulus (seluruh endpoint 14.2, 401/403, bcrypt, keputusan dengan username, simulasi latar, tanpa klaim jalur aman).
+
+---
+
+## Tahap 8 · dashboard/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- Konsol React 18 + Vite 5 + Recharts 2: halaman login, lima tab (Operasi, Data, Prediksi, Kurva pemicu, Simulasi), Kelola pengguna khusus admin, tema terang/gelap (pilihan pengguna atau sistem), catatan kewenangan KAI dan batas klaim di kaki halaman.
+- Tab Operasi: pilih episode, langkah/putar ulang per jam keputusan (2/4/8 detik per 6 jam episode), angka utama (peluang, mekanisme, lama tutup), grafik peluang vs kurva pemicu tindakan terpilih dengan garis batas waktu dan "sekarang", bukti utama, papan 9 tindakan (Setujui/Tolak dengan alasan/Batalkan, peringatan maladaptasi), ringkasan biaya T−0.
+- Setiap grafik punya tampilan tabel; label nyata/dummy; satu sumbu per grafik; palet tervalidasi.
+- Endpoint baru `/info` (empat batas klaim; nilai muka air sintetis 24 Jan dihitung model, bukan ditulis tangan).
+- `dashboard/export_dashboard.py`: satu perintah build + cek kesesuaian angka API vs model untuk low/base/high: 75/75 sesuai.
+
+**Berkas berubah:** `dashboard/*` (kecuali `node_modules`, `dist`), `api/routers/info.py`, `api/main.py`, `tests/test_konsol.py`, `README.md`.
+
+**Data masih dummy:** sama; konsol menandainya.
+
+**Asumsi baru:** A-041, A-042.
+
+**Hambatan:** tidak ada alat peramban di sesi ini, jadi tampilan konsol belum diperiksa secara visual oleh agen (hanya build, vitest, dan uji API). Mohon dicek sekali di peramban.
+
+**Keputusan manusia:** tidak ada.
+
+**Hasil tes:** `npm test` → 6 lulus; `npm run build` sukses; `pytest tests/test_konsol.py` → 3 lulus; `export_dashboard.py` → 75/75 angka konsol = model.
