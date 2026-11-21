@@ -1,0 +1,20 @@
+[project]
+name = "sigap-ka"
+version = "0.1.0"
+description = "Sistem pendukung keputusan kontinjensi banjir koridor KA Brumbung-Karangjati"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+markers = [
+    "db: tes integrasi yang membutuhkan PostgreSQL + TimescaleDB (docker compose)",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:passlib.*",
+]
+
+[tool.coverage.run]
+source = ["config", "sensing", "inference", "gating", "action", "simulation", "api", "auth", "db"]
+omit = ["tests/*"]

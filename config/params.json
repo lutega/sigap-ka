@@ -1,0 +1,305 @@
+{
+  "_meta": {
+    "versi": "0.1.0",
+    "keterangan": "Satu-satunya sumber parameter SIGAP-KA. Preset dipilih lewat PARAMS_PRESET di .env.",
+    "status_nilai": "Semua nilai berstatus dummy kecuali yang tercantum di blok _nyata. Lihat docs/asumsi.md.",
+    "satuan_biaya": "juta rupiah",
+    "zona_waktu": "WIB (UTC+7), disimpan tanpa zona waktu",
+    "preset_tersedia": ["low", "base", "high"]
+  },
+
+  "_nyata": {
+    "keterangan": "Angka nyata dari dokumen proyek (deck Overview/Update 5 Nov 2026). Tidak boleh diubah tanpa sumber baru.",
+    "glapan_24jan2025": {"nilai": 1970, "sumber": "rilis BNPB, dikutip spesifikasi 8.2"},
+    "glapan_ambang_awas": {"nilai": 1905, "sumber": "rilis BNPB, dikutip spesifikasi 8.2"},
+    "glapan_model_sintetis_lama_24jan2025": {"nilai": 1768, "sumber": "model sintetis versi lama, spesifikasi 6"},
+    "refund_pekalongan": {"nilai_juta": 3500, "perjalanan_batal": 124, "sumber": "jangkar biaya, spesifikasi 8.4"}
+  },
+
+  "lokasi": {
+    "lokal": {"nama": "Gubug-Karangjati (koridor)", "lat": -7.08, "lon": 110.66, "status": "perkiraan, perlu verifikasi"},
+    "hulu": {"nama": "Hulu DAS Tuntang (Kab. Semarang)", "lat": -7.25, "lon": 110.47, "status": "perkiraan, perlu verifikasi"},
+    "gundih": {"nama": "Gundih (rute alternatif)", "lat": -7.21, "lon": 110.90, "status": "perkiraan, perlu verifikasi"},
+    "glapan": {"nama": "Bendung Glapan", "lat": -7.08, "lon": 110.59, "status": "perkiraan, perlu verifikasi"}
+  },
+
+  "episode": {
+    "status": "dummy",
+    "horizon_jam": 72,
+    "interval_keputusan_jam": 6,
+    "antesedent_hari": 5,
+    "keterangan": "Jam keputusan tiap 6 jam dari T-72 sampai T-0. T-0 = jam acuan gangguan (mis. KA pertama yang terdampak)."
+  },
+
+  "tindakan": {
+    "T1": {
+      "nama": "Informasi penumpang dan refund",
+      "keputusan_sebelum": "Penumpang berangkat ke stasiun",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 3,  "L": 100, "P": 5,  "waktu_siap_jam": 30},
+      "base": {"C": 5,  "L": 150, "P": 10, "waktu_siap_jam": 36},
+      "high": {"C": 8,  "L": 240, "P": 20, "waktu_siap_jam": 42}
+    },
+    "T2": {
+      "nama": "Menahan KA di stasiun asal",
+      "keputusan_sebelum": "KA berangkat dari stasiun asal",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 25, "L": 200, "P": 15, "waktu_siap_jam": 6},
+      "base": {"C": 40, "L": 300, "P": 30, "waktu_siap_jam": 6},
+      "high": {"C": 60, "L": 480, "P": 60, "waktu_siap_jam": 12}
+    },
+    "T3": {
+      "nama": "Memutar via Gundih atau Solo",
+      "keputusan_sebelum": "KA melewati titik percabangan",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 80,  "L": 260, "P": 30,  "waktu_siap_jam": 12},
+      "base": {"C": 120, "L": 400, "P": 60,  "waktu_siap_jam": 12},
+      "high": {"C": 180, "L": 640, "P": 120, "waktu_siap_jam": 18}
+    },
+    "T4": {
+      "nama": "Mobilisasi bus pengganti",
+      "keputusan_sebelum": "Bus tiba di stasiun titik putus",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 50,  "L": 160, "P": 20, "waktu_siap_jam": 6},
+      "base": {"C": 80,  "L": 250, "P": 40, "waktu_siap_jam": 12},
+      "high": {"C": 120, "L": 400, "P": 80, "waktu_siap_jam": 18}
+    },
+    "T5": {
+      "nama": "Siagakan petugas Dapsus dan AMUS",
+      "keputusan_sebelum": "Air mencapai badan jalan rel",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 10, "L": 130, "P": 3,  "waktu_siap_jam": 6},
+      "base": {"C": 15, "L": 200, "P": 5,  "waktu_siap_jam": 6},
+      "high": {"C": 22, "L": 320, "P": 10, "waktu_siap_jam": 12}
+    },
+    "T6": {
+      "nama": "Tindakan T6 (belum dikonfirmasi tim)",
+      "keputusan_sebelum": "Belum dikonfirmasi",
+      "terkonfirmasi": false, "status": "dummy",
+      "low":  {"C": 20, "L": 130, "P": 10, "waktu_siap_jam": 12},
+      "base": {"C": 30, "L": 200, "P": 20, "waktu_siap_jam": 18},
+      "high": {"C": 45, "L": 320, "P": 40, "waktu_siap_jam": 24}
+    },
+    "T7": {
+      "nama": "Tindakan T7 (belum dikonfirmasi tim)",
+      "keputusan_sebelum": "Belum dikonfirmasi",
+      "terkonfirmasi": false, "status": "dummy",
+      "low":  {"C": 35, "L": 160, "P": 15, "waktu_siap_jam": 6},
+      "base": {"C": 50, "L": 250, "P": 30, "waktu_siap_jam": 12},
+      "high": {"C": 75, "L": 400, "P": 60, "waktu_siap_jam": 18}
+    },
+    "T8": {
+      "nama": "Tindakan T8 (belum dikonfirmasi tim)",
+      "keputusan_sebelum": "Belum dikonfirmasi",
+      "terkonfirmasi": false, "status": "dummy",
+      "low":  {"C": 40, "L": 140, "P": 20, "waktu_siap_jam": 6},
+      "base": {"C": 60, "L": 220, "P": 40, "waktu_siap_jam": 6},
+      "high": {"C": 90, "L": 350, "P": 80, "waktu_siap_jam": 12}
+    },
+    "T9": {
+      "nama": "Pembatalan perjalanan",
+      "keputusan_sebelum": "Sebelum jadwal berangkat",
+      "terkonfirmasi": true, "status": "dummy",
+      "low":  {"C": 500,  "L": 750,  "P": 100, "waktu_siap_jam": 18},
+      "base": {"C": 750,  "L": 1100, "P": 200, "waktu_siap_jam": 24},
+      "high": {"C": 1100, "L": 1700, "P": 400, "waktu_siap_jam": 30}
+    }
+  },
+
+  "lama_tutup": {
+    "status": "dummy",
+    "keterangan": "Tiga skenario lama tutup (spesifikasi 9.4). Faktor L mengalikan kerugian L tiap tindakan.",
+    "skenario": {
+      "pendek": {"jam_min": 2,  "jam_maks": 12,  "faktor_L": 0.6},
+      "sedang": {"jam_min": 12, "jam_maks": 48,  "faktor_L": 1.0},
+      "panjang": {"jam_min": 48, "jam_maks": 336, "faktor_L": 1.8}
+    },
+    "peluang_bersyarat": {
+      "genangan": {"pendek": 0.6, "sedang": 0.3, "panjang": 0.1},
+      "gerusan":  {"pendek": 0.1, "sedang": 0.3, "panjang": 0.6}
+    },
+    "campuran_mekanisme_bawaan": {"genangan": 0.7, "gerusan": 0.3}
+  },
+
+  "gating": {
+    "status": "dummy",
+    "jumlah_grid_peluang": 201,
+    "konsentrasi_beta": 12.0,
+    "diskon_biaya_awal_per_langkah": 0.02,
+    "keterangan": "Peluang antarprakiraan dimodelkan martingale Beta(kp, k(1-p)) dengan k = konsentrasi_beta. Bertindak satu langkah lebih awal lebih murah sebesar diskon; di batas waktu biaya = C."
+  },
+
+  "inferensi": {
+    "status": "dummy",
+    "fitur": {
+      "hujan_lokal_1h":   {"skala": 50,  "keterangan": "akumulasi hujan lokal 24 jam terakhir (mm)"},
+      "hujan_lokal_3h":   {"skala": 100, "keterangan": "akumulasi hujan lokal 3 hari terakhir (mm)"},
+      "hujan_lokal_5h":   {"skala": 150, "keterangan": "akumulasi hujan lokal 5 hari terakhir (mm)"},
+      "hujan_hulu_3h":    {"skala": 100, "keterangan": "akumulasi hujan hulu Tuntang 3 hari terakhir (mm)"},
+      "prakiraan_lokal":  {"skala": 50,  "keterangan": "prakiraan hujan lokal sampai T-0, maks 24 jam ke depan (mm)"},
+      "prakiraan_hulu":   {"skala": 50,  "keterangan": "prakiraan hujan hulu sampai T-0, maks 24 jam ke depan (mm)"},
+      "glapan_relatif":   {"skala": 100, "keterangan": "muka air Glapan terakhir dikurangi ambang Awas"},
+      "glapan_tren":      {"skala": 50,  "keterangan": "kenaikan muka air Glapan 6 jam terakhir"}
+    },
+    "prior_rerata": {
+      "genangan": {"intersep": -4.5, "hujan_lokal_1h": 0.6, "hujan_lokal_3h": 1.2, "hujan_lokal_5h": 0.4, "hujan_hulu_3h": 0.5, "prakiraan_lokal": 1.0, "prakiraan_hulu": 0.4, "glapan_relatif": 0.4, "glapan_tren": 0.3},
+      "gerusan":  {"intersep": -6.0, "hujan_lokal_1h": 0.2, "hujan_lokal_3h": 0.3, "hujan_lokal_5h": 0.2, "hujan_hulu_3h": 1.2, "prakiraan_lokal": 0.2, "prakiraan_hulu": 1.0, "glapan_relatif": 1.5, "glapan_tren": 0.8}
+    },
+    "prior_preset": {
+      "low":  {"pengali_rerata": 0.7, "sd_koefisien": 0.5, "sd_intersep": 1.0},
+      "base": {"pengali_rerata": 1.0, "sd_koefisien": 1.0, "sd_intersep": 2.0},
+      "high": {"pengali_rerata": 1.3, "sd_koefisien": 2.0, "sd_intersep": 3.0}
+    },
+    "laporan_lapangan": {
+      "rasio_kemungkinan_air_badan_rel": 20.0,
+      "keterangan": "Laporan petugas yang mengonfirmasi air di badan rel mengalikan odds gangguan."
+    },
+    "latensi_jam": {
+      "nasa_power": 72, "gpm_imerg": 4, "gsmap": 4, "bmkg_stasiun": 1,
+      "glapan_bnpb": 2, "bbws": 1, "muka_air_sintetis": 0, "dummy_generator": 3
+    },
+    "latih": {"jumlah_episode": 400, "offset_seed": 100000, "sampel_monte_carlo": 200, "maks_iterasi": 50},
+    "ambang_deteksi": 0.5
+  },
+
+  "muka_air": {
+    "status": "dummy",
+    "ambang_awas": 1905,
+    "satuan": "satuan elevasi rilis BNPB (asumsi cm pada papan duga)",
+    "sintetis": {
+      "elevasi_dasar": 1700,
+      "konstanta_waduk_jam": 24,
+      "pengali_tampungan": 4.0,
+      "pangkat_tampungan": 1.0,
+      "tampungan_awal_mm": 10.0,
+      "keterangan": "Waduk linear: dS/dt = R_hulu - S/k; elevasi = dasar + a * S^b. Air di badan rel: indeks dari hujan lokal 24 jam."
+    },
+    "badan_rel": {"ambang_hujan_lokal_24j_mm": 80, "keterangan": "indeks sintetis air di badan rel"}
+  },
+
+  "dummy": {
+    "status": "dummy",
+    "low": {
+      "hujan_lokal_median_mm": 55, "hujan_hulu_median_mm": 60, "sigma_log_hujan": 0.6,
+      "korelasi_lokal_hulu": 0.5, "antesedent_median_mm": 30
+    },
+    "base": {
+      "hujan_lokal_median_mm": 75, "hujan_hulu_median_mm": 85, "sigma_log_hujan": 0.6,
+      "korelasi_lokal_hulu": 0.5, "antesedent_median_mm": 40
+    },
+    "high": {
+      "hujan_lokal_median_mm": 100, "hujan_hulu_median_mm": 115, "sigma_log_hujan": 0.6,
+      "korelasi_lokal_hulu": 0.5, "antesedent_median_mm": 55
+    },
+    "badai": {"puncak_sebelum_t0_jam_min": 6, "puncak_sebelum_t0_jam_maks": 30, "lebar_jam": 10},
+    "prakiraan": {"sigma_log_lead_maks": 0.8, "sigma_log_lead_nol": 0.15, "jendela_jam": 24},
+    "kebenaran": {
+      "keterangan": "Model 'kebenaran' generator (bukan model inferensi). Fitur dari hujan teramati sampai T-0.",
+      "genangan": {"intersep": -5.0, "hujan_lokal_3h": 2.2, "hujan_lokal_5h": 0.6, "hujan_hulu_3h": 0.5, "glapan_puncak_relatif": 0.3},
+      "gerusan":  {"intersep": -6.5, "hujan_lokal_3h": 0.3, "hujan_lokal_5h": 0.2, "hujan_hulu_3h": 1.6, "glapan_puncak_relatif": 2.0}
+    },
+    "laporan_lapangan": {"peluang_lapor_bila_terganggu": 0.7, "lapor_sebelum_t0_jam_maks": 12, "peluang_lapor_palsu": 0.05},
+    "jalan_putus": {"peluang_bila_hujan_lebat": 0.15, "ambang_hujan_lokal_mm": 100},
+    "korelasi_hujan_gundih": 0.5
+  },
+
+  "jadwal_dummy": {
+    "status": "dummy",
+    "keterangan": "Placeholder KA-A s.d. KA-F sampai jadwal publik diisi di data/manual/jadwal_ka.csv",
+    "ka": [
+      {"nomor": "KA-A", "relasi": "Semarang - Surabaya (placeholder)", "jam_lewat_gubug": "03:15"},
+      {"nomor": "KA-B", "relasi": "Surabaya - Semarang (placeholder)", "jam_lewat_gubug": "07:40"},
+      {"nomor": "KA-C", "relasi": "Semarang - Surabaya (placeholder)", "jam_lewat_gubug": "11:05"},
+      {"nomor": "KA-D", "relasi": "Surabaya - Semarang (placeholder)", "jam_lewat_gubug": "15:30"},
+      {"nomor": "KA-E", "relasi": "Semarang - Surabaya (placeholder)", "jam_lewat_gubug": "19:45"},
+      {"nomor": "KA-F", "relasi": "Surabaya - Semarang (placeholder)", "jam_lewat_gubug": "23:10"}
+    ]
+  },
+
+  "simulasi": {
+    "status": "dummy",
+    "jumlah_episode": 300,
+    "kebijakan": ["sigap", "jam_tetap_24", "ambang_tetap_05", "cost_loss_batas", "reaktif", "informasi_sempurna"],
+    "jam_tetap_sebelum_t0": 24,
+    "ambang_tetap": 0.5,
+    "pembanding_deteksi": {
+      "aturan_hujan_lokal_3h_mm": 100,
+      "hmhews_kategori_hujan_harian_mm": {"sedang": 20, "lebat": 50, "sangat_lebat": 100, "ekstrem": 150},
+      "hmhews_level_peringatan": 2,
+      "keterangan": "Kategori hujan harian mengikuti klasifikasi BMKG (perlu dicek tim); indeks H-MHEWS adalah adaptasi sederhana, hanya pembanding."
+    }
+  },
+
+  "sumber_data": {
+    "nasa_power": {
+      "jenis": "hujan", "kelompok": "inti", "opsional": false,
+      "akses": "API publik per koordinat, tanpa akun",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point"
+    },
+    "gpm_imerg": {
+      "jenis": "hujan", "kelompok": "inti", "opsional": true,
+      "akses": "NASA GES DISC OPeNDAP, token Earthdata (EARTHDATA_TOKEN)",
+      "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDL.07"
+    },
+    "gsmap": {
+      "jenis": "hujan", "kelompok": "inti", "opsional": true,
+      "akses": "Portal JAXA G-Portal/sftp, akun gratis (JAXA_USER, JAXA_PASSWORD)",
+      "url": "hokusai.eorc.jaxa.jp"
+    },
+    "bmkg_prakiraan": {
+      "jenis": "prakiraan", "kelompok": "inti", "opsional": false,
+      "akses": "API data terbuka BMKG",
+      "url": "https://api.bmkg.go.id/publik/prakiraan-cuaca",
+      "adm4_lokal": "33.15.12.2001",
+      "adm4_status": "perkiraan kode wilayah desa di Kec. Gubug, perlu verifikasi"
+    },
+    "glapan_bnpb": {
+      "jenis": "muka_air", "kelompok": "inti", "opsional": false,
+      "akses": "Rilis BNPB, diisi manual di data/manual/muka_air_glapan.csv"
+    },
+    "muka_air_sintetis": {
+      "jenis": "muka_air", "kelompok": "inti", "opsional": false,
+      "akses": "Model hujan-limpasan internal (sintetis)"
+    },
+    "bbws": {
+      "jenis": "muka_air", "kelompok": "tambahan", "opsional": true,
+      "akses": "Surat permohonan BBWS Pemali Juana; CSV di data/manual/bbws.csv bila sudah ada"
+    },
+    "bmkg_stasiun": {
+      "jenis": "hujan", "kelompok": "tambahan", "opsional": true,
+      "akses": "Surat permohonan BMKG; CSV di data/manual/bmkg_stasiun.csv bila sudah ada"
+    },
+    "kejadian_manual": {
+      "jenis": "kejadian", "kelompok": "inti", "opsional": false,
+      "akses": "Tabel manual dari berita, pengumuman KAI, rilis BNPB/BPBD (data/manual/kejadian.csv)"
+    },
+    "kejadian_ocr_llm": {
+      "jenis": "kejadian", "kelompok": "inti", "opsional": true,
+      "akses": "Unggahan KAI121/Daop 4 -> OCR -> LLM -> diperiksa peneliti (data/raw/pengumuman/)"
+    },
+    "jadwal_ka": {
+      "jenis": "jadwal", "kelompok": "inti", "opsional": false,
+      "akses": "Jadwal publik KAI, diisi manual di data/manual/jadwal_ka.csv"
+    },
+    "dummy_generator": {
+      "jenis": "sintetis", "kelompok": "inti", "opsional": false,
+      "akses": "Dibangkitkan dari params.json (is_simulated = true)"
+    }
+  },
+  "urutan_cadangan_hujan_hulu": ["gpm_imerg", "gsmap", "nasa_power", "dummy_generator"],
+
+  "demo": {
+    "status": "dummy",
+    "seed_cadangan": 2025,
+    "id_episode_cadangan": "DEMO-CADANGAN",
+    "kecepatan_detik_per_jam": 1.0,
+    "jumlah_episode_sintetis_demo": 5,
+    "episode_nyata": {
+      "id": "NYATA-20250124",
+      "nama": "Banjir malam 24 Januari 2025",
+      "t0": "2025-01-24T21:00:00",
+      "status_t0": "asumsi: 'malam 24 Januari 2025' ditafsirkan pukul 21.00 WIB",
+      "hasil": "belum terkonfirmasi"
+    }
+  }
+}

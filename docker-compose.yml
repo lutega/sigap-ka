@@ -1,0 +1,25 @@
+# PostgreSQL 16 + TimescaleDB untuk SIGAP-KA.
+# Kredensial dan port dibaca dari .env (lihat .env.example).
+services:
+  db:
+    image: timescale/timescaledb:2.17.2-pg16
+    container_name: sigap-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sigap}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sigap}
+      POSTGRES_DB: ${POSTGRES_DB:-sigap}
+      TZ: Asia/Jakarta
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - sigap_pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sigap} -d ${POSTGRES_DB:-sigap}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  sigap_pgdata:

@@ -1,6 +1,12 @@
-﻿.env
+.env
 __pycache__/
 .venv/
 node_modules/
-data/raw/
+data/raw/*
+!data/raw/.gitkeep
 *.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+dashboard/dist/
+*.egg-info/
