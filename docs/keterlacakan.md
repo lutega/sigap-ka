@@ -48,3 +48,14 @@ mengimplementasikannya dan tes yang membuktikannya. Berkas tes ada di `tests/` (
 | 15 login dan pengguna | `auth/`, `api/routers/auth.py`, `pengguna.py`, `KelolaPengguna.jsx` | `test_api.py` (auth), `konsol.test.jsx` |
 | 16 mode demo | `simulation/demo.py`, `api/routers/demo.py`, `PanelDemo.jsx`, `simulation/skenario_cadangan.py` | `test_demo.py`, `konsol.test.jsx::panel mode demo` |
 | Tanpa intip masa depan | `inference/fitur.py`, `db/repositori.ambil_prakiraan_tersedia`, potongan API | `test_inferensi.py::test_fitur_tanpa_intip_*`, `test_db_model.py::test_prakiraan_hanya_*`, `test_api.py::test_daftar_dan_detail_*`, `test_demo.py` |
+
+## Tambahan 22 Nov 2026 · evaluasi pada data nyata
+
+| Kebutuhan | Modul | Tes |
+| --- | --- | --- |
+| Kejadian kandidat dari sumber publik (pendukung FR-S3) | `data/manual/kejadian_kandidat.csv`, `src/sigap_ka/inputs/kejadian_kandidat.py` | `test_kejadian_kandidat.py` |
+| Hujan IMERG Late per jam dan rerata DAS (pendukung FR-S1) | `sensing/hujan_gpm_imerg.py` (`late_jam`), `sensing/hujan_imerg_das.py` | `test_sensing_sumber.py::test_imerg_setengah_jam_*`, `test_imerg_das_*` |
+| Episode nyata T−0 sembarang, prakiraan persistensi, muka air tertunda (tanpa intip masa depan) | `simulation/episode.bangun_episode_hujan_nyata`, `prakiraan_persistensi` | `test_uji_balik.py::test_prakiraan_persistensi_*`, `test_muka_air_tertunda_*`, `test_akumulasi_tidak_bergantung_menit_t0` |
+| Uji balik, kepekaan bias, AUC dengan selang (pendukung FR-E4) | `simulation/uji_balik.py`, `simulation/realisme_generator.py` | `test_uji_balik.py`, `test_realisme_generator.py` |
+| Tampilan evaluasi nyata (pendukung FR-A, NFR-2 label) | `simulation/ringkasan_nyata.py`, `GET /data/evaluasi-nyata`, `EvaluasiNyata.jsx` | `test_api.py::test_evaluasi_nyata_*`, `konsol.test.jsx::evaluasi data nyata` |
+| Pemuatan ulang sumber manual tanpa baris basi | `sensing/standar.simpan_olahan(ganti=True)`, `db/repositori.hapus_muka_air_umum`, `hapus_seri_episode` | `test_sensing_sumber.py::test_simpan_olahan_ganti_*`, `test_db_model.py::test_hapus_*`, `test_simulasi.py::test_episode_dibangun_ulang_*` |
