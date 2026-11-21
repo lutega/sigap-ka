@@ -126,13 +126,16 @@ def simpan_mentah(nama_sumber: str, isi: Any, ekstensi: str = "json",
     return path
 
 
-def simpan_olahan(nama_file: str, df: pd.DataFrame, kunci: list[str] | None = None) -> Path:
+def simpan_olahan(nama_file: str, df: pd.DataFrame, kunci: list[str] | None = None,
+                  ganti: bool = False) -> Path:
     """Menyimpan tabel olahan ke data/processed/<nama_file>.csv, digabung dengan isi lama.
 
     Parameter:
         nama_file: nama tanpa ekstensi.
         df: tabel baru.
         kunci: kolom kunci untuk membuang duplikat (baris baru menang).
+        ganti: True untuk sumber manual yang berkasnya utuh (isi lama dibuang, bukan digabung),
+            agar koreksi/penghapusan baris di berkas manual ikut terbawa.
     Kembali:
         Path berkas CSV.
     """
@@ -140,7 +143,7 @@ def simpan_olahan(nama_file: str, df: pd.DataFrame, kunci: list[str] | None = No
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / f"{nama_file}.csv"
     gabung = df
-    if path.exists() and kunci:
+    if path.exists() and kunci and not ganti:
         lama = baca_olahan(nama_file)
         gabung = pd.concat([lama, df], ignore_index=True)
         gabung = gabung.drop_duplicates(subset=kunci, keep="last")

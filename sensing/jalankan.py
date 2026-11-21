@@ -123,19 +123,19 @@ def ambil_manual() -> dict[str, pd.DataFrame]:
     """Memproses berkas manual (Glapan, katalog kejadian, jadwal KA) ke data/processed."""
     hasil = {}
     glapan, _ = muka_air_glapan.jalankan()
-    simpan_olahan("muka_air_glapan", glapan, ["waktu", "lokasi", "sumber"])
+    simpan_olahan("muka_air_glapan", glapan, ["waktu", "lokasi", "sumber"], ganti=True)
     catat_log("glapan_bnpb", "sukses", glapan["waktu"].min(), glapan["waktu"].max(),
               "data/manual/muka_air_glapan.csv", len(glapan))
     hasil["muka_air_glapan"] = glapan
 
     m, catatan = modul_kejadian()
     kej = m.jalankan()
-    simpan_olahan("kejadian", kej, ["id"])
+    simpan_olahan("kejadian", kej, ["id"], ganti=True)
     catat_log(m.NAMA_SUMBER, "sukses", tautan="data/manual", jumlah_baris=len(kej), pesan=catatan)
     hasil["kejadian"] = kej
 
     jad = jadwal_ka.jalankan()
-    simpan_olahan("jadwal_ka", jad, ["nomor"])
+    simpan_olahan("jadwal_ka", jad, ["nomor"], ganti=True)
     catat_log("jadwal_ka", "sukses" if not jad["is_simulated"].any() else "cadangan",
               jumlah_baris=len(jad), pesan="placeholder dummy" if jad["is_simulated"].any() else None)
     hasil["jadwal_ka"] = jad

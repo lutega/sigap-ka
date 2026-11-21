@@ -241,12 +241,12 @@ def test_bmkg_peringatan_disaring_menurut_wilayah():
 # ---------------------------------------------------------------- muka air dan data bersurat
 
 def test_glapan_titik_nyata_dari_csv_manual():
-    """CSV manual Glapan berisi titik nyata 1970 (24 Jan 2025) berlabel nyata."""
+    """CSV manual Glapan berisi titik nyata 1970 (25 Jan 2025 00.00 WIB, rilis BNPB) berlabel nyata."""
     df, _ = muka_air_glapan.jalankan()
     _cek_kontrak(df, simulasi=False)
-    baris = df[df["waktu"].dt.date == date(2025, 1, 24)].iloc[0]
-    assert baris["nilai"] == 1970
-    assert not baris["jam_diketahui"]
+    baris = df[df["waktu"].dt.date == date(2025, 1, 25)].iloc[0]
+    assert baris["nilai"] == 1970 and baris["waktu"].hour == 0
+    assert baris["jam_diketahui"] and "bnpb.go.id" in baris["tautan"]
 
 
 @pytest.mark.parametrize("mod", [muka_air_bbws, hujan_bmkg_stasiun])
@@ -279,3 +279,20 @@ def test_jadwal_nyata_dari_csv(tmp_path):
     p.write_text("nomor,relasi,jam_lewat_gubug,sumber\n101,A - B,08:15,uji\n", encoding="utf-8")
     df = jadwal_ka.jalankan(p)
     _cek_kontrak(df, simulasi=False)
+
+
+def test_simpan_olahan_ganti_untuk_sumber_manual(tmp_path, monkeypatch):
+    """Sumber manual (ganti=True) membuang baris lama; sumber unduhan menggabung dengan isi lama."""
+    from config import reset_cache
+    from sensing.standar import baca_olahan, simpan_olahan
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
+    reset_cache()
+    lama = pd.DataFrame({"waktu": pd.to_datetime(["2025-01-24 23:00"]), "lokasi": ["glapan"], "sumber": ["x"], "nilai": [1.0]})
+    baru = pd.DataFrame({"waktu": pd.to_datetime(["2025-01-25 00:00"]), "lokasi": ["glapan"], "sumber": ["x"], "nilai": [2.0]})
+    kunci = ["waktu", "lokasi", "sumber"]
+    simpan_olahan("uji", lama, kunci)
+    simpan_olahan("uji", baru, kunci)
+    assert len(baca_olahan("uji")) == 2
+    simpan_olahan("uji", baru, kunci, ganti=True)
+    assert baca_olahan("uji")["nilai"].tolist() == [2.0]
+    reset_cache()

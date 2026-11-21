@@ -4,10 +4,10 @@ Tujuan      : Membaca elevasi muka air Bendung Glapan dari rilis BNPB (bukti hul
 Lapis       : S (Sensing), data inti (sebagian nyata).
 Sumber      : Rilis BNPB, dicatat manual di data/manual/muka_air_glapan.csv (kolom waktu,
               jam_diketahui, nilai, satuan, sumber, catatan). Saat ini satu titik nyata:
-              1970 pada 24 Jan 2025 (ambang Awas 1905).
+              1970 pada 25 Jan 2025 00.00 WIB (ambang Awas 1905), tautan rilis dicatat.
 Masukan     : Berkas CSV manual.
 Keluaran    : Tabel standar (lokasi = 'glapan', is_simulated = False).
-Keterbatasan: Hanya satu titik; jam pembacaan tidak diketahui sehingga diletakkan di akhir hari
+Keterbatasan: Hanya satu titik. Bila jam pembacaan tidak diketahui (jam_diketahui false), titik diletakkan di akhir hari
               agar tidak dipakai model sebelum waktunya. Satuan mengikuti rilis (A-007).
 """
 

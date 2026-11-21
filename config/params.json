@@ -10,7 +10,8 @@
 
   "_nyata": {
     "keterangan": "Angka nyata dari dokumen proyek (deck Overview/Update 5 Nov 2026). Tidak boleh diubah tanpa sumber baru.",
-    "glapan_24jan2025": {"nilai": 1970, "sumber": "rilis BNPB, dikutip spesifikasi 8.2"},
+    "glapan_24jan2025": {"nilai": 1970, "sumber": "rilis BNPB, dikutip spesifikasi 8.2", "waktu": "2025-01-25T00:00",
+                         "tautan": "https://bnpb.go.id/berita/update-banjir-grobogan-jalur-rel-gubug-karangjati-kembali-amblas"},
     "glapan_ambang_awas": {"nilai": 1905, "sumber": "rilis BNPB, dikutip spesifikasi 8.2"},
     "glapan_model_sintetis_lama_24jan2025": {"nilai": 1768, "sumber": "model sintetis versi lama, spesifikasi 6"},
     "refund_pekalongan": {"nilai_juta": 3500, "perjalanan_batal": 124, "sumber": "jangkar biaya, spesifikasi 8.4"}

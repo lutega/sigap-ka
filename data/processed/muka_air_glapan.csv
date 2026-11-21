@@ -1,2 +1,2 @@
 waktu,lokasi,nilai,satuan,sumber,is_simulated,jam_diketahui,tautan,catatan,kualitas
-2025-01-24 23:00:00,glapan,1970,cm (asumsi),glapan_bnpb,False,False,Rilis BNPB dikutip deck Overview SIGAP-KA (tautan belum dicatat),Jam pembacaan tidak diketahui; diletakkan pukul 23.00 agar tidak dipakai sebelum waktunya. Ambang Awas 1905.,baik
+2025-01-25 00:00:00,glapan,1970,cm (asumsi),glapan_bnpb,False,True,https://bnpb.go.id/berita/update-banjir-grobogan-jalur-rel-gubug-karangjati-kembali-amblas,"Rilis BNPB: elevasi Bendung Glapan 1970 pada 25/1/2025 00.00 WIB, ambang Awas 1905, status awas. Sebelumnya dicatat 24/1 23.00 tanpa jam (dari deck Overview).",baik

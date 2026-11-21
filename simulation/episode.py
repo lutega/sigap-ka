@@ -151,7 +151,7 @@ def bangun_episode_nyata(params: ParamsAktif | None = None, hujan_harian: pd.Dat
         prakiraan=pk, muka_air=muka_air, laporan=pd.DataFrame(columns=KOLOM_LAPORAN),
         kebenaran={"terganggu": None, "mekanisme": None, "skenario_lama_tutup": None},
         is_simulated=False, status_hasil=konf["hasil"],
-        keterangan=(f"Hujan nyata dari {sumber_hujan}; titik Glapan nyata (1970, jam tidak diketahui); "
+        keterangan=(f"Hujan nyata dari {sumber_hujan}; titik Glapan nyata (1970 pada 25/1 00.00 WIB, rilis BNPB); "
                     "prakiraan dan muka air per jam sintetis berlabel. " + konf["status_t0"]),
         preset=params.preset,
     )
