@@ -404,3 +404,39 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 - Verifikasi kotak sel DAS dengan poligon BBWS.
 - Pemeriksaan visual bagian evaluasi di dasbor.
 - Pemeriksaan visual (Chrome headless, API di atas cadangan SQLite) untuk bagian *Evaluasi pada data nyata*: tampilan terang, gelap, dan ponsel 390 px dirender benar (grafik AUC dengan selang, tabel, tanpa gulir horizontal halaman). Perbaikan kecil: judul kolom "p T‑24/T‑0" memakai tanda hubung tak terputus.
+
+---
+
+## Rekap akhir sesi perbaikan 22 Nov 2026
+
+**Selesai (semua sudah di-commit dan di-push):**
+1. Katalog kejadian kandidat K01–K09 dari berita publik.
+2. Jam Glapan dari rilis BNPB.
+3. T−0 22.25 untuk episode 24 Jan 2025.
+4. Uji balik pada hujan nyata, dengan kepekaan bias dan pemindaian harian beserta AUC dan selang 95%.
+5. Realisme generator.
+6. IMERG Late per jam.
+7. Rerata 9 sel DAS Tuntang.
+8. Muka air sintetis tertunda (koreksi uji balik yang terlalu optimistis).
+9. Bagian *Evaluasi pada data nyata* di dasbor, sudah diperiksa visual secara headless.
+10. Dua bug T−0 bermenit dan pemuatan ulang data manual.
+11. Pembaruan dokumen: asumsi A-055–A-064, `uji-balik.md`, `kejadian-kandidat.md`, naskah demo, dan keterlacakan.
+
+**Perlu respons tim:**
+1. Verifikasi K01–K09 (tanggal, jam, mekanisme) dan pemetaannya ke E1–E6. Konfirmasi juga T−0 22.25 untuk 24 Jan 2025 (A-014).
+2. Pilih arah kalibrasi (A-061): (a) kalibrasi keluaran model dengan label nyata, atau (b) parameterisasi ulang generator ke skala hujan IMERG lalu latih ulang dan ulangi simulasi.
+3. Data pos hujan dan TMA telemetri BBWS. Uji balik menunjukkan informasi waktu nyata adalah batas utama.
+4. Verifikasi kotak sel DAS Tuntang terhadap poligon DAS BBWS (A-063). Prioritasnya rendah karena pengaruhnya kecil.
+5. Butir lama yang masih terbuka:
+   - nama dan batas waktu T6–T8;
+   - C/L/P dan biaya keterlambatan dari praktisi KAI;
+   - definisi kebijakan pembanding (A-035) dan label (A-032);
+   - hak operator/admin (A-039);
+   - jaringan Docker Desktop;
+   - regenerasi token Earthdata (opsional).
+
+**Terhambat atau dilewati:**
+- **Berita tidak terbaca otomatis.** Beberapa halaman gagal dibuka (paywall, 403, atau koneksi ditolak: antaranews, bisnis.com, tempo, mediaindonesia, suaramerdeka, voi.id). Tautannya dicatat di `sumber_belum_dibaca` dan tidak dipakai sebagai dasar fakta.
+- **Hari "lain" berpeluang tinggi tidak bisa dipastikan.** Contohnya 24–28 Okt 2025 dan 11–16 Mar 2024. Tidak ditemukan berita gangguan di koridor, sehingga belum diketahui apakah itu alarm palsu atau gangguan yang tidak diberitakan.
+- **Data BMKG harian tetap tidak tersedia** (hanya bulanan). Akibatnya IMERG di koridor belum dikoreksi bias.
+- **Parameter generator tidak diubah**, karena itu keputusan tim.
