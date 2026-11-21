@@ -57,3 +57,12 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | --- | --- | --- | --- |
 | A-028 | Kurva pemicu: peluang antarprakiraan (tiap 6 jam) dimodelkan martingale Beta(k·p, k·(1−p)) dengan k = 12 (dummy). Bertindak satu langkah lebih awal 2% lebih murah, sehingga di batas waktu biaya = C (pola Regnier & Harr 2006; tanpa diskon ini menunggu hampir selalu menang). L efektif = L × faktor lama tutup saat ini dan dianggap tetap untuk sisa horizon. Tindakan diasumsikan mencegah seluruh L bila dijalankan sebelum batas waktunya. | Bentuk kurva dan status | terbuka |
 | A-029 | Status "Terlambat" berlaku bila jam keputusan sudah melewati batas waktu siap tanpa persetujuan; tepat pada batas waktu tindakan masih dapat diputuskan. | Papan tindakan | konvensi |
+
+## Tahap 5 · Aksi
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-030 | Penjaga klaim sengaja ketat: kata utuh "aman" atau "safe" dalam keluaran apa pun ditolak, termasuk dalam negasi ("tidak aman"), karena status jalur hanya ditetapkan KAI. Teks sistem ditulis tanpa kata tersebut; kata turunan seperti "keamanan" diperbolehkan. | Seluruh keluaran | konvensi |
+| A-031 | Keputusan operator diikat ke jam episode (jam sebelum T−0). Persetujuan membekukan status tindakan; "batalkan" menghapus efek persetujuan (dianggap tidak dijalankan). Persetujuan pada jam yang batas waktunya lewat ditolak. | Log dan ringkasan | konvensi |
+| A-032 | Label ringkasan T−0: sia-sia = dijalankan tanpa gangguan; terlambat = gangguan terjadi tanpa tindakan sampai batas waktu; terlalu awal = dijalankan (dan gangguan terjadi) lebih awal daripada saran SIGAP; tepat = selainnya. | Ringkasan dan demo | terbuka |
+| A-033 | Peringatan maladaptasi: memutar via Gundih diberi peringatan bila hujan 24 jam Gundih ≥ 50 mm (kategori lebat BMKG); bus pengganti bila ada laporan jalan Semarang–Purwodadi putus. Pada NASA POWER, Gundih satu sel grid dengan koridor sehingga peringatan Gundih cenderung ikut hujan lokal. | Papan tindakan | terbuka |

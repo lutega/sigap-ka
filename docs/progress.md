@@ -118,3 +118,26 @@ hambatan; keputusan yang perlu diambil manusia; hasil tes.
 **Keputusan manusia:** tidak ada.
 
 **Hasil tes:** `pytest tests/test_gating.py` → 21 lulus (termasuk pembanding integral Beta kontinu dan uji resolusi grid).
+
+---
+
+## Tahap 5 · action/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `action/papan_tindakan.py`: papan 9 tindakan per jam keputusan (status, peluang, ambang kurva, selisih, sisa jam, alasan singkat dengan bukti utama, peringatan maladaptasi Gundih dan jalan putus, label parameter dummy, catatan kewenangan KAI).
+- `action/log_keputusan.py`: catat Setujui/Tolak/Batalkan dengan waktu, status SIGAP, peluang, nilai kurva, username, mode normal/demo; validasi; tindakan berlaku disetujui tanpa intip keputusan masa depan; hapus log demo per sesi.
+- `action/ringkasan.py`: biaya keputusan operator vs saran SIGAP di T−0, label terlalu awal/terlambat/sia-sia/tepat; dua kemungkinan hasil bila episode belum terkonfirmasi.
+- `action/penjaga_klaim.py`: menolak kata utuh "aman"/"safe" di seluruh keluaran (FR-A5).
+- `gating/status.langkah_putuskan` dan `gating/cost_loss.biaya_rencana`: satu logika SIGAP dan satu rumus biaya untuk papan, ringkasan, dan simulasi.
+
+**Berkas berubah:** `action/*`, `gating/status.py`, `gating/cost_loss.py`, `inference/fitur.py` (hujan Gundih), `config/params.json` (blok maladaptasi), `tests/test_aksi.py`.
+
+**Data masih dummy:** ambang hujan Gundih, seluruh biaya.
+
+**Asumsi baru:** A-030 s.d. A-033.
+
+**Hambatan:** tidak ada.
+
+**Keputusan manusia:** konfirmasi definisi label ringkasan (A-032).
+
+**Hasil tes:** `pytest` → 135 lulus.

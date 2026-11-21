@@ -234,6 +234,12 @@
     }
   },
 
+  "maladaptasi": {
+    "status": "dummy",
+    "ambang_hujan_gundih_24j_mm": 50,
+    "keterangan": "Peringatan sebelum usulan memutar via Gundih bila hujan 24 jam di Gundih >= ambang (kategori lebat BMKG); usulan bus diberi peringatan bila jalan Semarang-Purwodadi dilaporkan putus (spesifikasi 12.4)."
+  },
+
   "kualitas": {
     "status": "dummy",
     "hujan_harian_maks_mm": 500,

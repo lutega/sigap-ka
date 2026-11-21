@@ -52,6 +52,22 @@ def biaya_aktual(bertindak: bool, terganggu: bool, C: float, L: float, P: float)
     return L if terganggu else 0.0
 
 
+def biaya_rencana(C: float, L: float, P: float, langkah_bertindak: int | None, langkah_batas: int,
+                  terganggu: bool, diskon: float) -> float:
+    """Biaya aktual satu tindakan dalam satu episode (FR-E2) dengan diskon waktu bertindak.
+
+    Parameter:
+        langkah_bertindak: langkah saat tindakan dijalankan (None = tidak dijalankan).
+        langkah_batas: langkah batas waktu siap tindakan.
+        L: kerugian aktual (sudah dikali faktor skenario lama tutup yang terjadi).
+    Kembali:
+        Biaya (juta rupiah). Tindakan sesudah batas waktu dianggap tidak dijalankan.
+    """
+    bertindak = langkah_bertindak is not None and langkah_bertindak <= langkah_batas
+    C_k = biaya_tindakan_pada_langkah(C, langkah_batas - langkah_bertindak, diskon) if bertindak else C
+    return biaya_aktual(bertindak, terganggu, C_k, L, P)
+
+
 def biaya_tindakan_pada_langkah(C: float, langkah_sebelum_batas: int, diskon: float) -> float:
     """Biaya tindakan bila dijalankan sejumlah langkah sebelum batas waktu: C (1 - diskon)^langkah.
 

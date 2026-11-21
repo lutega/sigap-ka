@@ -62,6 +62,28 @@ def ambang_pada_jam(tindakan: Tindakan, jam_sebelum_t0: int, params: ParamsAktif
                            g.konsentrasi_beta, g.diskon_biaya_awal_per_langkah, g.jumlah_grid_peluang)
 
 
+def langkah_putuskan(tindakan: Tindakan, peluang_per_langkah, faktor_L_per_langkah=None,
+                     params: ParamsAktif | None = None) -> int | None:
+    """Langkah keputusan pertama ketika SIGAP menyarankan 'Putuskan sekarang' (p >= kurva).
+
+    Dipakai papan, ringkasan T-0, dan kebijakan SIGAP di simulasi agar logikanya satu.
+    Parameter:
+        peluang_per_langkah: peluang gangguan per langkah keputusan (indeks 0 = T-horizon).
+        faktor_L_per_langkah: faktor L efektif per langkah (bawaan 1.0).
+    Kembali:
+        Indeks langkah, atau None bila tidak pernah sampai batas waktu siap.
+    """
+    params = params or muat_params()
+    ep = params.episode
+    batas = ep.langkah_dari_jam(tindakan.param.waktu_siap_jam)
+    for k in range(batas + 1):
+        f = 1.0 if faktor_L_per_langkah is None else float(faktor_L_per_langkah[k])
+        a = ambang_pada_jam(tindakan, ep.jam_sebelum_t0(k), params, f)
+        if peluang_per_langkah[k] >= a:
+            return k
+    return None
+
+
 def tentukan_status(tindakan: Tindakan, peluang: float, jam_sebelum_t0: int,
                     params: ParamsAktif | None = None, faktor_L: float = 1.0,
                     disetujui: bool = False) -> StatusTindakan:

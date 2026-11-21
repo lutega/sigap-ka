@@ -64,7 +64,7 @@ class IndeksEpisode:
         self.params = params or muat_params()
         self.t0 = episode.t0
         lat = self.params.inferensi["latensi_jam"]
-        self.hujan = {lok: self._seri_hujan(episode.hujan, lok, lat) for lok in ("lokal", "hulu")}
+        self.hujan = {lok: self._seri_hujan(episode.hujan, lok, lat) for lok in ("lokal", "hulu", "gundih")}
         self.prakiraan = {lok: self._seri_prakiraan(episode.prakiraan, lok) for lok in ("lokal", "hulu")}
         ma = episode.muka_air
         ma = ma[ma["lokasi"] == "glapan"] if len(ma) else ma
@@ -127,6 +127,10 @@ class IndeksEpisode:
         sebelum = jam <= jam[-1] - 6
         tren = terakhir - nilai[sebelum][-1] if sebelum.any() else 0.0
         return float(terakhir), float(tren)
+
+    def hujan_24j(self, lokasi: str, t: float) -> float:
+        """Akumulasi hujan 24 jam terakhir yang tersedia di lokasi (dipakai cek maladaptasi Gundih)."""
+        return self.hujan[lokasi].akumulasi(t, 24)
 
     def ada_laporan_air(self, t: float) -> bool:
         """True bila laporan air di badan rel sudah masuk sebelum/pada t."""
