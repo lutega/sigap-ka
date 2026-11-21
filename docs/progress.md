@@ -182,3 +182,24 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Keputusan manusia:** biaya keterlambatan tiap tindakan (penentu utama nilai SIGAP); akses IMERG/BBWS untuk bukti hulu; konfirmasi definisi kebijakan (A-035).
 
 **Hasil tes:** `pytest` → 150 lulus.
+
+---
+
+## Tahap 7 · api/ + auth/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `auth/`: hash bcrypt, token JWT, layanan pengguna (akun awal admin dari .env bila tabel kosong, tambah, nonaktifkan, ubah level, atur ulang password, penjaga admin aktif terakhir), dependensi `pengguna_aktif` dan `wajib_admin`.
+- `api/`: `main.py` (lifespan: skema + akun awal, CORS, penahan klaim, `/kesehatan`, penyaji dashboard), `deps.py` (konteks, cache episode dan estimator, pembersih JSON + penjaga klaim, validasi jam), `schemas.py`, router `auth`, `pengguna`, `data`, `prediksi` (episode, detail terpotong, prediksi, lintasan), `kurva` (tindakan, kurva, hitung ulang slider), `tindakan` (papan, keputusan, log, ringkasan), `simulasi` (tugas latar belakang).
+- Uji asap server nyata (uvicorn port 8765) terhadap TimescaleDB: login admin, daftar 7 episode, papan episode nyata dan cadangan, status sumber.
+
+**Berkas berubah:** `api/*`, `auth/*`, `tests/test_api.py`, `README.md`, `.env.example` (API_PORT).
+
+**Data masih dummy:** sama dengan tahap sebelumnya.
+
+**Asumsi baru:** A-038 s.d. A-040.
+
+**Hambatan:** port 8000 terpakai proses lain di mesin ini; API memakai port 8765.
+
+**Keputusan manusia:** konfirmasi pembagian hak operator/admin (A-039).
+
+**Hasil tes:** `pytest tests/test_api.py` → 27 lulus (seluruh endpoint 14.2, 401/403, bcrypt, keputusan dengan username, simulasi latar, tanpa klaim jalur aman).

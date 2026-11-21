@@ -75,3 +75,11 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-035 | Definisi operasional kebijakan: jam tetap = diputuskan sekali pada T−24 (atau di batas waktu bila lebih awal) dengan ambang statis; reaktif = bertindak setelah laporan air di badan rel; informasi sempurna = bertindak paling awal hanya bila gangguan terjadi. Semua kebijakan memakai peluang lapis I yang sama pada jam yang sama. | Perbandingan kebijakan | terbuka |
 | A-036 | Konsentrasi Beta kurva pemicu dikalibrasi ulang dari 12 menjadi 7 berdasarkan lintasan peluang lapis I (k = rerata p(1−p) / rerata Δp² − 1 = 7,06 pada 300 episode sintetis base). Menggantikan nilai k di A-028. | Kurva pemicu | konvensi |
 | A-037 | Pembanding RQ1: aturan hujan lokal = hujan lokal 3 hari teramati + prakiraan lokal sampai T−0 ≥ 100 mm; indeks adaptasi H-MHEWS = maks(kategori hujan BMKG dari hujan 24 jam/prakiraan, level 3 bila Glapan ≥ Awas), alarm bila ≥ 2. Alarm pada T−0 tidak dihitung (lead time nol). | Metrik deteksi | terbuka |
+
+## Tahap 7 · API dan auth
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-038 | Parameter `jam` di API dinyatakan sebagai jam sebelum T−0 (mis. 24 = T−24) dan harus kelipatan interval keputusan. Endpoint detail dan lintasan episode memotong data pada jam yang diminta. | Kontrak API | konvensi |
+| A-039 | Operator dan admin sama-sama boleh mencatat keputusan; log normal dibagi per episode (bukan per pengguna), log demo per sesi. Simulasi, kelola pengguna, dan reset demo khusus admin. Hitung ulang kurva dengan slider boleh untuk semua pengguna karena tidak mengubah params.json. | Otorisasi | terbuka |
+| A-040 | Token JWT HS256 berlaku 480 menit; status aktif pengguna diperiksa ulang tiap permintaan sehingga pengguna yang dinonaktifkan langsung tertolak. | Keamanan prototipe | konvensi |

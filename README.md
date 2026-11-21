@@ -58,6 +58,21 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 Hasil disimpan di `data/processed/simulasi/` (CSV biaya per episode dan JSON ringkasan) serta tabel
 `hasil_simulasi` dan `simulasi_run`. Seed yang sama memberi hasil yang sama.
 
+## API (FastAPI)
+
+```bash
+.venv/Scripts/python -m uvicorn api.main:app --host 127.0.0.1 --port 8765
+```
+
+- Dokumentasi interaktif: http://127.0.0.1:8765/docs
+- Login awal: `admin` / `admin` (dari `ADMIN_USER`/`ADMIN_PASSWORD`; ganti di luar demo, begitu juga
+  `JWT_SECRET`). Admin dapat menambah operator lewat `/pengguna` atau dashboard.
+- Semua endpoint selain `/auth/login` dan `/kesehatan` butuh header `Authorization: Bearer <token>`;
+  `/pengguna`, `POST /simulasi`, dan reset demo khusus admin.
+- Port 8765 dipakai karena port 8000 di mesin pengembang sudah terpakai proses lain.
+- Permintaan pertama per preset melatih model lapis I (sekitar 5 detik); episode dimuat sekali lalu
+  disimpan di memori.
+
 ## Menjalankan tes
 
 ```bash
