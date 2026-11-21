@@ -60,7 +60,7 @@ def engine_pg():
     from config import muat_pengaturan
     from db.inisialisasi import hapus_semua, inisialisasi
     from db.koneksi import buat_engine
-    eng = buat_engine(muat_pengaturan().database_url_test)
+    eng = buat_engine(muat_pengaturan().database_url_test, tanpa_pool=True)
     try:
         with eng.connect() as kon:
             kon.execute(text("SELECT 1"))

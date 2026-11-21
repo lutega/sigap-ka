@@ -93,11 +93,25 @@ sintetis jauh di bawah nilai nyata 1970. Bukti hulu butuh IMERG/GSMaP atau data 
 - *Apakah model memakai data masa depan?* Tidak. Fitur dihitung hanya dari data yang tersedia pada
   jam keputusan (latensi tiap sumber dihormati) dan diuji otomatis.
 
-## 6. Bila ada gangguan saat presentasi
+## 6. Cadangan tanpa Docker
+
+Di mesin pengembang, jaringan Docker Desktop (localhost:5432) sempat lambat (0,3–0,7 detik per
+perintah, 2–3 detik per koneksi) dan sesekali memutus koneksi. Siapkan cadangan SQLite sebelum hari H:
+
+```bash
+.venv/Scripts/python -m simulation.cadangan_sqlite        # sekitar 1 menit, berkas data/demo_cadangan.sqlite
+DATABASE_URL=sqlite:///data/demo_cadangan.sqlite .venv/Scripts/python -m uvicorn api.main:app --host 127.0.0.1 --port 8765
+```
+
+Isi cadangan sama (data nyata olahan, tujuh episode demo, hasil simulasi tiga preset); demo 12 langkah
+selesai dalam kurang dari 1 detik. Sebutkan bahwa basis data utama sistem tetap PostgreSQL +
+TimescaleDB; SQLite hanya cadangan presentasi.
+
+## 7. Bila ada gangguan saat presentasi
 
 | Gejala | Tindakan |
 | --- | --- |
 | Konsol tidak bisa login | Periksa server uvicorn berjalan; database baru otomatis membuat admin/admin |
 | Episode tidak muncul | Jalankan `python -m simulation.episode muat` |
-| Database tidak terjangkau | `docker compose up -d`, tunggu status healthy |
+| Database tidak terjangkau atau sangat lambat | `docker compose up -d`; bila tetap bermasalah, pakai cadangan SQLite (bagian 6) |
 | Hasil skenario cadangan berbeda | `python -m simulation.skenario_cadangan --periksa`; bila params sengaja diubah, bangun ulang cuplikan |

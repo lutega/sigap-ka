@@ -28,14 +28,15 @@ from db.koneksi import buat_engine
 DIR_DASHBOARD = AKAR_REPO / "dashboard" / "dist"
 
 
-def buat_aplikasi(database_url: str | None = None, siapkan_db: bool = True) -> FastAPI:
+def buat_aplikasi(database_url: str | None = None, siapkan_db: bool = True, tanpa_pool: bool = False) -> FastAPI:
     """Membuat aplikasi FastAPI.
 
     Parameter:
         database_url: URL database (bawaan DATABASE_URL); 'sqlite://' untuk tes.
         siapkan_db: buat skema dan akun awal admin saat start.
+        tanpa_pool: koneksi baru per permintaan (tes integrasi di Docker Desktop Windows).
     """
-    engine = buat_engine(database_url)
+    engine = buat_engine(database_url, tanpa_pool=tanpa_pool)
 
     @asynccontextmanager
     async def siklus(app: FastAPI):

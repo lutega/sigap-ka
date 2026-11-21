@@ -249,3 +249,45 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Keputusan manusia:** tidak ada.
 
 **Hasil tes:** `pytest tests/test_demo.py` → 7 lulus (alur lengkap offline, tanpa intip masa depan, reset terbatas, hak akses, episode nyata, keterulangan cuplikan); `npm test` → 7 lulus; build sukses.
+
+---
+
+## Tahap 10 · Uji menyeluruh, README, daftar asumsi (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `tests/test_alur_menyeluruh.py` (marker `db`): TimescaleDB uji → muat data olahan nyata → episode demo → API (data, prediksi, papan, keputusan) → demo sampai T−0 → reset; agregat akumulasi hujan nyata 24 Jan 2025 (1 hari 5,92 mm).
+- **Akar masalah tes yang menggantung ditemukan** (py-spy): ping pool SQLAlchemy menunggu tanpa batas pada koneksi "setengah terbuka" yang ditinggalkan penerus port Docker Desktop. Perbaikan: tes integrasi memakai koneksi baru per operasi (NullPool), pool API didaur ulang tiap 60 detik, batas waktu koneksi 10 detik.
+- Jalur localhost:5432 di mesin ini tetap lambat dan kadang putus (0,3–0,7 detik per perintah, 2–3 detik per koneksi; restart kontainer tidak membantu). Karena itu ditambahkan layanan `uji` di docker-compose untuk menjalankan pytest di dalam jaringan Docker, serta cadangan presentasi SQLite (`python -m simulation.cadangan_sqlite`).
+- Uji asap server nyata dengan cadangan SQLite: konsol tersaji di `/`, 8 permintaan paralel berhasil, demo 12 langkah 0,3 detik.
+- `docs/keterlacakan.md` (FR/NFR → modul → tes), README lengkap (mulai cepat, konfigurasi, status data, batas klaim, struktur), naskah demo diperbarui, komentar pembuka di semua `__init__.py`.
+
+**Hasil tes**
+- Di dalam jaringan Docker (`docker compose --profile uji run --rm uji`): **190 lulus** (termasuk 8 tes integrasi TimescaleDB dan uji menyeluruh).
+- Di host tanpa database: `pytest -m "not db"` → 182 lulus. Dari host, tes `db` lulus pada sebagian putaran dan gagal pada putaran lain karena koneksi diputus jaringan Docker Desktop (bukan karena logika).
+- Konsol: `npm test` → 7 lulus; `npm run build` sukses; `export_dashboard.py` → 75/75 angka konsol = model (low/base/high).
+- Cakupan (tanpa tes db): total 90%; inference 99%, gating 97%, action 98%, simulation 84%.
+
+**Berkas berubah:** `db/koneksi.py`, `api/main.py`, `simulation/evaluasi.py` (pengaman pembagian nol), `simulation/cadangan_sqlite.py`, `docker-compose.yml` (layanan `uji`), `tests/conftest.py`, `tests/test_alur_menyeluruh.py`, `tests/test_demo.py`, `*/__init__.py`, `README.md`, `docs/keterlacakan.md`, `docs/naskah-demo.md`, `docs/asumsi.md`, `.gitignore`.
+
+**Asumsi baru:** A-046, A-047 (total A-001 s.d. A-047).
+
+---
+
+# Laporan akhir serah terima (tahap 0–10)
+
+**Yang selesai:** seluruh tahap rencana: kerangka dan konfigurasi, database TimescaleDB, 12 modul sumber data (dua sumber nyata berhasil diunduh), lapis I Bayesian dua mekanisme, lapis G kurva pemicu pemrograman dinamis, lapis A papan/log/ringkasan/penjaga klaim, simulasi enam kebijakan dengan metrik LOEO, REST API + JWT + kelola pengguna, konsol React lima tab, mode demo offline dengan skenario cadangan, uji menyeluruh, dan dokumentasi.
+
+**Data yang masih dummy:** semua parameter biaya (C, L, P), waktu siap, prior lapis I, generator episode sintetis, muka air sintetis, jadwal KA (placeholder), prakiraan dan muka air per jam episode nyata. Nyata: hujan harian NASA POWER 2024–2026, prakiraan BMKG terkini, titik Glapan 1970 (24 Jan 2025) dan ambang Awas 1905.
+
+**Temuan yang perlu diketahui tim**
+1. Keunggulan SIGAP atas cost-loss di batas waktu kecil (0–3% pada diskon menunggu dummy 2%), bukan 14% seperti deck lama; besarnya ditentukan biaya menunggu/keterlambatan tiap tindakan.
+2. NASA POWER tidak membedakan hujan hulu dari lokal (satu sel grid); pada episode nyata 24 Jan 2025 peluang model tetap rendah dan muka air sintetis 1734 vs nyata 1970.
+3. Pada skenario cadangan, peluang model turun menjelang T−0 walaupun gangguan terjadi; disajikan apa adanya.
+4. Jaringan Docker Desktop di laptop pengembang lambat dan kadang memutus koneksi; gunakan layanan `uji` untuk pengujian dan cadangan SQLite untuk presentasi bila perlu.
+
+**Keputusan yang perlu diambil manusia**
+- Nama dan batas waktu T6–T8; nilai C, L, P dan biaya keterlambatan dari praktisi KAI.
+- Akun Earthdata/JAXA (hujan hulu satelit) atau data BBWS; pengisian katalog E1–E6 dan jadwal KA nyata.
+- Konfirmasi definisi kebijakan "jam tetap 24 jam" dan "reaktif" (A-035), label ringkasan (A-032), hak operator/admin (A-039).
+- Pemeriksaan visual konsol di peramban (agen tidak memiliki alat peramban di sesi ini).
+- Pemeriksaan jaringan Docker Desktop (restart Docker Desktop, VPN/antivirus, mode jaringan WSL) sebelum presentasi.

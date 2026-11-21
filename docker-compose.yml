@@ -21,5 +21,22 @@ services:
       timeout: 5s
       retries: 20
 
+  # Menjalankan pytest di dalam jaringan Docker (tanpa penerus port host). Berguna di Windows bila
+  # koneksi localhost:5432 lambat atau terputus. Pakai: docker compose --profile uji run --rm uji
+  uji:
+    image: python:3.12-slim
+    profiles: ["uji"]
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sigap}:${POSTGRES_PASSWORD:-sigap}@db:5432/${POSTGRES_DB:-sigap}
+      DATABASE_URL_TEST: postgresql://${POSTGRES_USER:-sigap}:${POSTGRES_PASSWORD:-sigap}@db:5432/sigap_test
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "pip install -q --root-user-action=ignore -r requirements-dev.txt && python -m pytest -p no:cacheprovider -q"
+
 volumes:
   sigap_pgdata:

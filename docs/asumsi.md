@@ -98,3 +98,10 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-043 | Laju putar otomatis demo diatur klien (pewaktu memanggil `/demo/{id}/langkah` tiap kecepatan × 6 detik selama status server "berjalan"); server menyimpan jam berjalan sehingga hasil tidak bergantung jam dinding. Keputusan demo hanya diterima pada jam yang sedang diputar. | Mode demo | konvensi |
 | A-044 | Skenario cadangan presentasi = episode terganggu pertama dari 20 episode seed 2025 (bukan dipilih agar SIGAP tampak baik); cuplikan dibulatkan 6 desimal sebelum dihitung sidik SHA-256. | Keterulangan demo | konvensi |
 | A-045 | Sesi demo hanya dapat dikendalikan pembuatnya atau admin; reset khusus admin. | Hak akses demo | terbuka |
+
+## Tahap 10 · Uji menyeluruh
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-046 | Cadangan presentasi tanpa Docker memakai berkas SQLite (`python -m simulation.cadangan_sqlite`) dengan isi yang sama; hanya untuk demo bila jaringan Docker bermasalah, bukan pengganti TimescaleDB. | Ketahanan demo | konvensi |
+| A-047 | Pengujian integrasi yang andal di Windows dijalankan di dalam jaringan Docker (`docker compose --profile uji run --rm uji`), karena jalur localhost:5432 lewat penerus port Docker Desktop di mesin pengembang lambat dan sesekali memutus koneksi. | Prosedur uji | konvensi |

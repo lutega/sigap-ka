@@ -137,6 +137,32 @@ def test_episode_nyata_demo_dua_kemungkinan(klien):
     assert d["ringkasan"]["status_hasil"] == "belum terkonfirmasi" and len(d["ringkasan"]["skenario"]) == 2
 
 
+# ---------------------------------------------------------------- cadangan tanpa Docker
+
+def test_cadangan_sqlite_berkas_untuk_demo(tmp_path):
+    """Berkas SQLite cadangan memuat data nyata, episode demo, dan simulasi; API berjalan di atasnya."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    from api.main import buat_aplikasi
+    from simulation.cadangan_sqlite import bangun
+    berkas = tmp_path / "cadangan.sqlite"
+    hasil = bangun(berkas, n=5)
+    assert hasil["data"]["obs_hujan"] > 3000 and "DEMO-CADANGAN" in hasil["episode"] and len(hasil["simulasi"]) == 3
+    app = buat_aplikasi(f"sqlite:///{berkas.as_posix()}")
+    with TestClient(app) as c:
+        tok = c.post("/auth/login", json={"username": "admin", "password": "admin"}).json()["access_token"]
+        h = {"Authorization": f"Bearer {tok}"}
+        urls = ["/episode/DEMO-CADANGAN/papan?jam=36", "/episode/DEMO-CADANGAN/lintasan?sampai_jam=36",
+                "/simulasi", "/data/sumber", "/tindakan"]
+        with ThreadPoolExecutor(5) as ex:  # permintaan paralel seperti konsol
+            assert list(ex.map(lambda u: c.get(u, headers=h).status_code, urls)) == [200] * 5
+        sid = c.post("/demo/mulai", json={"episode_id": "DEMO-CADANGAN"}, headers=h).json()["sesi"]["id"]
+        for _ in range(12):
+            d = c.post(f"/demo/{sid}/langkah", headers=h).json()
+        assert d["sesi"]["status"] == "selesai" and d["ringkasan"] is not None
+    app.state.konteks.engine.dispose()
+
+
 # ---------------------------------------------------------------- skenario cadangan
 
 def test_skenario_cadangan_selalu_sama():

@@ -17,7 +17,7 @@ from typing import Iterator
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.pool import StaticPool
+from sqlalchemy.pool import NullPool, StaticPool
 
 from config import muat_pengaturan
 
@@ -37,26 +37,36 @@ def normalisasi_url(url: str) -> str:
     return url
 
 
-def buat_engine(url: str | None = None, echo: bool = False) -> Engine:
+def buat_engine(url: str | None = None, echo: bool = False, tanpa_pool: bool = False) -> Engine:
     """Membuat engine SQLAlchemy.
 
     Parameter:
         url: URL database; bila kosong memakai DATABASE_URL dari .env.
              'sqlite://' membuat database di memori yang dibagi satu koneksi.
         echo: cetak SQL (untuk debug).
+        tanpa_pool: buka koneksi baru untuk tiap pemakaian (NullPool). Dipakai tes integrasi
+             karena penerus port Docker Desktop di Windows dapat meninggalkan koneksi
+             "setengah terbuka" yang membuat ping pool menunggu tanpa batas.
     Kembali:
         Engine SQLAlchemy.
     """
     url = normalisasi_url(url or muat_pengaturan().database_url)
     if url.startswith("sqlite"):
-        return create_engine(
-            url,
-            echo=echo,
-            connect_args={"check_same_thread": False},
-            poolclass=StaticPool,  # satu koneksi agar database memori tetap hidup
-        )
-    # Batas waktu koneksi agar tes/API tidak menggantung bila database tidak menjawab.
-    return create_engine(url, echo=echo, pool_pre_ping=True, connect_args={"connect_timeout": 10})
+        if url in ("sqlite://", "sqlite:///:memory:"):
+            return create_engine(
+                url,
+                echo=echo,
+                connect_args={"check_same_thread": False},
+                poolclass=StaticPool,  # satu koneksi agar database memori tetap hidup
+            )
+        # berkas SQLite (cadangan demo): pool biasa agar permintaan paralel konsol aman
+        return create_engine(url, echo=echo, connect_args={"check_same_thread": False, "timeout": 30})
+    # Batas waktu koneksi agar tidak menggantung bila database tidak menjawab; koneksi pool didaur
+    # ulang tiap 60 detik agar koneksi lama yang mungkin sudah diputus penerus port tidak dipakai.
+    opsi = {"connect_args": {"connect_timeout": 10}}
+    if tanpa_pool:
+        return create_engine(url, echo=echo, poolclass=NullPool, **opsi)
+    return create_engine(url, echo=echo, pool_pre_ping=True, pool_recycle=60, **opsi)
 
 
 def adalah_postgres(engine: Engine) -> bool:

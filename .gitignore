@@ -10,3 +10,6 @@ data/raw/*
 htmlcov/
 dashboard/dist/
 *.egg-info/
+
+# basis data cadangan demo (dibangkitkan ulang dengan python -m simulation.cadangan_sqlite)
+*.sqlite

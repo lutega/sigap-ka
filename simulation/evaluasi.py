@@ -68,7 +68,8 @@ def ringkas(biaya: pd.DataFrame) -> dict:
     rerata = biaya.groupby("kebijakan")["biaya"].mean()
     pembanding = rerata.drop(["sigap", "informasi_sempurna"], errors="ignore")
     terbaik = pembanding.idxmin()
-    selisih = (rerata["sigap"] - rerata[terbaik]) / rerata[terbaik] * 100.0
+    dasar = rerata[terbaik]  # bisa 0 pada simulasi kecil tanpa gangguan
+    selisih = (rerata["sigap"] - dasar) / dasar * 100.0 if dasar > 0 else 0.0
     tab = biaya.pivot(index="episode_ke", columns="kebijakan", values="biaya")
     berpasangan = {}
     for k in pembanding.index:  # selisih berpasangan per episode: SIGAP - pembanding
