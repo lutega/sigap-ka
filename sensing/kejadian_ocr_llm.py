@@ -199,8 +199,7 @@ def ekstrak_semua(dokumen: list[dict], klien: KlienLLM | None = None) -> pd.Data
 def simpan_untuk_diperiksa(df: pd.DataFrame, path: Path | None = None) -> Path:
     """Menyimpan calon kejadian ke data/manual/kejadian_ocr_periksa.csv untuk diperiksa peneliti."""
     path = path or DIR_MANUAL / BERKAS_PERIKSA
-    df.to_csv(path, index=False, encoding="utf-8", lineterminator="
-")
+    df.to_csv(path, index=False, encoding="utf-8", lineterminator="\n")
     return path
 
 

@@ -47,8 +47,7 @@ def catat_log(sumber: str, status: str, rentang_mulai=None, rentang_selesai=None
     path = dir_olahan() / f"{BERKAS_LOG}.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     baris.to_csv(path, mode="a", header=not path.exists(), index=False, encoding="utf-8",
-                 lineterminator="
-")
+                 lineterminator="\n")
 
 
 def ambil_nasa_power(dari: date, sampai: date, daftar_lokasi=("lokal", "hulu", "gundih"),
