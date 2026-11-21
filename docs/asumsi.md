@@ -50,3 +50,10 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-025 | Fitur lapis I: hujan lokal 1/3/5 hari dan hulu 3 hari dihitung sebagai akumulasi yang berakhir pada data terakhir yang tersedia (memperhitungkan latensi sumber); prakiraan = jumlah prakiraan terbitan terakhir dari jam keputusan sampai T−0; muka air = pembacaan Glapan terakhir yang tersedia dikurangi ambang Awas, dan kenaikannya 6 jam. Bila tidak ada data muka air, dipakai elevasi dasar model sintetis. | Masukan model | konvensi |
 | A-026 | Model peluang: regresi logistik multinomial Bayesian (tidak/genangan/gerusan) dengan prior Gaussian, MAP dengan Newton, kovarians Laplace, prediktif Monte Carlo 200 sampel berseed tetap. Model bawaan dilatih pada 400 episode sintetis (seed latih terpisah dari SIM_SEED). Pada 200 episode uji sintetis: AUC sekitar 0,68 (T−72), 0,84 (T−24), 0,95 (T−0); kalibrasi mendekati diagonal. Angka ini sifat data sintetis, bukan kinerja nyata. | Kinerja lapis I | terbuka |
 | A-027 | Laporan petugas "air di badan rel" mengalikan odds gangguan dengan rasio kemungkinan 20 (dummy); porsi genangan:gerusan dipertahankan. | Pembaruan bukti | terbuka |
+
+## Tahap 4 · Gating
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-028 | Kurva pemicu: peluang antarprakiraan (tiap 6 jam) dimodelkan martingale Beta(k·p, k·(1−p)) dengan k = 12 (dummy). Bertindak satu langkah lebih awal 2% lebih murah, sehingga di batas waktu biaya = C (pola Regnier & Harr 2006; tanpa diskon ini menunggu hampir selalu menang). L efektif = L × faktor lama tutup saat ini dan dianggap tetap untuk sisa horizon. Tindakan diasumsikan mencegah seluruh L bila dijalankan sebelum batas waktunya. | Bentuk kurva dan status | terbuka |
+| A-029 | Status "Terlambat" berlaku bila jam keputusan sudah melewati batas waktu siap tanpa persetujuan; tepat pada batas waktu tindakan masih dapat diputuskan. | Papan tindakan | konvensi |

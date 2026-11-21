@@ -96,3 +96,25 @@ hambatan; keputusan yang perlu diambil manusia; hasil tes.
 **Keputusan manusia:** konfirmasi pilihan model (pertanyaan terbuka spesifikasi 7); prior dari ahli bila tersedia.
 
 **Hasil tes:** `pytest` → 94 lulus.
+
+---
+
+## Tahap 4 · gating/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `gating/cost_loss.py`: ambang (C + P) / (L + P), biaya harapan, L efektif, biaya aktual FR-E2, diskon biaya awal.
+- `gating/kurva_pemicu.py`: pemrograman dinamis mundur pada grid peluang 201 titik dengan matriks transisi Beta martingale (bias rerata 0,0001); ambang tepat (C + P) / (L + P) di batas waktu; `kurva_untuk_tindakan` dengan parameter pengganti untuk slider (FR-G4) tanpa mengubah params.json; cache ambang.
+- `gating/status.py`: Putuskan sekarang / Tunggu prakiraan berikutnya / Terlambat / Sudah disetujui.
+- Pola preset base (dummy): kurva T1 turun ke 0,5 paling awal (T−48), lalu ke 0,094 di T−36; T9 tidak pernah di bawah 0,73; tindakan lain turun dari sekitar 0,8–0,9 ke ambang statisnya.
+
+**Berkas berubah:** `gating/*`, `tests/test_gating.py`.
+
+**Data masih dummy:** k = 12, diskon 2%, seluruh C, L, P, waktu siap.
+
+**Asumsi baru:** A-028, A-029.
+
+**Hambatan:** tidak ada.
+
+**Keputusan manusia:** tidak ada.
+
+**Hasil tes:** `pytest tests/test_gating.py` → 21 lulus (termasuk pembanding integral Beta kontinu dan uji resolusi grid).
