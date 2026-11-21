@@ -75,13 +75,21 @@ Poin narasi:
 
 ## 4. Episode nyata 24 Januari 2025
 
-Pilih **Banjir malam 24 Januari 2025**. Hujan berasal dari GPM IMERG Late (nyata, sel 0,1° sehingga
+Pilih **Banjir malam 24 Januari 2025**. T−0 = 22.25 WIB, jam tutup sementara menurut berita yang
+mengutip KAI (kandidat K03, A-014). Hujan berasal dari GPM IMERG Late (nyata, sel 0,1° sehingga
 hulu terpisah dari lokal), sedangkan prakiraan dan muka air per jam sintetis (label "campuran"). Hasil
 episode belum terkonfirmasi, jadi ringkasan T−0 menampilkan dua kemungkinan. Yang terlihat: hujan
 lebat 19–20 Jan (lokal sekitar 61 mm, hulu sekitar 54 mm pada 20 Jan); peluang model sekitar 34–43%
 sampai T−30 lalu sekitar 23%; SIGAP menyarankan T1 (T−42), T6 (T−18), T2 dan T5 (T−6). Muka air
 sintetis berpuncak 1875, masih di bawah nilai nyata 1970: satu sel grid belum mewakili seluruh
 daerah tangkapan Tuntang, sehingga data BBWS tetap dibutuhkan.
+
+Lanjutkan ke tab **Data** → *Evaluasi pada data nyata*. Bagian ini memuat uji balik pada sembilan
+kejadian kandidat dari berita (2024–2026) dan pemindaian setiap hari. Yang perlu disampaikan:
+
+- Model membedakan hari kejadian dari hari lain lebih baik daripada acak (AUC sekitar 0,80).
+- Model belum lebih baik daripada hujan hulu mentah, dan peluang absolutnya rendah karena model
+  dilatih pada data sintetis yang lebih basah (`docs/uji-balik.md`).
 
 ## 5. Pertanyaan penguji yang mungkin muncul
 
@@ -90,6 +98,12 @@ daerah tangkapan Tuntang, sehingga data BBWS tetap dibutuhkan.
 - *Mengapa SIGAP hanya sedikit lebih murah dari cost-loss di batas waktu?* Keunggulannya bergantung
   pada biaya menunggu (diskon biaya awal). Dengan diskon dummy 2% per 6 jam, selisihnya 0–3%; pada
   5% sekitar 7%. Biaya keterlambatan nyata perlu digali dari praktisi KAI.
+- *Apakah sudah diuji pada kejadian nyata?*
+  - Sudah, sebagai uji balik pada sembilan kejadian kandidat dari berita, dengan hujan IMERG Late
+    yang tersedia pada jam keputusan.
+  - Kemampuan membedakan hari: AUC 0,80, selang 95% 0,68–0,91.
+  - Kalibrasi peluang dan perbandingan dengan hujan mentah menunjukkan bahwa label terverifikasi
+    serta pos hujan atau TMA waktu nyata masih dibutuhkan.
 - *Dari mana angka biaya?* Dummy (params.json, juta rupiah). Jangkar nyata satu-satunya: refund
   Pekalongan Rp3,5 miliar untuk 124 perjalanan.
 - *Apakah model memakai data masa depan?* Tidak. Fitur dihitung hanya dari data yang tersedia pada
