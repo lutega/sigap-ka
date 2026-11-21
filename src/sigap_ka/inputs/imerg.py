@@ -19,7 +19,8 @@ import pandas as pd
 
 from sigap_ka.inputs.base import path_data, tabel_kosong, validasi
 
-PETA_ZONA = {"lokal": "lokal_gubug_karangjati", "hulu": "hulu_tuntang", "gundih": "gundih"}
+PETA_ZONA = {"lokal": "lokal_gubug_karangjati", "hulu": "hulu_tuntang", "gundih": "gundih",
+             "semarang_pembanding": "semarang_pembanding"}  # sel stasiun BMKG Semarang (validasi saja)
 
 
 def ambil(path: Path | None = None) -> pd.DataFrame:

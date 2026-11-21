@@ -26,6 +26,7 @@ Aturan tetap: pada jam keputusan model hanya memakai data yang **sudah tersedia*
 | Muka air Bendung Glapan | rilis BNPB (manual) → BBWS (bersurat) → model sintetis | per jam (sintetis), elevasi (asumsi cm) | 2 jam (BNPB), 0 (sintetis) | nyata 1 titik (1970, 24 Jan 2025); seri per jam sintetis | fitur Glapan relatif dan tren |
 | Laporan petugas: air di badan rel | laporan lapangan (tabel `laporan_lapangan`) | kejadian bertanda waktu | 0 | hanya sintetis di episode generator | pembaruan peluang (rasio kemungkinan) |
 | Laporan jalan Semarang–Purwodadi putus | BPBD/BNPB (manual) | kejadian bertanda waktu | 0 | hanya sintetis | peringatan maladaptasi T4 |
+| Curah hujan stasiun BMKG Kota Semarang (96839 Ahmad Yani, 96835 Klimatologi Jawa Tengah) | portal data BMKG, berkas DataIklimBulanan_*.xlsx | bulanan, mm | – | **nyata**, Nov 2024–Okt 2026, 24 bulan per stasiun, tanpa kode anomali | validasi IMERG saja (bukan masukan model; 25–30 km dari koridor) |
 | Katalog kejadian E1–E6 | manual atau OCR+LLM | per kejadian: tanggal, jam tutup/buka, KM, mekanisme | – | kerangka saja (jam dan mekanisme kosong) | **label** latih/validasi (belum bisa dipakai) |
 | Jadwal KA lewat Gubug | jadwal publik KAI (manual) | jam lewat | – | placeholder KA-A s.d. KA-F (dummy) | tampilan saja; belum masuk perhitungan |
 

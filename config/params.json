@@ -20,7 +20,8 @@
     "lokal": {"nama": "Gubug-Karangjati (koridor)", "lat": -7.08, "lon": 110.66, "status": "perkiraan, perlu verifikasi"},
     "hulu": {"nama": "Hulu DAS Tuntang (Kab. Semarang)", "lat": -7.25, "lon": 110.47, "status": "perkiraan, perlu verifikasi"},
     "gundih": {"nama": "Gundih (rute alternatif)", "lat": -7.21, "lon": 110.90, "status": "perkiraan, perlu verifikasi"},
-    "glapan": {"nama": "Bendung Glapan", "lat": -7.08, "lon": 110.59, "status": "perkiraan, perlu verifikasi"}
+    "glapan": {"nama": "Bendung Glapan", "lat": -7.08, "lon": 110.59, "status": "perkiraan, perlu verifikasi"},
+    "semarang_pembanding": {"nama": "Stasiun BMKG Ahmad Yani dan Klimatologi Jawa Tengah (rerata koordinat)", "lat": -6.9808, "lon": 110.3795, "status": "dari metadata berkas BMKG; hanya untuk validasi IMERG"}
   },
 
   "episode": {

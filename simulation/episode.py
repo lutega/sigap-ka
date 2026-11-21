@@ -110,7 +110,9 @@ def bangun_episode_nyata(params: ParamsAktif | None = None, hujan_harian: pd.Dat
     batas = pd.Timestamp(t0 + timedelta(hours=sesudah))
 
     def _jendela(df: pd.DataFrame) -> pd.DataFrame:
-        return df[(df["waktu"] >= hari_awal) & (df["waktu"] <= batas)].copy()
+        """Baris dalam jendela episode, hanya titik koridor (lokal, hulu, Gundih)."""
+        pilih = (df["waktu"] >= hari_awal) & (df["waktu"] <= batas) & df["lokasi"].isin(["lokal", "hulu", "gundih"])
+        return df[pilih].copy()
 
     if hujan_harian is None:
         # IMERG Late lebih dulu (hulu terpisah dari lokal; versi yang tersedia pada jam keputusan),

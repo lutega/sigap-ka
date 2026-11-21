@@ -146,6 +146,43 @@ def test_pemetaan_bawaan_stasiun_semarang_hanya_pembanding():
     assert bmkg.cari_stasiun("Stasiun Entah", pem) is None
 
 
+def _xlsx_bulanan_bmkg(path):
+    """Berkas tiruan berstruktur sama dengan unduhan asli DataIklimBulanan (dua lembar, angka uji)."""
+    with pd.ExcelWriter(path) as w:
+        for wmo, nama, lat, nilai in (("96835", "Stasiun Klimatologi Jawa Tengah", "-6.98470", [100.0, 8888, 50.5]),
+                                      ("96839", "Stasiun Meteorologi Ahmad Yani", "-6.97683", [120.0, 9999, 60.0])):
+            baris = [[None, "ID WMO", f":  {wmo}"], [None, "NAMA STASIUN", f":  {nama}"],
+                     [None, "LINTANG", f":  {lat}"], [None, "BUJUR", ":  110.38"], [None, "ELEVASI", ":  6 Meter"],
+                     [None, None, None], ["Periode", "rainfall", None]]
+            baris += [[p, v, None] for p, v in zip(["2025-01", "2025-02", "2025-03"], nilai)]
+            baris += [[None, None, None], ["KETERANGAN:", None, None], ["8888: Data tidak terukur", None, None],
+                      ["rainfall: Jumlah Curah Hujan dalam 1 bulan (mm)", None, None]]
+            pd.DataFrame(baris).to_excel(w, sheet_name=f"{wmo} - {nama[:20]}", header=False, index=False)
+
+
+def test_berkas_bulanan_multi_lembar_seperti_unduhan_asli(tmp_path):
+    """Format asli portal: satu lembar per stasiun, 'Periode | rainfall', metadata ID WMO/lintang."""
+    d = tmp_path / "bmkg"
+    d.mkdir()
+    _xlsx_bulanan_bmkg(d / "DataIklimBulanan_uji.xlsx")
+    hasil, lap = bmkg.jalankan(d, tmp_path / "bmkg_clean.csv")  # pemetaan bawaan repo
+    assert lap["resolusi"] == ["bulanan"] and lap["stasiun_tak_terpetakan"] == []
+    assert set(hasil["zona"]) == {"semarang_pembanding"}
+    assert set(hasil["id_wmo"].astype(str)) == {"96835", "96839"}
+    assert hasil["lat"].round(5).isin([-6.9847, -6.97683]).all()
+    assert (hasil["tanggal"].dt.day == 1).all() and len(hasil) == 6
+    assert lap["jumlah_nan"] == 2  # 8888 dan 9999
+    feb = hasil[hasil["tanggal"] == pd.Timestamp("2025-02-01")]
+    assert set(feb["catatan_qc"]) == {"kode 8888", "kode 9999"}
+
+
+def test_data_bulanan_tidak_masuk_fitur_harian():
+    """Baris bulanan BMKG diabaikan fitur harian walau stasiunnya dipetakan ke zona hujan."""
+    bulanan = _seri("lokal_gubug_karangjati", "bmkg", [300.0, 250.0]).assign(resolusi="bulanan")
+    zona = fitur_hujan.hujan_zona_harian({"bmkg": bulanan}, ["bmkg"])
+    assert zona.empty
+
+
 # ---------------------------------------------------------------- IMERG dan fitur hujan
 
 def test_adapter_imerg_hari_utc(tmp_path):

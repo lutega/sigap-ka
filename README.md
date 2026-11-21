@@ -165,7 +165,12 @@ export PYTHONPATH=src                                   # pytest sudah mengaturn
 .venv/Scripts/python -m sigap_ka.inputs.bmkg            # data/raw/bmkg/*.csv|xlsx -> data/interim/bmkg_clean.csv
 .venv/Scripts/python -m sigap_ka.features.hujan         # -> data/processed/hujan_features.csv
 .venv/Scripts/python -m sigap_ka.features.glapan        # -> data/interim/glapan_tma_synth.csv + data/processed/glapan_features.csv
+.venv/Scripts/python -m sigap_ka.features.validasi_imerg # IMERG vs stasiun BMKG Semarang -> data/processed/validasi_imerg_bmkg.csv
 ```
+
+Berkas BMKG yang sudah diverifikasi: `DataIklimBulanan_*.xlsx` dari portal BMKG (satu lembar per stasiun,
+`Periode | rainfall`, total bulanan). Hasil validasi (Nov 2024–Okt 2026, sel IMERG Semarang): IMERG Late
+bias +17% terhadap rerata dua stasiun, korelasi bulanan 0,82; selisih antarstasiun −6% (korelasi 0,96).
 
 - **BMKG** (`inputs/bmkg.py`): membaca berkas portal/salinan BMKG, kode 8888/9999, nilai negatif,
   dan tanggal ganda yang bertentangan menjadi NaN; stasiun dipetakan ke zona lewat

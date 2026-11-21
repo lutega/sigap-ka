@@ -325,3 +325,18 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 **Keputusan manusia:** berkas BMKG asli untuk memverifikasi format pembaca dan konvensi hari (A-049); seri TMA BBWS untuk menggantikan estimasi sintetis.
 
 **Hasil tes:** `pytest tests/test_input_bmkg.py tests/test_glapan_synth.py` → 18 lulus; `pytest -m "not db"` → 205 lulus.
+
+---
+
+## Pembaruan 22 Nov 2026 · Data BMKG asli dan validasi IMERG
+
+**Yang dikerjakan**
+- Berkas asli `data/raw/bmkg/DataIklimBulanan_2024-11_2026-10_ahmadyani_x.xlsx` (tidak di-commit) diperiksa: dua lembar (96835 Stasiun Klimatologi Jawa Tengah, 96839 Stasiun Meteorologi Ahmad Yani), metadata ID WMO/lintang/bujur/elevasi, tabel `Periode | rainfall` **bulanan**, catatan kaki kode 8888/9999.
+- `inputs/bmkg.py` disesuaikan dengan format asli: membaca semua lembar, mengenali `Periode` (YYYY-MM → resolusi bulanan) maupun format harian, mengambil ID WMO dan koordinat dari metadata, mencocokkan stasiun lewat ID WMO. Hasil: 48 baris (24 bulan × 2 stasiun), tanpa nilai anomali.
+- `config/stasiun_bmkg.json` diisi ID WMO dan koordinat dari metadata berkas BMKG; zona tetap `semarang_pembanding`.
+- IMERG Late (730 hari) dan Final (334 hari) diunduh untuk sel stasiun Semarang; `features/validasi_imerg.py` membandingkan total bulanan → `data/processed/validasi_imerg_bmkg.csv`.
+- **Temuan:** IMERG Late bias +17,4%, korelasi 0,82, MAE 78 mm/bulan (24 bulan); IMERG cenderung lebih tinggi dari penakar dengan selisih bulanan bisa besar (mis. Feb 2026 455 vs 225 mm; Mei 2026 139 vs 369 mm). Antarstasiun: −5,6%, korelasi 0,96.
+
+**Hasil tes:** `pytest -m "not db"` → 210 lulus (5 tes baru: format bulanan multi-lembar seperti berkas asli, bulanan tidak masuk fitur harian, validasi IMERG).
+
+**Keputusan manusia:** data BMKG harian/per jam (bila bisa diminta lewat PTSP) dan pos hujan BBWS di Grobogan/hulu Tuntang tetap dibutuhkan untuk koreksi IMERG di koridor.

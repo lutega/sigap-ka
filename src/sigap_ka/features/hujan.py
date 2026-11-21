@@ -39,6 +39,8 @@ def _per_zona(df: pd.DataFrame) -> pd.DataFrame:
     """Rerata harian per zona (beberapa stasiun dalam satu zona dirata-rata; NaN diabaikan)."""
     if df.empty:
         return pd.DataFrame(columns=["tanggal", "zona", "nilai", "sumber", "status_data"])
+    if "resolusi" in df:  # data bulanan BMKG tidak boleh masuk fitur harian
+        df = df[df["resolusi"].fillna("harian") == "harian"]
     g = df[df["zona"].isin(ZONA_HUJAN)].groupby(["tanggal", "zona"], as_index=False)
     return g.agg(nilai=("nilai", "mean"), sumber=("sumber", "first"), status_data=("status_data", "first"))
 
