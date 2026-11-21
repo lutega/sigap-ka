@@ -136,8 +136,8 @@
       "hujan_lokal_3h":   {"skala": 100, "keterangan": "akumulasi hujan lokal 3 hari terakhir (mm)"},
       "hujan_lokal_5h":   {"skala": 150, "keterangan": "akumulasi hujan lokal 5 hari terakhir (mm)"},
       "hujan_hulu_3h":    {"skala": 100, "keterangan": "akumulasi hujan hulu Tuntang 3 hari terakhir (mm)"},
-      "prakiraan_lokal":  {"skala": 50,  "keterangan": "prakiraan hujan lokal sampai T-0, maks 24 jam ke depan (mm)"},
-      "prakiraan_hulu":   {"skala": 50,  "keterangan": "prakiraan hujan hulu sampai T-0, maks 24 jam ke depan (mm)"},
+      "prakiraan_lokal":  {"skala": 100, "keterangan": "prakiraan hujan lokal dari jam keputusan sampai T-0 (mm), terbitan terakhir yang sudah ada"},
+      "prakiraan_hulu":   {"skala": 100, "keterangan": "prakiraan hujan hulu dari jam keputusan sampai T-0 (mm), terbitan terakhir yang sudah ada"},
       "glapan_relatif":   {"skala": 100, "keterangan": "muka air Glapan terakhir dikurangi ambang Awas"},
       "glapan_tren":      {"skala": 50,  "keterangan": "kenaikan muka air Glapan 6 jam terakhir"}
     },
@@ -192,7 +192,7 @@
       "korelasi_lokal_hulu": 0.5, "antesedent_median_mm": 55
     },
     "badai": {"puncak_sebelum_t0_jam_min": 6, "puncak_sebelum_t0_jam_maks": 30, "lebar_jam": 10},
-    "prakiraan": {"sigma_log_lead_maks": 0.8, "sigma_log_lead_nol": 0.15, "jendela_jam": 24,
+    "prakiraan": {"sigma_log_lead_maks": 0.8, "sigma_log_lead_nol": 0.15, "sesudah_t0_jam": 6,
                   "periode_jam": 3, "korelasi_antarterbitan": 0.6, "korelasi_lokal_hulu": 0.7,
                   "sigma_log_per_periode": 0.2},
     "t0_dasar": "2100-01-01T21:00:00",

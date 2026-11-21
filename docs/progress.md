@@ -73,3 +73,26 @@ hambatan; keputusan yang perlu diambil manusia; hasil tes.
 **Keputusan manusia:** akun Earthdata/JAXA bila ingin hujan hulu satelit; pengisian katalog E1-E6 dan jadwal KA nyata; uji metode OCR+LLM butuh ANTHROPIC_API_KEY dan Tesseract.
 
 **Hasil tes:** `pytest` -> 77 lulus (71 unit + 6 integrasi TimescaleDB).
+
+---
+
+## Tahap 3 · inference/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `inference/fitur.py`: `IndeksEpisode` menghitung 8 fitur spesifikasi 9.1 pada jam keputusan dengan larik numpy, menghormati latensi tiap sumber dan waktu terbit prakiraan (tanpa intip masa depan).
+- `inference/peluang_gangguan.py`: logistik multinomial Bayesian dua mekanisme (kelas tidak/genangan/gerusan, saling lepas sehingga p_total = p_genangan + p_gerusan), prior dari params.json per preset, MAP Newton + Laplace, prediktif Monte Carlo berseed; pembaruan rasio kemungkinan untuk laporan air di badan rel.
+- `inference/mekanisme.py` (mekanisme dominan, bukti utama), `inference/lama_tutup.py` (skenario pendek/sedang/panjang, harapan jam, faktor L efektif untuk lapis G), `inference/estimasi.py` (`Estimator`, data latih, model bawaan per preset).
+- Generator dummy diperbaiki: prakiraan tiap terbitan mencakup sampai T−0 + 6 jam (sebelumnya hanya 24 jam, sehingga prakiraan awal tidak melihat badai).
+- Kinerja pada episode sintetis uji: AUC 0,68 (T−72) → 0,84 (T−24) → 0,95 (T−0); kalibrasi baik (mis. kelompok p 0,59 teramati 0,65; p 0,89 teramati 0,86).
+
+**Berkas berubah:** `inference/*`, `sensing/dummy_generator.py`, `sensing/standar.py`, `sensing/jalankan.py`, `sensing/kejadian_ocr_llm.py` (akhir baris CSV), `config/params.json` (cakupan dan skala prakiraan), `tests/test_inferensi.py`.
+
+**Data masih dummy:** prior, rasio kemungkinan laporan, model dilatih pada episode sintetis.
+
+**Asumsi baru:** A-025 s.d. A-027; A-021 diperbarui.
+
+**Hambatan:** tidak ada.
+
+**Keputusan manusia:** konfirmasi pilihan model (pertanyaan terbuka spesifikasi 7); prior dari ahli bila tersedia.
+
+**Hasil tes:** `pytest` → 94 lulus.

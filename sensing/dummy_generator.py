@@ -110,8 +110,8 @@ def bangkitkan_episode(rng: np.random.Generator, params: ParamsAktif, episode_id
     d = params.dummy
     H = params.episode.horizon_jam
     A = params.episode.antesedent_hari * 24
-    jendela = d["prakiraan"]["jendela_jam"]
-    jam_rel = np.arange(-(H + A), jendela, dtype=float)  # jam relatif T-0, sampai T+jendela
+    sesudah = d["prakiraan"]["sesudah_t0_jam"]
+    jam_rel = np.arange(-(H + A), sesudah, dtype=float)  # jam relatif T-0, sampai T+sesudah
     waktu = [t0 + timedelta(hours=float(h)) for h in jam_rel]
     n = len(jam_rel)
     sigma, rho = d["sigma_log_hujan"], d["korelasi_lokal_hulu"]
@@ -163,7 +163,7 @@ def bangkitkan_episode(rng: np.random.Generator, params: ParamsAktif, episode_id
         sk = lt.skenario[skenario]
         lama = float(rng.uniform(sk.jam_min, sk.jam_maks))
 
-    # 5. Prakiraan: terbit tiap jam keputusan, periode 3 jam sampai jendela ke depan
+    # 5. Prakiraan: terbit tiap jam keputusan, periode 3 jam dari waktu terbit sampai T+sesudah
     pk = d["prakiraan"]
     interval = params.episode.interval_keputusan_jam
     periode = pk["periode_jam"]
@@ -177,8 +177,7 @@ def bangkitkan_episode(rng: np.random.Generator, params: ParamsAktif, episode_id
         e_lok = r * e_lok + np.sqrt(1 - r ** 2) * z1
         e_hulu = r * e_hulu + np.sqrt(1 - r ** 2) * _lognormal_berkorelasi(rng, pk["korelasi_lokal_hulu"], z1)
         for lok, seri, e in (("lokal", lokal, e_lok), ("hulu", hulu, e_hulu)):
-            for p in range(jendela // periode):
-                awal = h_terbit + p * periode
+            for awal in range(h_terbit, sesudah, periode):
                 sel = (jam_rel >= awal) & (jam_rel < awal + periode)
                 benar = seri[sel].sum()
                 sp = pk["sigma_log_per_periode"]

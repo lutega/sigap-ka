@@ -146,7 +146,8 @@ def simpan_olahan(nama_file: str, df: pd.DataFrame, kunci: list[str] | None = No
         gabung = gabung.drop_duplicates(subset=kunci, keep="last")
     if kunci:
         gabung = gabung.sort_values(kunci).reset_index(drop=True)
-    gabung.to_csv(path, index=False, encoding="utf-8")
+    gabung.to_csv(path, index=False, encoding="utf-8", lineterminator="
+")
     return path
 
 
