@@ -55,7 +55,8 @@ def buat_engine(url: str | None = None, echo: bool = False) -> Engine:
             connect_args={"check_same_thread": False},
             poolclass=StaticPool,  # satu koneksi agar database memori tetap hidup
         )
-    return create_engine(url, echo=echo, pool_pre_ping=True)
+    # Batas waktu koneksi agar tes/API tidak menggantung bila database tidak menjawab.
+    return create_engine(url, echo=echo, pool_pre_ping=True, connect_args={"connect_timeout": 10})
 
 
 def adalah_postgres(engine: Engine) -> bool:

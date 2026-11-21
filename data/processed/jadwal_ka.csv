@@ -1,0 +1,7 @@
+waktu,lokasi,nilai,satuan,sumber,is_simulated,nomor,relasi,jam_lewat_gubug,asal,kualitas
+1900-01-01 03:15:00,gubug,,,jadwal_ka,True,KA-A,Semarang - Surabaya (placeholder),03:15,placeholder params.json (jadwal_dummy),baik
+1900-01-01 07:40:00,gubug,,,jadwal_ka,True,KA-B,Surabaya - Semarang (placeholder),07:40,placeholder params.json (jadwal_dummy),baik
+1900-01-01 11:05:00,gubug,,,jadwal_ka,True,KA-C,Semarang - Surabaya (placeholder),11:05,placeholder params.json (jadwal_dummy),baik
+1900-01-01 15:30:00,gubug,,,jadwal_ka,True,KA-D,Surabaya - Semarang (placeholder),15:30,placeholder params.json (jadwal_dummy),baik
+1900-01-01 19:45:00,gubug,,,jadwal_ka,True,KA-E,Semarang - Surabaya (placeholder),19:45,placeholder params.json (jadwal_dummy),baik
+1900-01-01 23:10:00,gubug,,,jadwal_ka,True,KA-F,Surabaya - Semarang (placeholder),23:10,placeholder params.json (jadwal_dummy),baik

@@ -192,11 +192,15 @@
       "korelasi_lokal_hulu": 0.5, "antesedent_median_mm": 55
     },
     "badai": {"puncak_sebelum_t0_jam_min": 6, "puncak_sebelum_t0_jam_maks": 30, "lebar_jam": 10},
-    "prakiraan": {"sigma_log_lead_maks": 0.8, "sigma_log_lead_nol": 0.15, "jendela_jam": 24},
+    "prakiraan": {"sigma_log_lead_maks": 0.8, "sigma_log_lead_nol": 0.15, "jendela_jam": 24,
+                  "periode_jam": 3, "korelasi_antarterbitan": 0.6, "korelasi_lokal_hulu": 0.7,
+                  "sigma_log_per_periode": 0.2},
+    "t0_dasar": "2100-01-01T21:00:00",
+    "jarak_antarepisode_hari": 10,
     "kebenaran": {
       "keterangan": "Model 'kebenaran' generator (bukan model inferensi). Fitur dari hujan teramati sampai T-0.",
-      "genangan": {"intersep": -5.0, "hujan_lokal_3h": 2.2, "hujan_lokal_5h": 0.6, "hujan_hulu_3h": 0.5, "glapan_puncak_relatif": 0.3},
-      "gerusan":  {"intersep": -6.5, "hujan_lokal_3h": 0.3, "hujan_lokal_5h": 0.2, "hujan_hulu_3h": 1.6, "glapan_puncak_relatif": 2.0}
+      "genangan": {"intersep": -4.3, "hujan_lokal_3h": 2.2, "hujan_lokal_5h": 0.6, "hujan_hulu_3h": 0.5, "glapan_puncak_relatif": 0.3},
+      "gerusan":  {"intersep": -6.8, "hujan_lokal_3h": 0.3, "hujan_lokal_5h": 0.2, "hujan_hulu_3h": 1.6, "glapan_puncak_relatif": 1.6}
     },
     "laporan_lapangan": {"peluang_lapor_bila_terganggu": 0.7, "lapor_sebelum_t0_jam_maks": 12, "peluang_lapor_palsu": 0.05},
     "jalan_putus": {"peluang_bila_hujan_lebat": 0.15, "ambang_hujan_lokal_mm": 100},
@@ -230,6 +234,14 @@
     }
   },
 
+  "kualitas": {
+    "status": "dummy",
+    "hujan_harian_maks_mm": 500,
+    "hujan_jam_maks_mm": 150,
+    "muka_air_min": 1000,
+    "muka_air_maks": 3000
+  },
+
   "sumber_data": {
     "nasa_power": {
       "jenis": "hujan", "kelompok": "inti", "opsional": false,
@@ -250,8 +262,10 @@
       "jenis": "prakiraan", "kelompok": "inti", "opsional": false,
       "akses": "API data terbuka BMKG",
       "url": "https://api.bmkg.go.id/publik/prakiraan-cuaca",
-      "adm4_lokal": "33.15.12.2001",
-      "adm4_status": "perkiraan kode wilayah desa di Kec. Gubug, perlu verifikasi"
+      "url_peringatan": "https://www.bmkg.go.id/alerts/nowcast/id/rss.xml",
+      "url_peringatan_status": "belum diverifikasi",
+      "adm4_lokal": "33.15.17.2001",
+      "adm4_status": "Desa Penadaran, Kec. Gubug, Grobogan (terverifikasi dari respons API BMKG 21 Nov 2026)"
     },
     "glapan_bnpb": {
       "jenis": "muka_air", "kelompok": "inti", "opsional": false,

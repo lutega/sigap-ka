@@ -15,7 +15,7 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-005 | Koordinat lokal (Gubug–Karangjati), hulu Tuntang, Gundih, dan Bendung Glapan adalah perkiraan kasar. NASA POWER bergrid kasar sehingga selisih kecil tidak berpengaruh besar. | Lokasi pengambilan data hujan | terbuka |
 | A-006 | Semua waktu disimpan sebagai WIB (UTC+7) tanpa zona waktu. | Konsistensi antar sumber | konvensi |
 | A-007 | Satuan elevasi Glapan mengikuti rilis BNPB (diasumsikan cm pada papan duga); hanya ambang Awas 1905 yang diketahui, ambang Waspada/Siaga belum. | Indeks muka air | terbuka |
-| A-008 | Kode wilayah BMKG (adm4) untuk desa di Kec. Gubug di params.json adalah perkiraan. | Prakiraan BMKG bisa gagal diambil | terbuka |
+| A-008 | Kode wilayah BMKG (adm4) awal adalah perkiraan dan ternyata salah (404); diganti A-023. | - | selesai |
 | A-009 | Prior koefisien lapis I (blok `inferensi.prior_rerata`) adalah penilaian awal pengembang, bukan ahli; preset low/base/high mengubah pengali rerata dan simpangan prior. | Sensitivitas lapis I | terbuka |
 | A-010 | Model "kebenaran" generator dummy (blok `dummy.kebenaran`) sengaja berbeda dari prior inferensi agar evaluasi tidak melingkar sempurna. | Hasil simulasi | konvensi |
 | A-011 | Faktor L skenario lama tutup (pendek 0,6; sedang 1,0; panjang 1,8) dan peluang bersyarat mekanisme adalah dummy; arah kualitatifnya mengikuti 9.2 (genangan jam–1 hari, gerusan hari–minggu). | Kerugian L efektif | terbuka |
@@ -29,3 +29,16 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | Kode | Asumsi | Dampak | Status |
 | --- | --- | --- | --- |
 | A-016 | Tabel di luar 14.5 ditambahkan: `pengguna` (bagian 15), `episode`, `laporan_lapangan` (laporan petugas dan jalan putus), `simulasi_run` (status tugas latar belakang), `sesi_demo` (bagian 16). Tabel time series diberi kolom `episode_id` ('' = observasi umum) agar episode sintetis tidak bercampur dengan observasi nyata. | Skema | konvensi |
+
+## Tahap 2 · Sensing
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-017 | Tanggal harian NASA POWER diperlakukan sebagai tanggal WIB. **Temuan:** titik lokal, hulu, dan Gundih jatuh di sel grid NASA POWER yang sama sehingga nilainya identik; NASA POWER tidak dapat membedakan hujan hulu dari hujan lokal. Hujan hulu yang bermakna butuh IMERG/GSMaP (akun gratis) atau data BBWS. | Bukti hulu pada episode nyata lemah | terbuka |
+| A-018 | Nilai `tp` prakiraan BMKG diasumsikan akumulasi 3 jam yang berakhir pada `local_datetime`; `analysis_date` dianggap UTC dan ditambah 7 jam sebagai waktu terbit. Periode yang sudah dimulai sebelum waktu terbit dibuang. | Waktu terbit prakiraan | terbuka |
+| A-019 | Hujan harian dibagi rata ke 24 jam saat dipakai model muka air sintetis dan fitur per jam. | Puncak hujan harian teredam | terbuka |
+| A-020 | Kode periksa K1–K3 metode OCR+LLM ditafsirkan: K1 = benar tanpa koreksi, K2 = benar setelah dikoreksi peneliti, K3 = ditolak. Hanya K1/K2 masuk katalog. | Katalog ocr_llm | terbuka |
+| A-021 | Generator dummy: hujan anteseden dan badai lognormal berkorelasi antar lokasi (lokal–hulu 0,5; lokal–Gundih 0,5), puncak badai 6–30 jam sebelum T−0, galat prakiraan lognormal yang mengecil linear dari σ 0,8 (lead 72 jam) ke 0,15 (lead 0) dengan korelasi antarterbitan 0,6. Model kebenaran disetel agar laju gangguan base sekitar 28% (low 13%, high 44%) dan sekitar 30% gangguan berupa gerusan. | Seluruh hasil simulasi | terbuka |
+| A-022 | Titik Glapan 1970 (24 Jan 2025) tidak diketahui jamnya; diletakkan pukul 23.00 agar tidak dipakai sebelum waktunya. Akibatnya titik ini tidak masuk jam keputusan episode nyata (T−0 21.00) dan hanya dipakai sebagai pembanding model sintetis. | Episode nyata | terbuka |
+| A-023 | Kode wilayah BMKG lokal: 33.15.17.2001 (Desa Penadaran, Kec. Gubug), terverifikasi dari respons API BMKG. Menggantikan A-008. | Prakiraan BMKG | terverifikasi |
+| A-024 | Model bawaan metode ocr_llm: `claude-opus-5-5` dengan structured outputs dan fallback sisi server (`fallbacks: "default"`) bila model menolak; dapat diganti lewat LLM_MODEL di .env. | Biaya dan perilaku ekstraksi | konvensi |

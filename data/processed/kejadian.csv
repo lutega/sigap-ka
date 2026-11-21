@@ -1,0 +1,7 @@
+waktu,lokasi,nilai,satuan,sumber,is_simulated,id,tanggal,jam_tutup,jam_buka,lokasi_km,mekanisme,ka_terdampak,tautan_sumber,metode,status_konfirmasi,catatan,kualitas
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E1,,,,,,,,manual,belum terkonfirmasi,Prioritas pengisian jam tutup/jam buka/mekanisme (spesifikasi 8.3),kosong
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E2,,,,,,,,manual,belum terkonfirmasi,Belum disalin ke repo,kosong
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E3,,,,,,,,manual,belum terkonfirmasi,Terjadi dengan hujan lokal rendah; perlu bukti hulu (spesifikasi 6),kosong
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E4,,,,,,,,manual,belum terkonfirmasi,Prioritas pengisian jam tutup/jam buka/mekanisme (spesifikasi 8.3),kosong
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E5,,,,,,,,manual,belum terkonfirmasi,Prioritas pengisian jam tutup/jam buka/mekanisme (spesifikasi 8.3),kosong
+,koridor Brumbung-Karangjati,,jam,kejadian_manual,False,E6,,,,,,,,manual,belum terkonfirmasi,Prioritas pengisian; terjadi dengan hujan lokal rendah (spesifikasi 6 dan 8.3),kosong

@@ -65,22 +65,21 @@ def _siapkan_timescale(engine: Engine) -> None:
 
 def _isi_tabel_acuan(engine: Engine) -> None:
     """Mengisi/menyegarkan tabel sumber_data dan tindakan dari params.json (tanpa C, L, P)."""
+    from db.repositori import _upsert  # upsert massal: sedikit perintah SQL (latensi Docker tinggi)
+
     params = muat_params()
     with sesi_dari(engine) as sesi:
-        for nama, s in params.sumber_data.items():
-            baris = sesi.get(SumberData, nama) or SumberData(nama=nama)
-            baris.jenis = s["jenis"]
-            baris.cara_akses = s["akses"]
-            baris.kelompok = s["kelompok"]
-            baris.opsional = bool(s["opsional"])
-            sesi.merge(baris)
-        for t in params.daftar_tindakan():
-            sesi.merge(TindakanDB(
-                id=t.id,
-                nama=t.nama,
-                batas_waktu_siap=t.keputusan_sebelum,
-                terkonfirmasi=t.terkonfirmasi,
-            ))
+        # Hanya kolom deskriptif yang diperbarui; status_terakhir dari log tidak tertimpa.
+        _upsert(sesi, SumberData, [
+            {"nama": nama, "jenis": s["jenis"], "cara_akses": s["akses"],
+             "kelompok": s["kelompok"], "opsional": bool(s["opsional"])}
+            for nama, s in params.sumber_data.items()
+        ])
+        _upsert(sesi, TindakanDB, [
+            {"id": t.id, "nama": t.nama, "batas_waktu_siap": t.keputusan_sebelum,
+             "terkonfirmasi": t.terkonfirmasi}
+            for t in params.daftar_tindakan()
+        ])
 
 
 def inisialisasi(engine: Engine | None = None) -> dict:

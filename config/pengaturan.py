@@ -50,7 +50,7 @@ class Pengaturan(BaseSettings):
     jaxa_user: str = ""
     jaxa_password: str = ""
     anthropic_api_key: str = ""
-    llm_model: str = "claude-sonnet-5-5"
+    llm_model: str = "claude-opus-5-5"
     tesseract_cmd: str = ""
 
     model_config = SettingsConfigDict(

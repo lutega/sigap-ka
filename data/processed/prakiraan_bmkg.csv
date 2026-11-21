@@ -1,0 +1,19 @@
+waktu_terbit,waktu,lokasi,nilai,satuan,sumber,is_simulated,resolusi_jam,kualitas
+2026-11-21 06:00:00,2026-11-21 17:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-21 20:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-21 23:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 02:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 05:00:00,lokal,0.1,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 08:00:00,lokal,0.8,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 11:00:00,lokal,2.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 14:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 17:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 20:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-22 23:00:00,lokal,0.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 02:00:00,lokal,0.1,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 05:00:00,lokal,0.1,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 08:00:00,lokal,1.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 11:00:00,lokal,1.0,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 14:00:00,lokal,0.1,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 17:00:00,lokal,0.1,mm,bmkg_prakiraan,False,3,baik
+2026-11-21 06:00:00,2026-11-23 20:00:00,lokal,0.3,mm,bmkg_prakiraan,False,3,baik

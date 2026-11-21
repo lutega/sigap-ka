@@ -31,6 +31,22 @@ docker compose up -d          # tunggu status healthy: docker ps
 # .venv/Scripts/python -m db.inisialisasi --reset  # hapus semua tabel lalu buat ulang
 ```
 
+## Data (lapis S)
+
+```bash
+.venv/Scripts/python -m sensing.jalankan status                       # kesiapan tiap sumber
+.venv/Scripts/python -m sensing.jalankan nasa_power --dari 2024-01-01  # unduh hujan harian (internet)
+.venv/Scripts/python -m sensing.jalankan bmkg                         # unduh prakiraan BMKG terkini (internet)
+.venv/Scripts/python -m sensing.jalankan manual                       # proses data/manual (Glapan, kejadian, jadwal)
+.venv/Scripts/python -m sensing.jalankan muat                         # muat data/processed ke database (offline)
+```
+
+Data mentah disimpan di `data/raw/` (tidak di-commit), data olahan di `data/processed/` (di-commit,
+sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicatat di
+`data/processed/log_pengambilan.csv` serta tabel `log_pengambilan`. Berkas isian manual ada di
+`data/manual/`. Sumber yang butuh akun (GPM IMERG: `EARTHDATA_TOKEN`; GSMaP: `JAXA_USER`,
+`JAXA_PASSWORD`) dilewati bila kredensial kosong, dan sistem beralih ke cadangan berlabel.
+
 ## Menjalankan tes
 
 ```bash
