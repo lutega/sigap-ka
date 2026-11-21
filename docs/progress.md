@@ -397,9 +397,10 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 - `pytest -m "not db"` → 240 lulus.
 - `vitest` → 9 lulus.
 - `vite build` → berhasil.
-- Tes database lewat layanan `uji` (Docker) → semua lulus pada langkah sebelumnya; diulang sesudah commit ini.
+- Tes database lewat layanan `uji` (Docker) → 248 lulus (termasuk tes database).
 
 **Keputusan manusia:**
 - Pilihan kalibrasi: (a) kalibrasi keluaran atau (b) parameterisasi ulang generator.
 - Verifikasi kotak sel DAS dengan poligon BBWS.
 - Pemeriksaan visual bagian evaluasi di dasbor.
+- Pemeriksaan visual (Chrome headless, API di atas cadangan SQLite) untuk bagian *Evaluasi pada data nyata*: tampilan terang, gelap, dan ponsel 390 px dirender benar (grafik AUC dengan selang, tabel, tanpa gulir horizontal halaman). Perbaikan kecil: judul kolom "p T‑24/T‑0" memakai tanda hubung tak terputus.

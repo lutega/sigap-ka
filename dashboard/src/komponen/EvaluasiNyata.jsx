@@ -136,8 +136,8 @@ export default function EvaluasiNyata() {
           { kunci: "mekanisme", judul: "Mekanisme" },
           { kunci: "hujan_aktual_hulu_72j", judul: "Hulu 72 j aktual", angka: true, format: (x) => angka(x, 0) },
           { kunci: "hujan_hulu_3h_tersedia", judul: "Hulu tersedia", angka: true, format: (x) => angka(x, 0) },
-          { kunci: "p_T-24", judul: "p T-24", angka: true, format: (x) => angka(x) },
-          { kunci: "p_T-0", judul: "p T-0", angka: true, format: (x) => angka(x) },
+          { kunci: "p_T-24", judul: "p T‑24", angka: true, format: (x) => angka(x) },
+          { kunci: "p_T-0", judul: "p T‑0", angka: true, format: (x) => angka(x) },
           { kunci: "tindakan_sigap", judul: "Rencana SIGAP", format: (x) => x || "–" },
           { kunci: "sumber", judul: "Sumber", format: (x) => (x || []).join(", ") }]} />
       </section>
