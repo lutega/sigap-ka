@@ -1,0 +1,131 @@
+{
+  "rerata_biaya": {
+    "sigap": 643.96,
+    "jam_tetap_24": 654.87,
+    "ambang_tetap_05": 719.07,
+    "cost_loss_batas": 644.05,
+    "reaktif": 971.69,
+    "informasi_sempurna": 311.65
+  },
+  "nama_kebijakan": {
+    "sigap": "SIGAP (kurva pemicu)",
+    "jam_tetap_24": "Jam tetap 24 jam",
+    "ambang_tetap_05": "Ambang tetap 0,5",
+    "cost_loss_batas": "Cost-loss di batas waktu",
+    "reaktif": "Reaktif (tunggu bukti lapangan)",
+    "informasi_sempurna": "Informasi sempurna (batas bawah)"
+  },
+  "pembanding_terbaik": "cost_loss_batas",
+  "sigap_vs_pembanding_terbaik_persen": -0.01,
+  "selisih_berpasangan_sigap": {
+    "ambang_tetap_05": {
+      "rerata": -75.11,
+      "galat_baku": 34.0,
+      "ki95": [
+        -141.74,
+        -8.48
+      ]
+    },
+    "cost_loss_batas": {
+      "rerata": -0.1,
+      "galat_baku": 11.13,
+      "ki95": [
+        -21.91,
+        21.72
+      ]
+    },
+    "jam_tetap_24": {
+      "rerata": -10.92,
+      "galat_baku": 18.75,
+      "ki95": [
+        -47.66,
+        25.83
+      ]
+    },
+    "reaktif": {
+      "rerata": -327.73,
+      "galat_baku": 61.75,
+      "ki95": [
+        -448.76,
+        -206.7
+      ]
+    }
+  },
+  "laju_gangguan": 0.3233,
+  "catatan": "Parameter dummy; keunggulan adalah batas atas menurut asumsi model sendiri.",
+  "metrik_deteksi": {
+    "sigap_loeo": {
+      "POD": 0.84375,
+      "FAR": 0.46,
+      "CSI": 0.4909090909090909,
+      "lead_time_jam": 57.333333333333336,
+      "hit": 27,
+      "miss": 5,
+      "false_alarm": 23
+    },
+    "aturan_hujan_lokal": {
+      "POD": 0.96875,
+      "FAR": 0.5633802816901409,
+      "CSI": 0.4305555555555556,
+      "lead_time_jam": 65.41935483870968,
+      "hit": 31,
+      "miss": 1,
+      "false_alarm": 40
+    },
+    "hmhews": {
+      "POD": 1.0,
+      "FAR": 0.6444444444444445,
+      "CSI": 0.35555555555555557,
+      "lead_time_jam": 66.1875,
+      "hit": 32,
+      "miss": 0,
+      "false_alarm": 58
+    }
+  },
+  "sensitivitas_diskon": [
+    {
+      "diskon": 0.0,
+      "sigap": 644.05,
+      "jam_tetap_24": 660.88,
+      "ambang_tetap_05": 772.84,
+      "cost_loss_batas": 644.05,
+      "reaktif": 971.69,
+      "informasi_sempurna": 371.83,
+      "pembanding_terbaik": "cost_loss_batas",
+      "sigap_vs_terbaik_persen": 0.0
+    },
+    {
+      "diskon": 0.02,
+      "sigap": 643.96,
+      "jam_tetap_24": 654.87,
+      "ambang_tetap_05": 719.07,
+      "cost_loss_batas": 644.05,
+      "reaktif": 971.69,
+      "informasi_sempurna": 311.65,
+      "pembanding_terbaik": "cost_loss_batas",
+      "sigap_vs_terbaik_persen": -0.01
+    },
+    {
+      "diskon": 0.05,
+      "sigap": 599.05,
+      "jam_tetap_24": 646.19,
+      "ambang_tetap_05": 650.75,
+      "cost_loss_batas": 644.05,
+      "reaktif": 971.69,
+      "informasi_sempurna": 237.73,
+      "pembanding_terbaik": "cost_loss_batas",
+      "sigap_vs_terbaik_persen": -6.99
+    },
+    {
+      "diskon": 0.1,
+      "sigap": 551.57,
+      "jam_tetap_24": 632.57,
+      "ambang_tetap_05": 563.51,
+      "cost_loss_batas": 644.05,
+      "reaktif": 971.69,
+      "informasi_sempurna": 148.86,
+      "pembanding_terbaik": "ambang_tetap_05",
+      "sigap_vs_terbaik_persen": -2.12
+    }
+  ]
+}

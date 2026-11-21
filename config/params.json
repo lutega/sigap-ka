@@ -124,7 +124,8 @@
   "gating": {
     "status": "dummy",
     "jumlah_grid_peluang": 201,
-    "konsentrasi_beta": 12.0,
+    "konsentrasi_beta": 7.0,
+    "konsentrasi_beta_asal": "dikalibrasi dari lintasan peluang lapis I pada 300 episode sintetis base (k = rerata p(1-p) / rerata (dp)^2 - 1 = 7,06); nilai awal 12",
     "diskon_biaya_awal_per_langkah": 0.02,
     "keterangan": "Peluang antarprakiraan dimodelkan martingale Beta(kp, k(1-p)) dengan k = konsentrasi_beta. Bertindak satu langkah lebih awal lebih murah sebesar diskon; di batas waktu biaya = C."
   },

@@ -94,6 +94,43 @@ def fitur_kebenaran(hujan_lokal: np.ndarray, hujan_hulu: np.ndarray, elevasi: np
     }
 
 
+def bangkitkan_prakiraan(jam_rel: np.ndarray, lokal: np.ndarray, hulu: np.ndarray, t0: datetime,
+                         params: ParamsAktif, rng: np.random.Generator) -> list[tuple]:
+    """Prakiraan sintetis dari hujan "benar" per jam: terbit tiap jam keputusan, periode 3 jam.
+
+    Galat lognormal per terbitan mengecil linear terhadap lead time (sigma lead maks -> lead nol),
+    berkorelasi antarterbitan (AR-1) dan antara lokal-hulu, ditambah derau per periode; dipakai
+    untuk episode sintetis dan untuk prakiraan sintetis episode nyata (arsip prakiraan tidak ada).
+    Parameter:
+        jam_rel: jam relatif T-0 untuk tiap nilai seri (per jam).
+        lokal, hulu: hujan per jam (mm).
+    Kembali:
+        Daftar (waktu_terbit, waktu awal periode, lokasi, nilai mm).
+    """
+    pk = params.dummy["prakiraan"]
+    H = params.episode.horizon_jam
+    interval = params.episode.interval_keputusan_jam
+    periode, sesudah = pk["periode_jam"], pk["sesudah_t0_jam"]
+    baris = []
+    e_lok = e_hulu = 0.0
+    for k, h_terbit in enumerate(range(-H, 1, interval)):
+        lead = -h_terbit
+        sig = pk["sigma_log_lead_nol"] + (pk["sigma_log_lead_maks"] - pk["sigma_log_lead_nol"]) * lead / H
+        r = pk["korelasi_antarterbitan"] if k else 0.0
+        z1 = rng.standard_normal()
+        e_lok = r * e_lok + np.sqrt(1 - r ** 2) * z1
+        e_hulu = r * e_hulu + np.sqrt(1 - r ** 2) * _lognormal_berkorelasi(rng, pk["korelasi_lokal_hulu"], z1)
+        for lok, seri, e in (("lokal", lokal, e_lok), ("hulu", hulu, e_hulu)):
+            for awal in range(h_terbit, sesudah, periode):
+                sel = (jam_rel >= awal) & (jam_rel < awal + periode)
+                benar = seri[sel].sum()
+                sp = pk["sigma_log_per_periode"]
+                faktor = np.exp(sig * e - sig ** 2 / 2) * np.exp(sp * rng.standard_normal() - sp ** 2 / 2)
+                baris.append((t0 + timedelta(hours=h_terbit), t0 + timedelta(hours=awal), lok,
+                              float(benar * faktor)))
+    return baris
+
+
 def bangkitkan_episode(rng: np.random.Generator, params: ParamsAktif, episode_id: str,
                        t0: datetime, seed: int) -> EpisodeSintetis:
     """Membangkitkan satu episode sintetis.
@@ -164,26 +201,8 @@ def bangkitkan_episode(rng: np.random.Generator, params: ParamsAktif, episode_id
         lama = float(rng.uniform(sk.jam_min, sk.jam_maks))
 
     # 5. Prakiraan: terbit tiap jam keputusan, periode 3 jam dari waktu terbit sampai T+sesudah
-    pk = d["prakiraan"]
-    interval = params.episode.interval_keputusan_jam
-    periode = pk["periode_jam"]
-    baris_pk = []
-    e_lok = e_hulu = 0.0
-    for k, h_terbit in enumerate(range(-H, 1, interval)):
-        lead = -h_terbit
-        sig = pk["sigma_log_lead_nol"] + (pk["sigma_log_lead_maks"] - pk["sigma_log_lead_nol"]) * lead / H
-        r = pk["korelasi_antarterbitan"] if k else 0.0
-        z1 = rng.standard_normal()
-        e_lok = r * e_lok + np.sqrt(1 - r ** 2) * z1
-        e_hulu = r * e_hulu + np.sqrt(1 - r ** 2) * _lognormal_berkorelasi(rng, pk["korelasi_lokal_hulu"], z1)
-        for lok, seri, e in (("lokal", lokal, e_lok), ("hulu", hulu, e_hulu)):
-            for awal in range(h_terbit, sesudah, periode):
-                sel = (jam_rel >= awal) & (jam_rel < awal + periode)
-                benar = seri[sel].sum()
-                sp = pk["sigma_log_per_periode"]
-                faktor = np.exp(sig * e - sig ** 2 / 2) * np.exp(sp * rng.standard_normal() - sp ** 2 / 2)
-                baris_pk.append((t0 + timedelta(hours=h_terbit), t0 + timedelta(hours=awal), lok,
-                                 float(benar * faktor)))
+    periode = d["prakiraan"]["periode_jam"]
+    baris_pk = bangkitkan_prakiraan(jam_rel, lokal, hulu, t0, params, rng)
 
     # 6. Laporan lapangan dan jalan putus
     lp = d["laporan_lapangan"]

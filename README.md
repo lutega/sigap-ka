@@ -47,6 +47,17 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 `data/manual/`. Sumber yang butuh akun (GPM IMERG: `EARTHDATA_TOKEN`; GSMaP: `JAXA_USER`,
 `JAXA_PASSWORD`) dilewati bila kredensial kosong, dan sistem beralih ke cadangan berlabel.
 
+## Simulasi dan episode
+
+```bash
+.venv/Scripts/python -m simulation.jalankan --preset base --n 300 --seed 42      # 6 kebijakan, 300 episode
+.venv/Scripts/python -m simulation.jalankan --semua-preset --loeo 100 --sensitivitas --simpan-db
+.venv/Scripts/python -m simulation.episode muat     # episode demo (nyata 24 Jan 2025, cadangan, sintetis) ke database
+```
+
+Hasil disimpan di `data/processed/simulasi/` (CSV biaya per episode dan JSON ringkasan) serta tabel
+`hasil_simulasi` dan `simulasi_run`. Seed yang sama memberi hasil yang sama.
+
 ## Menjalankan tes
 
 ```bash

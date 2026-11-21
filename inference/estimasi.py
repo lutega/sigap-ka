@@ -90,6 +90,23 @@ class Estimator:
             hasil[i] = q[1] + q[2]
         return hasil
 
+    def lintasan(self, episode) -> dict[str, np.ndarray]:
+        """Peluang total, faktor L, dan ada-tidaknya laporan air di semua jam keputusan (untuk simulasi).
+
+        Kembali:
+            dict 'peluang' (n,), 'faktor_L' (n,), 'laporan' (n,) bool, berurutan T-horizon ke T-0.
+        """
+        idx = self._indeks(episode)
+        jam = jam_relatif_keputusan(self.params)
+        P = self.model.prediksi(np.vstack([idx.vektor(t) for t in jam]))
+        peluang, faktor, laporan = np.empty(len(jam)), np.empty(len(jam)), np.zeros(len(jam), bool)
+        for i, t in enumerate(jam):
+            laporan[i] = idx.ada_laporan_air(t)
+            q = perbarui_dengan_laporan(P[i], laporan[i], self.params)
+            peluang[i] = q[1] + q[2]
+            faktor[i] = lama_tutup.faktor_L(lama_tutup.sebaran(q, self.params), self.params)
+        return {"peluang": peluang, "faktor_L": faktor, "laporan": laporan}
+
     def estimasi(self, episode, jam_sebelum_t0: int) -> HasilInferensi:
         """Hasil lapis I lengkap pada satu jam keputusan.
 

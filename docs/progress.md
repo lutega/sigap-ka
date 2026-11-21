@@ -141,3 +141,44 @@ hambatan; keputusan yang perlu diambil manusia; hasil tes.
 **Keputusan manusia:** konfirmasi definisi label ringkasan (A-032).
 
 **Hasil tes:** `pytest` → 135 lulus.
+
+---
+
+## Tahap 6 · simulation/ (selesai 21 Nov 2026)
+
+**Yang dikerjakan**
+- `simulation/episode.py`: struktur `Episode` (label nyata/dummy per seri), episode sintetis, skenario cadangan presentasi (seed tetap), episode nyata 24 Jan 2025, simpan/muat database, CLI `python -m simulation.episode muat`.
+- `simulation/kebijakan.py`: enam kebijakan dengan informasi setara.
+- `simulation/evaluasi.py`: biaya per episode (FR-E2), simulasi N episode, ringkasan dengan selisih berpasangan dan galat baku, sensitivitas biaya menunggu, POD/FAR/CSI/lead time leave-one-episode-out, pembanding aturan hujan lokal dan indeks adaptasi H-MHEWS.
+- `simulation/jalankan.py`: CLI simulasi; hasil ke `data/processed/simulasi/` dan tabel `hasil_simulasi`/`simulasi_run`.
+- Konsentrasi Beta lapis G dikalibrasi dari lintasan peluang lapis I (12 → 7).
+
+**Hasil (300 episode sintetis, seed 42, parameter dummy; rerata biaya, juta rupiah)**
+
+| Kebijakan | low | base | high |
+| --- | --- | --- | --- |
+| SIGAP | 254 | 644 | 1257 |
+| Jam tetap 24 jam | 273 | 655 | 1340 |
+| Ambang tetap 0,5 | 280 | 719 | 1423 |
+| Cost-loss di batas | 259 | 644 | 1299 |
+| Reaktif | 313 | 972 | 2525 |
+| Informasi sempurna | 105 | 312 | 703 |
+| SIGAP vs pembanding terbaik | −1,9% | −0,01% | −3,3% |
+
+Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; aturan hujan lokal CSI 0,43; indeks H-MHEWS CSI 0,36.
+
+**Temuan yang perlu dibaca tim**
+1. Keunggulan SIGAP atas cost-loss di batas waktu kecil (0–3%), jauh di bawah angka 14% deck lama. Keunggulan hampir seluruhnya bergantung pada biaya menunggu (diskon biaya awal): base 0% (diskon 0), 0% (2%), −7% (5%), −2% (10%). Pada diskon 10%, ambang tetap 0,5 bisa lebih murah dari SIGAP (low +0,9%, high +4,7%) karena asumsi martingale DP tidak persis sama dengan lintasan peluang sebenarnya. Biaya keterlambatan tiap tindakan perlu digali dari praktisi KAI.
+2. Episode nyata 24 Jan 2025: dengan hujan NASA POWER (lokal = hulu, sel grid sama; hujan harian 24 Jan hanya 5,9 mm), peluang model tetap 0,09–0,16 dan muka air sintetis mencapai 1734, sedangkan nyata 1970 (Awas 1905). Model sintetis baru meleset lebih jauh daripada model lama (1768). Ini menegaskan batas klaim: bukti hulu butuh IMERG/GSMaP/BBWS.
+
+**Berkas berubah:** `simulation/*`, `inference/estimasi.py` (lintasan), `inference/fitur.py`, `sensing/dummy_generator.py` (prakiraan dapat dipakai ulang), `config/params.json` (k = 7), `data/processed/simulasi/*`, `tests/test_simulasi.py`, `README.md`.
+
+**Data masih dummy:** seluruh biaya, generator, prakiraan dan muka air episode nyata.
+
+**Asumsi baru:** A-034 s.d. A-037.
+
+**Hambatan:** tidak ada.
+
+**Keputusan manusia:** biaya keterlambatan tiap tindakan (penentu utama nilai SIGAP); akses IMERG/BBWS untuk bukti hulu; konfirmasi definisi kebijakan (A-035).
+
+**Hasil tes:** `pytest` → 150 lulus.

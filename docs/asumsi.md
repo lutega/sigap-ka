@@ -66,3 +66,12 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | A-031 | Keputusan operator diikat ke jam episode (jam sebelum T−0). Persetujuan membekukan status tindakan; "batalkan" menghapus efek persetujuan (dianggap tidak dijalankan). Persetujuan pada jam yang batas waktunya lewat ditolak. | Log dan ringkasan | konvensi |
 | A-032 | Label ringkasan T−0: sia-sia = dijalankan tanpa gangguan; terlambat = gangguan terjadi tanpa tindakan sampai batas waktu; terlalu awal = dijalankan (dan gangguan terjadi) lebih awal daripada saran SIGAP; tepat = selainnya. | Ringkasan dan demo | terbuka |
 | A-033 | Peringatan maladaptasi: memutar via Gundih diberi peringatan bila hujan 24 jam Gundih ≥ 50 mm (kategori lebat BMKG); bus pengganti bila ada laporan jalan Semarang–Purwodadi putus. Pada NASA POWER, Gundih satu sel grid dengan koridor sehingga peringatan Gundih cenderung ikut hujan lokal. | Papan tindakan | terbuka |
+
+## Tahap 6 · Simulasi
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-034 | Episode nyata 24 Jan 2025 memakai hujan NASA POWER nyata (harian, dibagi rata per jam), titik Glapan nyata, serta prakiraan dan muka air per jam sintetis berlabel (arsip prakiraan dan seri muka air belum ada). Hasil episode belum terkonfirmasi. | Demo episode nyata | terbuka |
+| A-035 | Definisi operasional kebijakan: jam tetap = diputuskan sekali pada T−24 (atau di batas waktu bila lebih awal) dengan ambang statis; reaktif = bertindak setelah laporan air di badan rel; informasi sempurna = bertindak paling awal hanya bila gangguan terjadi. Semua kebijakan memakai peluang lapis I yang sama pada jam yang sama. | Perbandingan kebijakan | terbuka |
+| A-036 | Konsentrasi Beta kurva pemicu dikalibrasi ulang dari 12 menjadi 7 berdasarkan lintasan peluang lapis I (k = rerata p(1−p) / rerata Δp² − 1 = 7,06 pada 300 episode sintetis base). Menggantikan nilai k di A-028. | Kurva pemicu | konvensi |
+| A-037 | Pembanding RQ1: aturan hujan lokal = hujan lokal 3 hari teramati + prakiraan lokal sampai T−0 ≥ 100 mm; indeks adaptasi H-MHEWS = maks(kategori hujan BMKG dari hujan 24 jam/prakiraan, level 3 bila Glapan ≥ Awas), alarm bila ≥ 2. Alarm pada T−0 tidak dihitung (lead time nol). | Metrik deteksi | terbuka |

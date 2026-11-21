@@ -1,0 +1,131 @@
+{
+  "rerata_biaya": {
+    "sigap": 1256.99,
+    "jam_tetap_24": 1340.37,
+    "ambang_tetap_05": 1422.71,
+    "cost_loss_batas": 1299.34,
+    "reaktif": 2525.23,
+    "informasi_sempurna": 702.6
+  },
+  "nama_kebijakan": {
+    "sigap": "SIGAP (kurva pemicu)",
+    "jam_tetap_24": "Jam tetap 24 jam",
+    "ambang_tetap_05": "Ambang tetap 0,5",
+    "cost_loss_batas": "Cost-loss di batas waktu",
+    "reaktif": "Reaktif (tunggu bukti lapangan)",
+    "informasi_sempurna": "Informasi sempurna (batas bawah)"
+  },
+  "pembanding_terbaik": "cost_loss_batas",
+  "sigap_vs_pembanding_terbaik_persen": -3.26,
+  "selisih_berpasangan_sigap": {
+    "ambang_tetap_05": {
+      "rerata": -165.72,
+      "galat_baku": 55.66,
+      "ki95": [
+        -274.81,
+        -56.62
+      ]
+    },
+    "cost_loss_batas": {
+      "rerata": -42.35,
+      "galat_baku": 21.01,
+      "ki95": [
+        -83.54,
+        -1.16
+      ]
+    },
+    "jam_tetap_24": {
+      "rerata": -83.37,
+      "galat_baku": 30.91,
+      "ki95": [
+        -143.96,
+        -22.78
+      ]
+    },
+    "reaktif": {
+      "rerata": -1268.24,
+      "galat_baku": 146.01,
+      "ki95": [
+        -1554.43,
+        -982.05
+      ]
+    }
+  },
+  "laju_gangguan": 0.4833,
+  "catatan": "Parameter dummy; keunggulan adalah batas atas menurut asumsi model sendiri.",
+  "metrik_deteksi": {
+    "sigap_loeo": {
+      "POD": 0.9591836734693877,
+      "FAR": 0.38961038961038963,
+      "CSI": 0.5949367088607594,
+      "lead_time_jam": 61.276595744680854,
+      "hit": 47,
+      "miss": 2,
+      "false_alarm": 30
+    },
+    "aturan_hujan_lokal": {
+      "POD": 0.9795918367346939,
+      "FAR": 0.4482758620689655,
+      "CSI": 0.5454545454545454,
+      "lead_time_jam": 67.375,
+      "hit": 48,
+      "miss": 1,
+      "false_alarm": 39
+    },
+    "hmhews": {
+      "POD": 1.0,
+      "FAR": 0.4948453608247423,
+      "CSI": 0.5051546391752577,
+      "lead_time_jam": 68.20408163265306,
+      "hit": 49,
+      "miss": 0,
+      "false_alarm": 48
+    }
+  },
+  "sensitivitas_diskon": [
+    {
+      "diskon": 0.0,
+      "sigap": 1299.34,
+      "jam_tetap_24": 1349.64,
+      "ambang_tetap_05": 1551.47,
+      "cost_loss_batas": 1299.34,
+      "reaktif": 2525.23,
+      "informasi_sempurna": 821.67,
+      "pembanding_terbaik": "cost_loss_batas",
+      "sigap_vs_terbaik_persen": 0.0
+    },
+    {
+      "diskon": 0.02,
+      "sigap": 1256.99,
+      "jam_tetap_24": 1340.37,
+      "ambang_tetap_05": 1422.71,
+      "cost_loss_batas": 1299.34,
+      "reaktif": 2525.23,
+      "informasi_sempurna": 702.6,
+      "pembanding_terbaik": "cost_loss_batas",
+      "sigap_vs_terbaik_persen": -3.26
+    },
+    {
+      "diskon": 0.05,
+      "sigap": 1233.93,
+      "jam_tetap_24": 1326.65,
+      "ambang_tetap_05": 1257.33,
+      "cost_loss_batas": 1299.34,
+      "reaktif": 2525.23,
+      "informasi_sempurna": 552.71,
+      "pembanding_terbaik": "ambang_tetap_05",
+      "sigap_vs_terbaik_persen": -1.86
+    },
+    {
+      "diskon": 0.1,
+      "sigap": 1092.06,
+      "jam_tetap_24": 1304.28,
+      "ambang_tetap_05": 1042.84,
+      "cost_loss_batas": 1299.34,
+      "reaktif": 2525.23,
+      "informasi_sempurna": 365.15,
+      "pembanding_terbaik": "ambang_tetap_05",
+      "sigap_vs_terbaik_persen": 4.72
+    }
+  ]
+}

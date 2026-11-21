@@ -30,7 +30,8 @@ def _jam_relatif(waktu: pd.Series, t0: datetime) -> np.ndarray:
     """Waktu (Series datetime) menjadi jam relatif terhadap T-0 (float)."""
     if len(waktu) == 0:
         return np.zeros(0)
-    return ((pd.to_datetime(waktu) - pd.Timestamp(t0)) / pd.Timedelta(hours=1)).to_numpy(dtype=float)
+    nilai = pd.to_datetime(waktu).to_numpy(dtype="datetime64[ns]")
+    return (nilai - np.datetime64(pd.Timestamp(t0).to_datetime64(), "ns")) / np.timedelta64(1, "h")
 
 
 @dataclass
