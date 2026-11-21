@@ -155,6 +155,29 @@ DATABASE_URL=sqlite:///data/demo_cadangan.sqlite .venv/Scripts/python -m uvicorn
 
 Langkah lengkap presentasi ada di `docs/naskah-demo.md`.
 
+## Modul input dan fitur modular (`src/sigap_ka/`)
+
+Satu modul per sumber, keluaran berskema `tanggal, zona, nilai, sumber, status_data`
+(`inputs/base.py`, dengan adapter ke tabel standar lama):
+
+```bash
+export PYTHONPATH=src                                   # pytest sudah mengaturnya sendiri
+.venv/Scripts/python -m sigap_ka.inputs.bmkg            # data/raw/bmkg/*.csv|xlsx -> data/interim/bmkg_clean.csv
+.venv/Scripts/python -m sigap_ka.features.hujan         # -> data/processed/hujan_features.csv
+.venv/Scripts/python -m sigap_ka.features.glapan        # -> data/interim/glapan_tma_synth.csv + data/processed/glapan_features.csv
+```
+
+- **BMKG** (`inputs/bmkg.py`): membaca berkas portal/salinan BMKG, kode 8888/9999, nilai negatif,
+  dan tanggal ganda yang bertentangan menjadi NaN; stasiun dipetakan ke zona lewat
+  `config/stasiun_bmkg.json`. Stasiun Kota Semarang dipetakan ke `semarang_pembanding` (pembanding
+  IMERG), bukan ke zona lokal/hulu/Gundih.
+- **Fitur hujan** (`features/hujan.py`): `hujan_lokal_1d/3d/5d`, `hujan_hulu_3d`,
+  `hujan_gundih_1d/3d`; per zona dipakai BMKG bila ada, selain itu IMERG Late (sumber dicatat).
+- **TMA Glapan sintetis** (`inputs/glapan_synth.py`): dua waduk linear (aliran dasar ala API dan
+  lonjakan banjir) dengan anchoring opsional ke titik nyata (1970 pada 24 Jan 2025);
+  `status_data = sintetis`. Fitur `glapan_relatif` (TMA − 1905) dan `tren_glapan_6j`
+  ada di `features/glapan.py`.
+
 ## Menjalankan tes
 
 ```bash

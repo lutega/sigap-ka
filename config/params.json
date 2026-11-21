@@ -176,7 +176,29 @@
       "tampungan_awal_mm": 10.0,
       "keterangan": "Waduk linear: dS/dt = R_hulu - S/k; elevasi = dasar + a * S^b. Air di badan rel: indeks dari hujan lokal 24 jam."
     },
-    "badan_rel": {"ambang_hujan_lokal_24j_mm": 80, "keterangan": "indeks sintetis air di badan rel"}
+    "badan_rel": {"ambang_hujan_lokal_24j_mm": 80, "keterangan": "indeks sintetis air di badan rel"},
+    "glapan_api": {
+      "status": "dummy",
+      "keterangan": "Estimasi TMA Glapan sementara (src/sigap_ka/inputs/glapan_synth.py): dua waduk linear (aliran dasar lambat ala API + lonjakan banjir cepat dari hujan di atas ambang) dengan peluruhan eksponensial; anchoring opsional ke titik TMA nyata.",
+      "elevasi_dasar": 1700,
+      "bobot_hulu": 1.0,
+      "bobot_lokal": 0.3,
+      "k_lambat_jam": 120,
+      "k_cepat_jam": 12,
+      "tampungan_lambat_awal_mm": 20.0,
+      "ambang_lonjakan_mm_hari": 40,
+      "pengali_lambat": 1.2,
+      "pengali_cepat": 2.5,
+      "pangkat": 1.0,
+      "faktor_anchor_min": 0.5,
+      "faktor_anchor_maks": 3.0
+    }
+  },
+
+  "fitur_hujan": {
+    "status": "konvensi",
+    "urutan_sumber": ["bmkg", "gpm_imerg_late"],
+    "keterangan": "Fitur hujan harian (src/sigap_ka/features/hujan.py): per zona dipakai stasiun BMKG bila ada, selain itu IMERG Late. Jendela berisi hari kosong menghasilkan NaN (tidak diisi tebakan)."
   },
 
   "dummy": {
@@ -292,7 +314,10 @@
     },
     "bmkg_stasiun": {
       "jenis": "hujan", "kelompok": "tambahan", "opsional": true,
-      "akses": "Surat permohonan BMKG; CSV di data/manual/bmkg_stasiun.csv bila sudah ada"
+      "akses": "Portal data BMKG / surat permohonan; berkas .csv/.xlsx di data/raw/bmkg/ (dibaca src/sigap_ka/inputs/bmkg.py)",
+      "dir_mentah": "data/raw/bmkg",
+      "berkas_pemetaan": "config/stasiun_bmkg.json",
+      "kode_anomali": [8888, 9999]
     },
     "kejadian_manual": {
       "jenis": "kejadian", "kelompok": "inti", "opsional": false,

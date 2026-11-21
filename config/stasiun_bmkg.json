@@ -1,0 +1,21 @@
+{
+  "keterangan": "Pemetaan stasiun BMKG ke zona SIGAP-KA. Dirujuk dari params.json (sumber_data.bmkg_stasiun.berkas_pemetaan). Stasiun yang tidak terdaftar di sini dilewati (dilaporkan), tidak ditebak zonanya.",
+  "zona_hujan": ["lokal_gubug_karangjati", "hulu_tuntang", "gundih"],
+  "zona_lain": ["semarang_pembanding"],
+  "stasiun": {
+    "Stasiun Meteorologi Ahmad Yani": {
+      "zona": "semarang_pembanding",
+      "alias": ["Ahmad Yani", "Stamet Ahmad Yani", "Stasiun Meteorologi Ahmad Yani Semarang", "Ahmad Yani Semarang"],
+      "lat": null,
+      "lon": null,
+      "catatan": "Kota Semarang, sekitar 25-30 km dari koridor dan hulu Tuntang: hanya pembanding/validasi IMERG, bukan masukan zona lokal atau hulu. Isi lat/lon dari portal BMKG."
+    },
+    "Stasiun Klimatologi Jawa Tengah": {
+      "zona": "semarang_pembanding",
+      "alias": ["Klimatologi Jawa Tengah", "Staklim Jawa Tengah", "Stasiun Klimatologi Semarang", "Klimatologi Semarang"],
+      "lat": null,
+      "lon": null,
+      "catatan": "Kota Semarang: hanya pembanding/validasi IMERG. Isi lat/lon dari portal BMKG."
+    }
+  }
+}

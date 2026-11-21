@@ -13,3 +13,6 @@ dashboard/dist/
 
 # basis data cadangan demo (dibangkitkan ulang dengan python -m simulation.cadangan_sqlite)
 *.sqlite
+
+# data antara (dibangkitkan ulang oleh src/sigap_ka)
+data/interim/

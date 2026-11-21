@@ -305,3 +305,23 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 - Konsol tab Data: pilihan sumber hujan (IMERG Late, IMERG Final, NASA POWER).
 
 **Hasil tes:** `pytest -m "not db"` → 187 lulus (5 tes baru: pengurai Giovanni, jalur Late, Final tanpa cadangan OPeNDAP, EULA, episode nyata berbasis IMERG); `npm test` → 7 lulus. Catatan: satu putaran sempat menggantung karena kebuntuan event loop anyio di Windows (sinyal bangun lewat soket localhost tidak sampai); putaran ulang lulus.
+
+---
+
+## Pembaruan 22 Nov 2026 · Modul input dan fitur modular (src/sigap_ka)
+
+**Yang dikerjakan**
+- `src/sigap_ka/inputs/base.py`: skema keluaran `tanggal, zona, nilai, sumber, status_data`, validator, adapter ke tabel standar lapis S lama.
+- `src/sigap_ka/inputs/bmkg.py`: pembaca .csv/.xlsx toleran (metadata "Nama Stasiun", baris judul Tanggal/RR, catatan kaki), pembersihan 8888/9999/negatif/teks/tanggal ganda → NaN dengan alasan di `catatan_qc`, pemetaan zona lewat `config/stasiun_bmkg.json`, keluaran `data/interim/bmkg_clean.csv`.
+- `src/sigap_ka/inputs/imerg.py`: adapter IMERG Late/Final ke skema standar.
+- `src/sigap_ka/features/hujan.py`: fitur hujan harian per zona dengan prioritas BMKG → IMERG Late; jendela berisi hari kosong → NaN.
+- `src/sigap_ka/inputs/glapan_synth.py` + `features/glapan.py`: TMA Glapan sintetis per jam (dua waduk linear, lonjakan di atas 40 mm/hari, peluruhan 12 dan 120 jam), anchoring ke titik nyata dengan faktor dibatasi 0,5–3; fitur `glapan_relatif` dan `tren_glapan_6j`.
+- Dijalankan pada data nyata: belum ada berkas BMKG (folder kosong, tidak galat); fitur hujan 1053 hari dari IMERG Late; TMA sintetis 25.272 jam, faktor anchor 1,91, puncak 24 Jan 2025 = 1970, maksimum 2338, di atas Awas sekitar 14% waktu (lihat A-051).
+
+**Berkas berubah:** `src/sigap_ka/**`, `config/stasiun_bmkg.json`, `config/params.json` (muka_air.glapan_api, fitur_hujan, bmkg_stasiun), `pyproject.toml` (pythonpath src, saringan peringatan pandas/numpy), `requirements.txt` (openpyxl), `.gitignore` (data/interim), `tests/test_input_bmkg.py`, `tests/test_glapan_synth.py`, `data/processed/hujan_features.csv`, `data/processed/glapan_features.csv`, `README.md`.
+
+**Asumsi baru:** A-049 s.d. A-052.
+
+**Keputusan manusia:** berkas BMKG asli untuk memverifikasi format pembaca dan konvensi hari (A-049); seri TMA BBWS untuk menggantikan estimasi sintetis.
+
+**Hasil tes:** `pytest tests/test_input_bmkg.py tests/test_glapan_synth.py` → 18 lulus; `pytest -m "not db"` → 205 lulus.

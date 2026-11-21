@@ -112,3 +112,12 @@ tim atau diganti data nyata. Angka nyata hanya yang tercantum di blok `_nyata` p
 | --- | --- | --- | --- |
 | A-048 | Hujan IMERG diambil per titik (satu sel 0,1°): lokal (−7,05; 110,65), hulu (−7,25; 110,45), Gundih (−7,25; 110,95), lewat Giovanni Time Series API. Hari IMERG (UTC) dicatat mulai 07.00 WIB. Episode nyata memakai **IMERG Late** (latensi 14 jam, tersedia pada jam keputusan); **IMERG Final** (latensi sekitar 105 hari) hanya untuk analisis riwayat agar tidak mengintip masa depan. Satu sel belum mewakili rerata daerah tangkapan Tuntang. | Bukti hulu episode nyata | terbuka |
 | A-017 (pembaruan) | NASA POWER kini menjadi cadangan; masalah satu sel grid untuk lokal/hulu/Gundih tidak lagi memengaruhi episode nyata karena IMERG tersedia. | – | diperbarui |
+
+## Pembaruan 22 Nov 2026 · Modul input/fitur modular (src/sigap_ka)
+
+| Kode | Asumsi | Dampak | Status |
+| --- | --- | --- | --- |
+| A-049 | Hari curah hujan BMKG diasumsikan diukur pukul 07.00 WIB untuk 24 jam sebelumnya, sedangkan hari IMERG adalah hari UTC (07.00–07.00 WIB); tanggal BMKG D kira-kira setara hari IMERG D−1. Belum dikoreksi di fitur harian (perlu dicek dengan berkas BMKG asli). | Perbandingan BMKG–IMERG, fitur gabungan | terbuka |
+| A-050 | Estimasi TMA Glapan sintetis menganggap hari tanpa data hujan = 0 mm (jumlahnya dilaporkan); hujan harian dibagi rata per jam. | Seri TMA sintetis | terbuka |
+| A-051 | Anchoring TMA sintetis ke satu titik nyata (1970, 24 Jan 2025, jam tidak diketahui → maksimum harian) memberi faktor skala sekitar 1,9; akibatnya TMA sintetis melewati ambang Awas sekitar 14% waktu (2024–2026). Titik itu tidak bisa sekaligus dipakai untuk menguji model; perlu seri BBWS. | Fitur Glapan sintetis | terbuka |
+| A-052 | Stasiun BMKG yang tersedia di portal hanya di Kota Semarang (Ahmad Yani, Klimatologi Jawa Tengah), sekitar 25–30 km dari koridor dan hulu; dipetakan ke zona `semarang_pembanding` untuk validasi IMERG, bukan masukan zona. Hari BMKG kosong di zona lokal/hulu/Gundih diisi IMERG Late per hari (sumber dicatat per baris). | Fitur hujan | konvensi |

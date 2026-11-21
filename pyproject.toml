@@ -6,15 +6,17 @@ requires-python = ">=3.11"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [".", "src"]
 addopts = "-q"
 markers = [
     "db: tes integrasi yang membutuhkan PostgreSQL + TimescaleDB (docker compose)",
 ]
 filterwarnings = [
     "ignore::DeprecationWarning:passlib.*",
+    # kompatibilitas pandas 2.3 + numpy 2.5 (aritmetika Timestamp di dalam pandas), bukan logika SIGAP-KA
+    "ignore:The 'generic' unit for NumPy timedelta is deprecated:DeprecationWarning",
 ]
 
 [tool.coverage.run]
-source = ["config", "sensing", "inference", "gating", "action", "simulation", "api", "auth", "db"]
+source = ["config", "sensing", "inference", "gating", "action", "simulation", "api", "auth", "db", "src/sigap_ka"]
 omit = ["tests/*"]
