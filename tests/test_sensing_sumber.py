@@ -128,6 +128,16 @@ def test_imerg_pipeline_dengan_token():
     assert responses.calls[0].request.headers["Authorization"] == "Bearer uji"
 
 
+@responses.activate
+def test_imerg_eula_belum_disetujui_memberi_tautan():
+    """403 'EULA Acceptance Failure' diubah menjadi pesan berisi tautan persetujuan aplikasi."""
+    responses.add(responses.GET, hujan_gpm_imerg.url_harian(date(2025, 1, 1), -7.25, 110.47), status=403,
+                  json={"status_code": 403, "error_description": "EULA Acceptance Failure",
+                        "resolution_url": "https://urs.earthdata.nasa.gov/approve_app?client_id=uji"})
+    with pytest.raises(SumberTidakTersedia, match="approve_app"):
+        hujan_gpm_imerg.ambil("hulu", date(2025, 1, 1), date(2025, 1, 1), token="uji")
+
+
 # ---------------------------------------------------------------- GSMaP
 
 class _SftpTiruan:

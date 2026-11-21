@@ -72,12 +72,32 @@ def ambil(lokasi: str, mulai: date, selesai: date, sesi_http: requests.Session |
         url = url_harian(hari, titik["lat"], titik["lon"])
         try:
             resp = http.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=60)
-            resp.raise_for_status()
         except requests.RequestException as galat:
             raise SumberTidakTersedia(f"GPM IMERG gagal diambil ({hari}): {galat}") from galat
+        if resp.status_code in (401, 403):
+            raise SumberTidakTersedia(pesan_otorisasi(resp))
+        if not resp.ok:
+            raise SumberTidakTersedia(f"GPM IMERG gagal diambil ({hari}): HTTP {resp.status_code}")
         hasil.append({"tanggal": hari, "url": url, "teks": resp.text, "lokasi": lokasi})
         hari += timedelta(days=1)
     return hasil
+
+
+def pesan_otorisasi(resp: requests.Response) -> str:
+    """Pesan galat yang dapat ditindaklanjuti untuk respons 401/403 GES DISC.
+
+    GES DISC menolak token yang valid bila pemilik akun belum menyetujui aplikasi
+    "NASA GESDISC DATA ARCHIVE" (EULA); responsnya memuat resolution_url untuk persetujuan itu.
+    """
+    try:
+        isi = resp.json()
+    except ValueError:
+        isi = {}
+    if "EULA" in str(isi.get("error_description", "")) or resp.status_code == 401:
+        tautan = isi.get("resolution_url") or "https://urs.earthdata.nasa.gov/profile (Applications > Authorized Apps)"
+        return ("GPM IMERG ditolak (HTTP %d): akun Earthdata belum menyetujui aplikasi NASA GESDISC DATA "
+                "ARCHIVE. Buka %s, login, lalu setujui." % (resp.status_code, tautan))
+    return f"GPM IMERG ditolak (HTTP {resp.status_code}): periksa EARTHDATA_TOKEN"
 
 
 def urai_ascii(teks: str) -> float:
