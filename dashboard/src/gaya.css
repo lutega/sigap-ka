@@ -143,3 +143,8 @@ td.angka, th.angka { text-align: right; }
 /* login */
 .login { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
 .login form { width: min(360px, 100%); display: grid; gap: 12px; }
+
+/* Evaluasi data nyata: baris angka utama dan tooltip AUC */
+.baris-stat { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.tooltip-sigap { background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; font-size: 12px; display: grid; gap: 2px; max-width: 280px; }

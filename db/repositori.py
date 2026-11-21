@@ -399,6 +399,12 @@ def hapus_seri_episode(sesi: Session, episode_id: str) -> None:
         sesi.execute(delete(tabel).where(tabel.episode_id == episode_id))
 
 
+def hapus_muka_air_umum(sesi: Session, sumber: str) -> None:
+    """Menghapus observasi muka air umum (episode_id kosong) dari satu sumber; dipakai sebelum memuat
+    ulang sumber manual agar koreksi jam/nilai tidak meninggalkan baris lama."""
+    sesi.execute(delete(ObsMukaAir).where(ObsMukaAir.sumber == sumber, ObsMukaAir.episode_id == ""))
+
+
 def hapus_laporan_episode(sesi: Session, episode_id: str) -> None:
     """Menghapus laporan lapangan satu episode (dipakai saat episode dibangun ulang)."""
     sesi.execute(delete(LaporanLapangan).where(LaporanLapangan.episode_id == episode_id))

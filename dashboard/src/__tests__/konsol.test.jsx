@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App.jsx";
 import PapanTindakan from "../komponen/PapanTindakan.jsx";
 import PanelDemo from "../tab/PanelDemo.jsx";
+import EvaluasiNyata from "../komponen/EvaluasiNyata.jsx";
 import { LabelData, StatusTindakan } from "../komponen/umum.jsx";
 import { simpanToken } from "../api.js";
 
@@ -131,5 +132,36 @@ describe("teks antarmuka", () => {
       const isi = readFileSync(p, "utf-8");
       expect(isi, p).not.toMatch(/\b(aman|safe)\b/i);
     }
+  });
+});
+
+describe("evaluasi data nyata", () => {
+  afterEach(() => { vi.restoreAllMocks(); });
+
+  it("menampilkan kandidat, AUC dengan selang, dan batas klaim", async () => {
+    const data = {
+      sumber_utama: "harian", prakiraan_utama: "persistensi",
+      sumber: { harian: { nama: "IMERG Late harian" }, jam: { nama: "IMERG Late per jam" } },
+      batas_klaim: ["Kejadian berasal dari berita publik dan berstatus kandidat."],
+      validasi_imerg: { gpm_imerg_late: { bias_persen: 17.4, korelasi: 0.82, n_bulan: 24 }, antarstasiun: { bias_persen: -5.6, korelasi: 0.96 } },
+      pemisahan: { harian: { n_kejadian: 8, n_lain: 992, skor: [{ skor: "p_T-0", nama: "Peluang SIGAP pada T-0", auc: 0.8, bawah: 0.68, atas: 0.91 }], pembanding: {} } },
+      kandidat: [{ id_kandidat: "K03", t0: "2025-01-24T22:25", lokasi_km: "32+5/7", jenis_gangguan: "tutup_dua_jalur", mekanisme: "gerusan",
+        sumber: ["bnpb.go.id"], status: "kandidat; perlu verifikasi tim",
+        harian: { "p_T-0": 0.05, "p_T-24": 0.23, hujan_aktual_hulu_72j: 41.3, hujan_hulu_3h_tersedia: 45, tindakan_sigap: "T1@T-60" } }],
+      realisme: { median: [{ besaran: "hulu_72j", sintetis_latih: 81, nyata_semua_hari: 12.5, nyata_hari_kejadian: 66 }], kelas_hujan: [] },
+    };
+    vi.stubGlobal("fetch", vi.fn(() => balasan(data)));
+    render(<EvaluasiNyata />);
+    expect(await screen.findByText("K03")).toBeInTheDocument();
+    expect(screen.getByText("T1@T-60")).toBeInTheDocument();
+    expect(screen.getByText(/selang 95% 0,68–0,91/)).toBeInTheDocument();
+    expect(screen.getByText(/berstatus kandidat/)).toBeInTheDocument();
+    expect(screen.getByText("+17,4%")).toBeInTheDocument();
+  });
+
+  it("tidak galat bila endpoint mengembalikan daftar kosong", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => balasan([])));
+    const { container } = render(<EvaluasiNyata />);
+    await waitFor(() => expect(container.textContent).toBe(""));
   });
 });

@@ -1,6 +1,7 @@
 """
 Tujuan      : Endpoint lapis S: daftar sumber data (status nyata/dummy, waktu ambil terakhir), seri
-              hujan, seri muka air, dan katalog kejadian.
+              hujan, seri muka air, katalog kejadian, dan ringkasan evaluasi pada data nyata
+              (validasi IMERG, kejadian kandidat, uji balik).
 Lapis       : API -> S (Sensing).
 Sumber      : Database (obs_hujan, obs_muka_air, kejadian, sumber_data, log_pengambilan) dan
               sensing/registri.py.
@@ -23,6 +24,7 @@ from config import muat_params
 from db import repositori as repo
 from db.model import LogPengambilan
 from sensing.registri import status_sumber
+from simulation.ringkasan_nyata import muat_ringkasan
 
 router = APIRouter(prefix="/data", tags=["data"], dependencies=[Depends(pengguna_aktif)])
 
@@ -88,3 +90,10 @@ def kejadian(sesi: Session = Depends(ambil_sesi)):
 def jadwal(sesi: Session = Depends(ambil_sesi)):
     """Jadwal KA yang melewati Gubug (placeholder dummy sampai jadwal publik diisi)."""
     return keluaran(_baris(repo.ambil_jadwal(sesi), ["nomor", "relasi", "jam_lewat_gubug", "sumber", "is_simulated"]))
+
+
+@router.get("/evaluasi-nyata")
+def evaluasi_nyata():
+    """Ringkasan evaluasi pada data nyata: validasi IMERG vs BMKG, kejadian kandidat dari berita
+    (tanpa tautan lengkap), uji balik, AUC dengan selang 95%, kepekaan bias, realisme generator."""
+    return keluaran(muat_ringkasan())

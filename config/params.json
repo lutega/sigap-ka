@@ -25,6 +25,15 @@
     "semarang_pembanding": {"nama": "Stasiun BMKG Ahmad Yani dan Klimatologi Jawa Tengah (rerata koordinat)", "lat": -6.9808, "lon": 110.3795, "status": "dari metadata berkas BMKG; hanya untuk validasi IMERG"}
   },
 
+  "das_tuntang": {
+    "status": "perkiraan, perlu verifikasi",
+    "keterangan": "Sel GPM IMERG 0,1 derajat (pusat sel) yang mendekati DAS Tuntang di hulu Bendung Glapan (Rawa Pening, lereng Merbabu-Salatiga, Bringin). Kotak perkiraan dari peta, bukan poligon DAS BBWS Pemali-Juana (A-063).",
+    "sel": [[-7.35, 110.35], [-7.35, 110.45], [-7.35, 110.55],
+            [-7.25, 110.35], [-7.25, 110.45], [-7.25, 110.55],
+            [-7.15, 110.35], [-7.15, 110.45], [-7.15, 110.55]],
+    "porsi_sel_minimum": 0.8
+  },
+
   "episode": {
     "status": "dummy",
     "horizon_jam": 72,
@@ -158,7 +167,8 @@
       "keterangan": "Laporan petugas yang mengonfirmasi air di badan rel mengalikan odds gangguan."
     },
     "latensi_jam": {
-      "nasa_power": 72, "gpm_imerg": 14, "gpm_imerg_late": 14, "gpm_imerg_final": 2520,
+      "nasa_power": 72, "gpm_imerg": 14, "gpm_imerg_late": 14, "gpm_imerg_late_jam": 14, "gpm_imerg_late_das": 14, "gpm_imerg_final": 2520,
+      "muka_air_sintetis_tertunda_jam": 15, "muka_air_sintetis_tertunda_harian": 38,
       "gsmap": 4, "bmkg_stasiun": 1,
       "glapan_bnpb": 2, "bbws": 1, "muka_air_sintetis": 0, "dummy_generator": 3
     },
@@ -285,7 +295,8 @@
       "akses": "Giovanni Time Series API (utama) / GES DISC OPeNDAP (cadangan), token Earthdata (EARTHDATA_TOKEN) dan persetujuan aplikasi NASA GESDISC DATA ARCHIVE",
       "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDL.07",
       "url_giovanni": "https://api.giovanni.earthdata.nasa.gov/timeseries",
-      "giovanni_data": {"late": "GPM_3IMERGDL_07_precipitation", "final": "GPM_3IMERGDF_07_precipitation"},
+      "giovanni_data": {"late": "GPM_3IMERGDL_07_precipitation", "final": "GPM_3IMERGDF_07_precipitation",
+                        "late_jam": "GPM_3IMERGHHL_07_precipitation"},
       "catatan": "Late dipakai untuk memutar ulang episode (tersedia sekitar 14 jam); Final untuk analisis riwayat (terbit sekitar 3,5 bulan kemudian)."
     },
     "gsmap": {
@@ -360,9 +371,14 @@
     "jam_pindai": 12,
     "jeda_hari_kontrol": 3,
     "prakiraan_utama": "persistensi",
+    "sumber_hujan": ["harian", "jam", "harian_das"],
+    "muka_air_utama": "tertunda",
+    "varian_muka_air": ["tertunda", "waktu_nyata"],
     "varian_prakiraan": ["persistensi", "sintetis", "kosong"],
     "skala_bias": [1.0, 0.852, 0.79, 0.8, 1.2],
     "jam_dilaporkan": [48, 24, 12, 6, 0],
-    "ambang_peluang_laporan": [0.3, 0.5]
+    "ambang_peluang_laporan": [0.3, 0.5],
+    "n_bootstrap": 2000,
+    "seed_bootstrap": 42
   }
 }

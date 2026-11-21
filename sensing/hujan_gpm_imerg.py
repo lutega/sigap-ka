@@ -8,12 +8,17 @@ Sumber      : Jalur utama: Giovanni Time Series API (satu permintaan per titik u
                 memutar ulang episode karena itulah yang tersedia bagi operator pada jam keputusan.
               - Final (GPM_3IMERGDF.07): terkalibrasi penakar, terbit sekitar 3,5 bulan kemudian;
                 dipakai untuk analisis riwayat (spesifikasi 8.1), bukan untuk jam keputusan.
+              - Late per jam ('late_jam', dari GPM_3IMERGHHL.07 setengah jam, mm/jam): dijumlah ke
+                per jam; tersedia sekitar 14 jam setelah jam itu, jadi jeda informasinya lebih pendek
+                daripada Late harian (14-38 jam).
               Autentikasi: EARTHDATA_TOKEN (.env) sebagai header Authorization Bearer.
-Masukan     : Kunci lokasi, rentang tanggal, produk ('late' atau 'final').
-Keluaran    : Tabel standar (waktu = awal hari UTC = 07.00 WIB, resolusi_jam = 24, satuan mm,
-              sumber 'gpm_imerg_late' atau 'gpm_imerg_final', is_simulated = False).
-Keterbatasan: Resolusi harian (hujan dibagi rata per jam saat dipakai model per jam). Nilai satu sel
-              grid, bukan rerata daerah tangkapan Tuntang (A-048).
+Masukan     : Kunci lokasi, rentang tanggal, produk ('late', 'final', atau 'late_jam').
+Keluaran    : Tabel standar (harian: waktu = awal hari UTC = 07.00 WIB, resolusi_jam = 24; per jam:
+              waktu = awal jam WIB, resolusi_jam = 1; satuan mm; sumber 'gpm_imerg_late',
+              'gpm_imerg_final', atau 'gpm_imerg_late_jam'; is_simulated = False).
+Keterbatasan: Produk harian dibagi rata per jam saat dipakai model per jam. Nilai satu sel grid,
+              bukan rerata daerah tangkapan Tuntang (A-048). Jam dengan salah satu setengah jam
+              kosong dibuang (NaN).
 """
 
 from __future__ import annotations
@@ -30,7 +35,8 @@ from config import muat_params, muat_pengaturan
 from sensing.standar import SumberTidakTersedia, batas_kualitas, tandai_kualitas, validasi_standar
 
 NAMA_SUMBER = "gpm_imerg"
-SUMBER_PRODUK = {"late": "gpm_imerg_late", "final": "gpm_imerg_final"}
+SUMBER_PRODUK = {"late": "gpm_imerg_late", "final": "gpm_imerg_final", "late_jam": "gpm_imerg_late_jam"}
+HARI_PER_PERMINTAAN_JAM = 92  # setengah jam: dipotong per ~3 bulan (sekitar 4 detik per permintaan)
 NILAI_KOSONG = -9999.9
 RESOLUSI_DERAJAT = 0.1
 SELISIH_WIB = pd.Timedelta(hours=7)  # hari IMERG dihitung dalam UTC
@@ -64,12 +70,14 @@ def pesan_otorisasi(resp: requests.Response) -> str:
 # ---------------------------------------------------------------- jalur utama: Giovanni
 
 def ambil_deret(lokasi: str, mulai: date, selesai: date, produk: str = "late",
-                sesi_http: requests.Session | None = None, token: str | None = None) -> dict:
+                sesi_http: requests.Session | None = None, token: str | None = None,
+                titik: dict | None = None) -> dict:
     """Mengunduh deret harian IMERG satu titik lewat Giovanni Time Series API (satu permintaan).
 
     Parameter:
-        lokasi: kunci lokasi di params.json.
+        lokasi: kunci lokasi di params.json (atau label bebas bila titik diberikan).
         mulai, selesai: rentang tanggal (inklusif, hari UTC).
+        titik: {'lat', 'lon'} untuk titik di luar blok lokasi (mis. sel DAS); bawaan dari params.
         produk: 'late' atau 'final'.
     Kembali:
         dict {'lokasi', 'produk', 'url', 'teks'} (teks CSV Giovanni).
@@ -78,7 +86,7 @@ def ambil_deret(lokasi: str, mulai: date, selesai: date, produk: str = "late",
     """
     token = _token(token)
     konf = muat_params().sumber_data[NAMA_SUMBER]
-    titik = muat_params().lokasi[lokasi]
+    titik = titik or muat_params().lokasi[lokasi]
     url = (f"{konf['url_giovanni']}?data={konf['giovanni_data'][produk]}"
            f"&location=[{titik['lat']},{titik['lon']}]"
            f"&time={mulai:%Y-%m-%d}T00:00:00/{selesai:%Y-%m-%d}T23:59:59")
@@ -114,6 +122,45 @@ def urai_giovanni(teks: str) -> tuple[dict, pd.DataFrame]:
             k, v = b.split(",", 1)
             meta[k.strip()] = v.strip()
     raise ValueError("format CSV Giovanni tidak dikenal (tidak ada baris Timestamp)")
+
+
+def ke_format_standar_jam(daftar: list[dict]) -> pd.DataFrame:
+    """Deret setengah jam Giovanni (mm/jam) menjadi hujan per jam (mm).
+
+    Dua setengah jam dijumlah (laju x 0,5 jam); jam yang tidak lengkap menjadi NaN.
+    Waktu = awal jam UTC + 7 jam (WIB).
+    """
+    potongan, sel = [], "?, ?"
+    for mentah in daftar:
+        meta, tabel = urai_giovanni(mentah["teks"])
+        sel = f"{meta.get('lat', '?')}, {meta.get('lon', '?')}"
+        potongan.append(tabel)
+    tabel = pd.concat(potongan, ignore_index=True).drop_duplicates("tanggal_utc")
+    jam = tabel["tanggal_utc"].dt.floor("h")
+    mm = tabel["nilai"] * 0.5
+    per_jam = mm.groupby(jam).sum(min_count=2).where(mm.groupby(jam).count() == 2)
+    df = pd.DataFrame({
+        "waktu": per_jam.index + SELISIH_WIB,
+        "lokasi": daftar[0]["lokasi"],
+        "nilai": per_jam.to_numpy(dtype=float),
+        "satuan": "mm",
+        "sumber": SUMBER_PRODUK["late_jam"],
+        "is_simulated": False,
+        "resolusi_jam": 1,
+        "sel_grid": sel,
+    })
+    return validasi_standar(df)
+
+
+def ambil_deret_jam(lokasi: str, mulai: date, selesai: date, sesi_http: requests.Session | None = None,
+                    token: str | None = None) -> list[dict]:
+    """Mengunduh deret setengah jam IMERG Late satu titik, dipotong per HARI_PER_PERMINTAAN_JAM hari."""
+    daftar, awal = [], mulai
+    while awal <= selesai:
+        akhir = min(selesai, awal + timedelta(days=HARI_PER_PERMINTAAN_JAM - 1))
+        daftar.append(ambil_deret(lokasi, awal, akhir, "late_jam", sesi_http=sesi_http, token=token))
+        awal = akhir + timedelta(days=1)
+    return daftar
 
 
 def ke_format_standar_deret(mentah: dict) -> pd.DataFrame:
@@ -222,8 +269,12 @@ def jalankan(lokasi: str, mulai: date, selesai: date, produk: str = "late",
     """Pipeline: Giovanni (utama) -> bila gagal dan produk Late, OPeNDAP per hari -> cek_kualitas.
 
     Kembali:
-        (tabel standar berkualitas, mentah).
+        (tabel standar berkualitas, mentah). Untuk 'late_jam' mentah = dict berisi daftar potongan.
     """
+    if produk == "late_jam":
+        daftar = ambil_deret_jam(lokasi, mulai, selesai, sesi_http=sesi_http, token=token)
+        mentah = {"lokasi": lokasi, "produk": produk, "url": daftar[0]["url"], "potongan": daftar}
+        return cek_kualitas(ke_format_standar_jam(daftar)), mentah
     try:
         mentah = ambil_deret(lokasi, mulai, selesai, produk, sesi_http=sesi_http, token=token)
         return cek_kualitas(ke_format_standar_deret(mentah)), mentah

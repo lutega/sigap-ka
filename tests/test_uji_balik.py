@@ -113,8 +113,9 @@ def test_uji_balik_kandidat_dan_pindai_harian():
                              "t0": [datetime(2025, 1, 22, 6, 0), datetime(2025, 1, 3, 6, 0)],
                              "jam_diketahui": [True, True], "jenis_gangguan": "tutup_dua_jalur",
                              "mekanisme": "genangan"})
-    hasil = ub.uji_balik_kandidat(p, hujan=hujan, kandidat=kandidat, varian=["persistensi", "kosong"])
-    assert len(hasil) == 4
+    hasil = ub.uji_balik_kandidat(p, hujan=hujan, kandidat=kandidat, varian=["persistensi", "kosong"],
+                                  varian_muka_air=["tertunda"])
+    assert len(hasil) == 4 and (hasil["muka_air"] == "tertunda").all()
     u1 = hasil[(hasil["id_kandidat"] == "U1") & (hasil["prakiraan"] == "persistensi")].iloc[0]
     assert 0 <= u1["p_T-0"] <= 1 and u1["hujan_hulu_3h_tersedia"] > 100
     u2 = hasil[hasil["id_kandidat"] == "U2"]
@@ -125,3 +126,87 @@ def test_uji_balik_kandidat_dan_pindai_harian():
     ph = ub.pindai_harian(p, hujan=hujan, kandidat=kandidat, mulai="2025-01-15", selesai="2025-01-27")
     assert set(ph["label"]) <= {"kejadian", "sekitar", "lain"}
     assert (ph.loc[ph["tanggal"] == "2025-01-22", "label"] == "kejadian").all()
+
+
+def _hujan_jam(mm_per_jam: float = 0.5) -> pd.DataFrame:
+    """Hujan per jam buatan (IMERG Late per jam) Januari 2025."""
+    jam = pd.date_range("2025-01-01 07:00", "2025-01-31 06:00", freq="h")
+    return pd.concat([pd.DataFrame({"waktu": jam, "lokasi": lok, "nilai": mm_per_jam, "satuan": "mm",
+                                    "sumber": "gpm_imerg_late_jam", "is_simulated": False, "resolusi_jam": 1})
+                      for lok in ("lokal", "hulu", "gundih")], ignore_index=True)
+
+
+def test_prakiraan_persistensi_per_jam_rerata_24_jam_tersedia():
+    """Data per jam: laju = rerata 24 jam terakhir yang tersedia (latensi 14 jam), bukan jam terakhir saja."""
+    p = muat_params()
+    hujan = _hujan_jam(0.0)
+    t0 = datetime(2025, 1, 25, 12, 0)
+    # 12 jam bernilai 2 mm yang berakhir tepat 14 jam sebelum T-0 -> tersedia; 24 jam terakhir = 24 mm -> 1 mm/jam
+    blok = (hujan["waktu"] >= t0 - pd.Timedelta(hours=26)) & (hujan["waktu"] < t0 - pd.Timedelta(hours=14))
+    hujan.loc[blok, "nilai"] = 2.0
+    pk = prakiraan_persistensi(hujan, t0, p)
+    terakhir = pk[pk["waktu_terbit"] == pk["waktu_terbit"].max()]
+    assert terakhir["nilai"].max() == pytest.approx(3.0)   # 1 mm/jam x periode 3 jam
+
+
+def test_jalankan_per_sumber_dengan_data_per_jam(tmp_path, monkeypatch):
+    """Pipeline uji balik: sumber yang belum diunduh dicatat; sumber per jam menulis kandidat_jam.csv."""
+    from config import reset_cache
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
+    reset_cache()
+    try:
+        _hujan_jam(0.8).to_csv(tmp_path / "hujan_gpm_imerg_jam.csv", index=False)
+        r = ub.jalankan(pindai=False, sumber=["harian", "jam"])
+        assert "catatan" in r["per_sumber"]["harian"] and r["sumber_utama"] == "jam"
+        assert (tmp_path / "uji_balik" / "kandidat_jam.csv").exists()
+        dinilai = [k for k in r["kandidat"] if not k.get("catatan")]
+        assert {k["id_kandidat"] for k in dinilai} >= {"K02", "K03"}
+    finally:
+        reset_cache()
+
+
+def test_muka_air_tertunda_tidak_memakai_hujan_belum_tersedia():
+    """Muka air sintetis tertunda (data per jam): pada T-0 yang terbaca adalah nilai T-15 (1 jam + latensi 14)."""
+    p = muat_params()
+    hujan = _hujan_jam(0.2)
+    blok = (hujan["waktu"] >= "2025-01-24 00:00") & (hujan["waktu"] < "2025-01-25 00:00")
+    hujan.loc[blok, "nilai"] = 8.0
+    t0 = datetime(2025, 1, 25, 0, 0)
+    nyata = _ep(t0, hujan=hujan, prakiraan="kosong")
+    tunda = _ep(t0, hujan=hujan, prakiraan="kosong", muka_air_tertunda=True)
+    assert (tunda.muka_air["sumber"] == "muka_air_sintetis_tertunda_jam").all()
+    seri = nyata.muka_air[nyata.muka_air["lokasi"] == "glapan"].set_index("waktu")["nilai"]
+    elev_tunda = IndeksEpisode(tunda, p).fitur_mentah(0.0)["glapan_relatif"] + p.muka_air["ambang_awas"]
+    elev_nyata = IndeksEpisode(nyata, p).fitur_mentah(0.0)["glapan_relatif"] + p.muka_air["ambang_awas"]
+    assert elev_tunda == pytest.approx(seri.loc[pd.Timestamp(t0) - pd.Timedelta(hours=15)])
+    assert elev_nyata > elev_tunda      # hujan 24/1 sudah menaikkan muka air waktu nyata
+    with pytest.raises(ValueError):
+        ub._tertunda("kemarin")
+
+
+def test_auc_selang_bootstrap():
+    """Selang bootstrap memuat AUC titik dan tetap untuk seed sama; terlalu sedikit data -> None."""
+    pos, neg = np.array([0.9, 0.6, 0.4]), np.array([0.1, 0.2, 0.5, 0.3, 0.7])
+    a = ub.auc_selang(pos, neg, n=500, seed=1)
+    assert a == ub.auc_selang(pos, neg, n=500, seed=1)
+    assert a[0] <= ub._auc(pos, neg) <= a[1]
+    assert ub.auc_selang(np.array([0.5]), neg) is None
+
+
+def test_muat_hujan_hulu_das_mengganti_hulu(tmp_path, monkeypatch):
+    """hulu_das=True: baris hulu diganti rerata DAS, lokal/Gundih tetap; tanpa berkas DAS -> kosong."""
+    from config import reset_cache
+    from simulation.episode import muat_hujan_imerg_late
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
+    reset_cache()
+    try:
+        _hujan().to_csv(tmp_path / "hujan_gpm_imerg.csv", index=False)
+        assert muat_hujan_imerg_late(hulu_das=True).empty
+        das = _hujan(dasar=9.0)
+        das = das[das["lokasi"] == "hulu"].assign(sumber="gpm_imerg_late_das")
+        das.to_csv(tmp_path / "hujan_gpm_imerg_das.csv", index=False)
+        h = muat_hujan_imerg_late(hulu_das=True)
+        assert (h.loc[h["lokasi"] == "hulu", "nilai"] == 9.0).all()
+        assert (h.loc[h["lokasi"] == "lokal", "nilai"] == 5.0).all()
+    finally:
+        reset_cache()

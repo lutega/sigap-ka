@@ -107,9 +107,19 @@ Rp3,5 miliar untuk 124 perjalanan batal.
 
 | Data | Dampak | Cara memperoleh |
 | --- | --- | --- |
-| Rerata hujan seluruh daerah tangkapan Tuntang (bukan satu sel) dan pos hujan | muka air sintetis episode nyata masih di bawah nilai nyata | data BBWS atau beberapa sel IMERG |
+| Pos hujan dan TMA telemetri BBWS (rerata 9 sel IMERG DAS Tuntang sudah ada, korelasi 0,97 dengan sel titik sehingga tidak banyak mengubah hasil) | muka air sintetis episode nyata masih di bawah nilai nyata | data BBWS |
 | Arsip prakiraan | episode riwayat memakai prakiraan sintetis | surat permohonan BMKG |
 | Seri muka air Glapan | muka air episode nyata sintetis (1734 vs nyata 1970) | surat permohonan BBWS Pemali Juana |
 | Jam tutup/buka dan mekanisme E1–E6 | model belum bisa dilatih/divalidasi pada kejadian nyata | berita, pengumuman KAI121/Daop 4, BNPB/BPBD |
 | Biaya C, L, P dan biaya keterlambatan | biaya dan keunggulan SIGAP hanya ilustrasi | wawancara praktisi KAI |
 | Jadwal KA nyata | jadwal belum masuk perhitungan | jadwal publik KAI |
+
+## 8. Tambahan 22 Nov 2026 (uji balik pada data nyata)
+
+| Data | Sumber | Resolusi | Latensi | Status | Dipakai untuk |
+| --- | --- | --- | --- | --- | --- |
+| Hujan per jam lokal/hulu/Gundih | GPM IMERG Late setengah jam (GPM_3IMERGHHL.07) lewat Giovanni, dijumlah per jam | per jam, mm | 14 jam | nyata, 2024-01-01 s.d. 2026-11-19 (`hujan_gpm_imerg_jam.csv`) | uji balik sumber "jam" |
+| Hujan hulu rerata DAS Tuntang | 9 sel IMERG Late harian (`config/params.json` blok `das_tuntang`) | harian, mm | 14 jam | nyata (`hujan_gpm_imerg_das.csv`); kotak sel perkiraan (A-063) | uji balik sumber "harian_das" |
+| Kejadian kandidat K01–K09 | berita publik dan rilis BNPB/KAI yang dikutip media | per kejadian (jam bila disebut) | – | kandidat (`data/manual/kejadian_kandidat.csv`) | label uji balik dan AUC |
+| Prakiraan persistensi | turunan hujan IMERG yang sudah tersedia | 3 jam | sama dengan hujan | turunan, berlabel `is_simulated` | pengganti prakiraan pada uji balik (A-058) |
+| Muka air sintetis tertunda | model waduk dari hujan IMERG, diberi latensi hujan masukannya | per jam | 15 jam (per jam) / 38 jam (harian) | sintetis berlabel | uji balik utama (A-062) |

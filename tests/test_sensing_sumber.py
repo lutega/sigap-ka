@@ -296,3 +296,34 @@ def test_simpan_olahan_ganti_untuk_sumber_manual(tmp_path, monkeypatch):
     simpan_olahan("uji", baru, kunci, ganti=True)
     assert baca_olahan("uji")["nilai"].tolist() == [2.0]
     reset_cache()
+
+
+def test_imerg_setengah_jam_dijumlah_per_jam():
+    """Giovanni setengah jam (mm/jam) -> hujan per jam (mm): (laju1 + laju2) x 0,5; jam tak lengkap -> NaN."""
+    teks = ("prod_name,GPM_3IMERGHHL.07\nunit,mm/hr\nundef,-9999.9\nlat,-7.25\nlon,110.45\n\n"
+            "Timestamp (UTC),Data\n2025-01-24 00:00,2\n2025-01-24 00:30,4\n2025-01-24 01:00,1\n"
+            "2025-01-24 01:30,-9999.9\n")
+    df = hujan_gpm_imerg.ke_format_standar_jam([{"lokasi": "hulu", "produk": "late_jam", "teks": teks}])
+    assert df["waktu"].tolist() == [pd.Timestamp("2025-01-24 07:00"), pd.Timestamp("2025-01-24 08:00")]
+    assert df["nilai"].iloc[0] == pytest.approx(3.0) and np.isnan(df["nilai"].iloc[1])
+    assert (df["resolusi_jam"] == 1).all() and (df["sumber"] == "gpm_imerg_late_jam").all()
+    assert df["sel_grid"].iloc[0] == "-7.25, 110.45"
+
+
+def _teks_giovanni(nilai: list, lat: float, lon: float) -> str:
+    baris = "\n".join(f"2025-01-{i + 1:02d},{v}" for i, v in enumerate(nilai))
+    return f"prod_name,GPM_3IMERGDL.07\nunit,mm\nundef,-9999.9\nlat,{lat}\nlon,{lon}\n\nTimestamp (UTC),Data\n{baris}\n"
+
+
+def test_imerg_das_rerata_sel_dan_porsi_minimum():
+    """Rerata DAS = rata-rata sel terisi; hari dengan sel terisi di bawah porsi minimum -> NaN."""
+    from sensing import hujan_imerg_das
+    daftar = [{"lokasi": f"das_{i}", "produk": "late", "teks": _teks_giovanni(v, -7.25, 110.35 + 0.1 * i)}
+              for i, v in enumerate([[10, 0, -9999.9], [20, 3, -9999.9], [30, 6, 9]])]
+    df = hujan_imerg_das.ke_format_standar(daftar, porsi_sel_minimum=0.6)
+    das = df[df["lokasi"] == "hulu"].set_index("waktu")["nilai"]
+    assert das.iloc[0] == pytest.approx(20.0) and das.iloc[1] == pytest.approx(3.0)
+    assert np.isnan(das.iloc[2])                      # hanya 1 dari 3 sel terisi
+    assert set(df.loc[df["lokasi"] != "hulu", "sumber"]) == {"gpm_imerg_late_sel"}
+    assert (df.loc[df["lokasi"] == "hulu", "sumber"] == "gpm_imerg_late_das").all()
+    assert len(hujan_imerg_das.daftar_sel()) == 9

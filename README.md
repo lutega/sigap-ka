@@ -53,6 +53,8 @@ docker compose up -d                                   # PostgreSQL 16 + Timesca
 .venv/Scripts/python -m sensing.jalankan status                       # kesiapan tiap sumber
 .venv/Scripts/python -m sensing.jalankan nasa_power --dari 2024-01-01  # unduh hujan harian (internet)
 .venv/Scripts/python -m sensing.jalankan imerg --dari 2024-01-01       # IMERG Late + Final lewat Giovanni (token Earthdata)
+.venv/Scripts/python -m sensing.jalankan imerg --produk late_jam --dari 2024-01-01   # IMERG Late per jam (dari setengah jam, ~2 menit)
+.venv/Scripts/python -m sensing.jalankan imerg-das --dari 2024-01-01  # 9 sel DAS Tuntang + rerata hulu
 .venv/Scripts/python -m sensing.jalankan bmkg                         # unduh prakiraan BMKG terkini (internet)
 .venv/Scripts/python -m sensing.jalankan manual                       # proses data/manual (Glapan, kejadian, jadwal)
 .venv/Scripts/python -m sensing.jalankan muat                         # muat data/processed ke database (offline)
@@ -69,8 +71,11 @@ sehingga database bisa diisi ulang tanpa internet), dan setiap pengambilan dicat
 | Hujan harian GPM IMERG Late 2024-01-01 s.d. 2026-11-18 dan Final s.d. 2025-09-30 (lokal, hulu, Gundih, sel 0,1°) | nyata; hulu terpisah dari lokal; Late dipakai episode nyata |
 | Hujan harian NASA POWER 2024-01-01 s.d. 2026-11-20 (lokal, hulu, Gundih) | nyata (satu sel grid untuk ketiga titik; cadangan) |
 | Prakiraan BMKG Desa Penadaran, Kec. Gubug | nyata, terkini saja (tanpa arsip) |
-| Muka air Glapan 1970 (24 Jan 2025), ambang Awas 1905 | nyata, satu titik |
+| Hujan per jam GPM IMERG Late 2024-01-01 s.d. 2026-11-19 (dari produk setengah jam, lokal/hulu/Gundih) | nyata; jumlah harian identik dengan produk harian; jeda informasi sekitar 14 jam |
+| Hujan harian 9 sel IMERG DAS Tuntang dan rerata hulu | nyata; kotak sel perkiraan (A-063); korelasi harian dengan sel titik hulu 0,97 |
+| Muka air Glapan 1970 (25 Jan 2025 00.00 WIB, rilis BNPB), ambang Awas 1905 | nyata, satu titik |
 | Katalog E1–E6 | kerangka; jam tutup/buka/mekanisme belum terisi |
+| Kejadian kandidat K01–K09 (Feb 2024–Apr 2026) dari berita publik | kandidat, perlu verifikasi tim (`docs/kejadian-kandidat.md`) |
 | Jadwal KA | placeholder KA-A s.d. KA-F (dummy) |
 | Parameter C, L, P, waktu siap, prior, episode sintetis, muka air sintetis | dummy |
 
@@ -135,7 +140,8 @@ npm test           # vitest
 
 Lima tab: **Operasi** (putar ulang episode, peluang vs kurva pemicu, papan 9 tindakan dengan
 Setujui/Tolak, ringkasan T−0, mode demo), **Data** (status sumber, hujan, muka air, kejadian,
-jadwal), **Prediksi** (peluang per mekanisme, lama tutup, bukti utama), **Kurva pemicu** (slider C,
+jadwal, dan evaluasi pada data nyata: validasi IMERG vs BMKG, kejadian kandidat dan hasil uji balik,
+AUC dengan selang 95%, realisme generator), **Prediksi** (peluang per mekanisme, lama tutup, bukti utama), **Kurva pemicu** (slider C,
 L, P, batas waktu), **Simulasi** (enam kebijakan, metrik deteksi, batas klaim). Admin juga melihat
 **Kelola pengguna**. Setiap grafik punya tampilan tabel; data nyata/dummy selalu berlabel.
 

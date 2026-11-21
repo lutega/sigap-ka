@@ -115,6 +115,23 @@ def test_muka_air_format_standar(sesi_sqlite):
     assert not hasil.loc[0, "is_simulated"]
 
 
+def test_hapus_muka_air_umum_dan_seri_episode(sesi_sqlite):
+    """Hapus observasi umum satu sumber tidak menyentuh seri episode; hapus seri episode menolak id kosong."""
+    import pytest
+    df = pd.DataFrame({"waktu": [datetime(2025, 1, 24, 23), datetime(2025, 1, 25, 0)], "lokasi": ["glapan", "glapan"],
+                       "nilai": [1970.0, 1970.0], "satuan": ["cm", "cm"], "sumber": ["glapan_bnpb", "glapan_bnpb"],
+                       "is_simulated": [False, False]})
+    repo.simpan_muka_air(sesi_sqlite, df)
+    repo.simpan_muka_air(sesi_sqlite, df.iloc[:1], episode_id="EP-X")
+    repo.hapus_muka_air_umum(sesi_sqlite, "glapan_bnpb")
+    assert repo.ambil_muka_air(sesi_sqlite, titik="glapan").empty
+    assert len(repo.ambil_muka_air(sesi_sqlite, titik="glapan", episode_id="EP-X")) == 1
+    repo.hapus_seri_episode(sesi_sqlite, "EP-X")
+    assert repo.ambil_muka_air(sesi_sqlite, titik="glapan", episode_id="EP-X").empty
+    with pytest.raises(ValueError):
+        repo.hapus_seri_episode(sesi_sqlite, "")
+
+
 def test_catat_pengambilan_memperbarui_status(sesi_sqlite):
     """Catatan asal data memperbarui status sumber."""
     repo.catat_pengambilan(sesi_sqlite, "nasa_power", "sukses", jumlah_baris=10,

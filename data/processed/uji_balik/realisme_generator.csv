@@ -11,6 +11,6 @@ hulu_3h_tersedia,nyata_hari_kejadian,8,9.6,28.7,41.5,74.3,93.2,96.0,
 lokal_3h_tersedia,sintetis_latih,400,31.8,44.8,69.4,98.3,153.2,248.4,94.3
 lokal_3h_tersedia,nyata_semua_hari,1044,0.0,0.7,10.9,32.1,53.9,117.6,
 lokal_3h_tersedia,nyata_hari_kejadian,8,16.5,17.8,44.1,58.7,67.6,69.5,
-glapan_relatif_T0,sintetis_latih,400,-143.0,-110.6,-63.0,19.0,109.7,544.2,99.4
-glapan_relatif_T0,nyata_semua_hari,1044,-205.0,-203.7,-187.4,-159.8,-134.4,-80.7,
-glapan_relatif_T0,nyata_hari_kejadian,8,-153.6,-137.9,-104.2,-89.7,-61.5,-47.5,
+glapan_relatif_T0,sintetis_latih,400,-143.0,-110.6,-63.0,19.0,109.7,544.2,99.2
+glapan_relatif_T0,nyata_semua_hari,1044,-204.9,-203.8,-188.8,-159.1,-132.4,-67.9,
+glapan_relatif_T0,nyata_hari_kejadian,8,-198.5,-162.2,-146.6,-113.0,-95.2,-63.3,

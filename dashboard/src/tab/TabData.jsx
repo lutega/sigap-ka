@@ -1,9 +1,11 @@
-// Tab Data: status sumber (nyata/dummy, waktu ambil terakhir), hujan harian NASA POWER lokal dan
-// hulu, muka air Glapan (sintetis + titik nyata, garis Awas), katalog kejadian, jadwal KA.
+// Tab Data: status sumber (nyata/dummy, waktu ambil terakhir), hujan harian lokal dan hulu, muka air
+// Glapan (sintetis + titik nyata, garis Awas), katalog kejadian, jadwal KA, dan evaluasi pada data
+// nyata (validasi IMERG, kejadian kandidat, uji balik).
 // Lapis: A (antarmuka) untuk lapis S.
 import { useEffect, useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, ComposedChart, Legend, Line, ReferenceLine, ResponsiveContainer, Scatter, Tooltip, XAxis, YAxis } from "recharts";
 import { api } from "../api.js";
+import EvaluasiNyata from "../komponen/EvaluasiNyata.jsx";
 import { KartuGrafik, LabelData, Pesan, TabelData } from "../komponen/umum.jsx";
 import { useTema } from "../tema.js";
 
@@ -138,6 +140,8 @@ export default function TabData() {
             { kunci: "jam_lewat_gubug", judul: "Jam lewat" }, { kunci: "sumber", judul: "Sumber" }]} />
         </section>
       </div>
+
+      <EvaluasiNyata />
     </>
   );
 }

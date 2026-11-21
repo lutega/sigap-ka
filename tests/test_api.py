@@ -241,3 +241,12 @@ def test_tidak_ada_respons_yang_menyatakan_jalur_aman():
     assert RESPON, "tes lain harus berjalan lebih dulu"
     for teks in RESPON:
         assert not periksa_teks(teks), teks[:200]
+
+
+def test_evaluasi_nyata_berisi_kandidat_dan_batas_klaim(klien, admin):
+    """Ringkasan evaluasi nyata: kandidat tanpa tautan lengkap, batas klaim, lolos penjaga klaim."""
+    d = _get(klien, "/data/evaluasi-nyata", admin)
+    assert len(d["kandidat"]) >= 5 and all(k["status"].startswith("kandidat") for k in d["kandidat"])
+    assert all("http" not in s for k in d["kandidat"] for s in k["sumber"])
+    assert any("kandidat" in b for b in d["batas_klaim"])
+    assert set(d) >= {"validasi_imerg", "pemisahan", "kepekaan_bias", "realisme", "sumber"}

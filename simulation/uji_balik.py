@@ -95,20 +95,28 @@ def evaluasi_episode(ep, estimator: Estimator, params: ParamsAktif) -> dict:
 
 # ---------------------------------------------------------------- uji balik kandidat
 
+def _tertunda(mode_muka_air: str) -> bool:
+    """'tertunda' -> True (muka air sintetis memakai latensi hujan); 'waktu_nyata' -> False."""
+    if mode_muka_air not in ("tertunda", "waktu_nyata"):
+        raise ValueError(f"mode muka air tidak dikenal: {mode_muka_air}")
+    return mode_muka_air == "tertunda"
+
+
 def uji_balik_kandidat(params: ParamsAktif | None = None, estimator: Estimator | None = None,
                        hujan: pd.DataFrame | None = None, kandidat: pd.DataFrame | None = None,
-                       varian: list[str] | None = None) -> pd.DataFrame:
-    """Uji balik setiap kandidat untuk tiap varian prakiraan.
+                       varian: list[str] | None = None, varian_muka_air: list[str] | None = None) -> pd.DataFrame:
+    """Uji balik setiap kandidat untuk tiap varian prakiraan dan mode muka air sintetis.
 
     Kembali:
-        Satu baris per (kandidat, varian): T-0, cakupan data, hujan aktual 72 jam (lokal, hulu),
-        peluang T-48..T-0, fitur tersedia pada T-0, dan rencana SIGAP.
+        Satu baris per (kandidat, prakiraan, muka_air): T-0, cakupan data, hujan aktual 72 jam
+        (lokal, hulu), peluang T-48..T-0, fitur tersedia pada T-0, dan rencana SIGAP.
     """
     params = params or muat_params()
     estimator = estimator or Estimator(params=params)
     hujan = muat_hujan_imerg_late() if hujan is None else hujan
     kandidat = kejadian_kandidat.tabel_t0() if kandidat is None else kandidat
     varian = varian or params.uji_balik["varian_prakiraan"]
+    varian_muka_air = varian_muka_air or params.uji_balik.get("varian_muka_air", ["tertunda"])
     baris = []
     for _, k in kandidat.iterrows():
         t0 = pd.Timestamp(k["t0"]).to_pydatetime()
@@ -119,18 +127,23 @@ def uji_balik_kandidat(params: ParamsAktif | None = None, estimator: Estimator |
                  "hujan_aktual_lokal_72j": round(hujan_aktual(hujan, "lokal", t0), 1),
                  "hujan_aktual_hulu_72j": round(hujan_aktual(hujan, "hulu", t0), 1)}
         for mode in varian:
-            if cak < 0.8:
-                baris.append({**dasar, "prakiraan": mode, "catatan": "data hujan kurang dari 80% jendela"})
-                continue
-            ep = bangun_episode_hujan_nyata(t0, f"UB-{k['id_kandidat']}", f"Uji balik {k['id_kandidat']}", params,
-                                            hujan_harian=hujan, prakiraan=mode)
-            baris.append({**dasar, "prakiraan": mode, **evaluasi_episode(ep, estimator, params), "catatan": ""})
+            for ma in varian_muka_air:
+                if cak < 0.8:
+                    baris.append({**dasar, "prakiraan": mode, "muka_air": ma,
+                                  "catatan": "data hujan kurang dari 80% jendela"})
+                    continue
+                ep = bangun_episode_hujan_nyata(t0, f"UB-{k['id_kandidat']}", f"Uji balik {k['id_kandidat']}",
+                                                params, hujan_harian=hujan, prakiraan=mode,
+                                                muka_air_tertunda=_tertunda(ma))
+                baris.append({**dasar, "prakiraan": mode, "muka_air": ma,
+                              **evaluasi_episode(ep, estimator, params), "catatan": ""})
     return pd.DataFrame(baris)
 
 
 def kepekaan_bias(params: ParamsAktif | None = None, estimator: Estimator | None = None,
                   hujan: pd.DataFrame | None = None, kandidat: pd.DataFrame | None = None,
-                  skala: list[float] | None = None, prakiraan: str | None = None) -> pd.DataFrame:
+                  skala: list[float] | None = None, prakiraan: str | None = None,
+                  muka_air: str | None = None) -> pd.DataFrame:
     """Peluang dan rencana SIGAP tiap kandidat bila seluruh hujan IMERG dikalikan faktor skala.
 
     Skala < 1 meniru koreksi bias IMERG Late yang lebih tinggi dari penakar (A-054).
@@ -141,6 +154,7 @@ def kepekaan_bias(params: ParamsAktif | None = None, estimator: Estimator | None
     kandidat = kejadian_kandidat.tabel_t0() if kandidat is None else kandidat
     skala = skala or params.uji_balik["skala_bias"]
     prakiraan = prakiraan or params.uji_balik["prakiraan_utama"]
+    muka_air = muka_air or params.uji_balik.get("muka_air_utama", "tertunda")
     baris = []
     for _, k in kandidat.iterrows():
         t0 = pd.Timestamp(k["t0"]).to_pydatetime()
@@ -148,7 +162,8 @@ def kepekaan_bias(params: ParamsAktif | None = None, estimator: Estimator | None
             continue
         for f in skala:
             ep = bangun_episode_hujan_nyata(t0, f"UB-{k['id_kandidat']}", "kepekaan bias", params,
-                                            hujan_harian=hujan, skala_hujan=f, prakiraan=prakiraan)
+                                            hujan_harian=hujan, skala_hujan=f, prakiraan=prakiraan,
+                                            muka_air_tertunda=_tertunda(muka_air))
             baris.append({"id_kandidat": k["id_kandidat"], "t0": t0.isoformat(timespec="minutes"),
                           "skala_hujan": f, "prakiraan": prakiraan, **evaluasi_episode(ep, estimator, params)})
     return pd.DataFrame(baris)
@@ -158,7 +173,8 @@ def kepekaan_bias(params: ParamsAktif | None = None, estimator: Estimator | None
 
 def pindai_harian(params: ParamsAktif | None = None, estimator: Estimator | None = None,
                   hujan: pd.DataFrame | None = None, kandidat: pd.DataFrame | None = None,
-                  prakiraan: str | None = None, mulai: str | None = None, selesai: str | None = None) -> pd.DataFrame:
+                  prakiraan: str | None = None, mulai: str | None = None, selesai: str | None = None,
+                  muka_air: str | None = None) -> pd.DataFrame:
     """Peluang harian (T-0 = tanggal + jam_pindai) sepanjang cakupan IMERG Late.
 
     Label: 'kejadian' bila ada kandidat bertanggal sama; 'sekitar' bila dalam jeda_hari_kontrol hari
@@ -169,6 +185,7 @@ def pindai_harian(params: ParamsAktif | None = None, estimator: Estimator | None
     hujan = muat_hujan_imerg_late() if hujan is None else hujan
     kandidat = kejadian_kandidat.tabel_t0() if kandidat is None else kandidat
     prakiraan = prakiraan or params.uji_balik["prakiraan_utama"]
+    muka_air = muka_air or params.uji_balik.get("muka_air_utama", "tertunda")
     ub = params.uji_balik
     tgl_kejadian = sorted({pd.Timestamp(t).normalize() for t in kandidat["t0"]})
     jeda = pd.Timedelta(days=int(ub["jeda_hari_kontrol"]))
@@ -189,7 +206,8 @@ def pindai_harian(params: ParamsAktif | None = None, estimator: Estimator | None
         else:
             label = "lain"
         epi = bangun_episode_hujan_nyata(t0, f"PINDAI-{d:%Y%m%d}", "pindai harian", params,
-                                         hujan_harian=hujan, prakiraan=prakiraan)
+                                         hujan_harian=hujan, prakiraan=prakiraan,
+                                         muka_air_tertunda=_tertunda(muka_air))
         baris.append({"tanggal": d.date().isoformat(), "label": label,
                       "hujan_aktual_lokal_72j": round(hujan_aktual(hujan, "lokal", t0), 1),
                       "hujan_aktual_hulu_72j": round(hujan_aktual(hujan, "hulu", t0), 1),
@@ -203,6 +221,15 @@ def _auc(positif: np.ndarray, negatif: np.ndarray) -> float | None:
         return None
     lebih = (positif[:, None] > negatif[None, :]).sum() + 0.5 * (positif[:, None] == negatif[None, :]).sum()
     return round(float(lebih / (len(positif) * len(negatif))), 3)
+
+
+def auc_selang(positif: np.ndarray, negatif: np.ndarray, n: int = 2000, seed: int = 42) -> list[float] | None:
+    """Selang kepercayaan 95% AUC dengan bootstrap (hari kejadian dan hari lain diambil ulang terpisah)."""
+    if len(positif) < 2 or len(negatif) < 2:
+        return None
+    rng = np.random.default_rng(seed)
+    nilai = [_auc(rng.choice(positif, len(positif)), rng.choice(negatif, len(negatif))) for _ in range(n)]
+    return [round(float(np.quantile(nilai, 0.025)), 3), round(float(np.quantile(nilai, 0.975)), 3)]
 
 
 def metrik_pemisahan(pindai: pd.DataFrame, params: ParamsAktif | None = None,
@@ -222,7 +249,9 @@ def metrik_pemisahan(pindai: pd.DataFrame, params: ParamsAktif | None = None,
         if k not in pindai:
             continue
         pos, neg = kej[k].to_numpy(dtype=float), lain[k].to_numpy(dtype=float)
+        ub = params.uji_balik
         isi = {"auc": _auc(pos, neg),
+               "auc_selang95": auc_selang(pos, neg, int(ub.get("n_bootstrap", 2000)), int(ub.get("seed_bootstrap", 42))),
                "persentil_kejadian": {t: round(float((neg < v).mean() * 100), 1)
                                       for t, v in zip(kej["tanggal"], pos)}}
         if k.startswith("p_"):
@@ -237,36 +266,67 @@ def metrik_pemisahan(pindai: pd.DataFrame, params: ParamsAktif | None = None,
 
 # ---------------------------------------------------------------- pipeline
 
-def jalankan(params: ParamsAktif | None = None, pindai: bool = True) -> dict:
-    """Menjalankan uji balik kandidat, kepekaan bias, dan (opsional) pemindaian harian; menyimpan hasil.
+NAMA_SUMBER_UJI = {"harian": "IMERG Late harian (jeda 14-38 jam)", "jam": "IMERG Late per jam (jeda sekitar 14 jam)",
+                   "harian_das": "IMERG Late harian, hulu = rerata 9 sel DAS Tuntang"}
 
+
+def jalankan(params: ParamsAktif | None = None, pindai: bool = True, sumber: list[str] | None = None) -> dict:
+    """Menjalankan uji balik kandidat, kepekaan bias, dan (opsional) pemindaian harian untuk tiap
+    sumber hujan ('harian' = IMERG Late harian, 'jam' = IMERG Late per jam); menyimpan hasil.
+
+    Berkas sumber 'harian' tanpa akhiran (kandidat.csv, pindai_harian.csv); sumber lain berakhiran
+    _<sumber> (mis. kandidat_jam.csv). Kepekaan bias hanya untuk sumber pertama.
     Kembali:
-        Ringkasan (juga disimpan ke data/processed/uji_balik/ringkasan.json).
+        Ringkasan (juga disimpan ke data/processed/uji_balik/ringkasan.json). Kunci 'kandidat' dan
+        'pemisahan' tingkat atas = sumber pertama yang tersedia; rincian per sumber di 'per_sumber'.
     """
     params = params or muat_params()
     estimator = Estimator(params=params)
-    hujan = muat_hujan_imerg_late()
-    if hujan.empty:
-        raise ValueError("IMERG Late belum diunduh (python -m sensing.jalankan imerg)")
     kandidat = kejadian_kandidat.tabel_t0()
     folder = dir_olahan() / "uji_balik"
     folder.mkdir(parents=True, exist_ok=True)
-
-    ub = uji_balik_kandidat(params, estimator, hujan, kandidat)
-    ub.to_csv(folder / "kandidat.csv", index=False, lineterminator="\n")
-    kb = kepekaan_bias(params, estimator, hujan, kandidat)
-    kb.to_csv(folder / "kepekaan_bias.csv", index=False, lineterminator="\n")
+    daftar = sumber or params.uji_balik.get("sumber_hujan", ["harian"])
+    utama = params.uji_balik["prakiraan_utama"]
     ringkasan = {
         "dibuat": datetime.now().isoformat(timespec="seconds"),
         "status": "kandidat; model dilatih pada data sintetis; hasil bukan validasi resmi",
-        "preset": params.preset, "prakiraan_utama": params.uji_balik["prakiraan_utama"],
-        "jumlah_kandidat": int(len(kandidat)),
-        "kandidat": ub[ub["prakiraan"] == params.uji_balik["prakiraan_utama"]].to_dict("records"),
+        "preset": params.preset, "prakiraan_utama": utama, "jumlah_kandidat": int(len(kandidat)),
+        "per_sumber": {},
     }
+    pertama = None
+    for nama in daftar:
+        hujan = muat_hujan_imerg_late(per_jam=(nama == "jam"), hulu_das=(nama == "harian_das"))
+        if hujan.empty:
+            ringkasan["per_sumber"][nama] = {"catatan": "data belum diunduh (python -m sensing.jalankan imerg)"}
+            continue
+        akhiran = "" if nama == "harian" else f"_{nama}"
+        ub = uji_balik_kandidat(params, estimator, hujan, kandidat)
+        ub.to_csv(folder / f"kandidat{akhiran}.csv", index=False, lineterminator="\n")
+        utama_ma = params.uji_balik.get("muka_air_utama", "tertunda")
+        pilih = (ub["prakiraan"] == utama) & (ub["muka_air"] == utama_ma)
+        isi = {"nama": NAMA_SUMBER_UJI.get(nama, nama), "muka_air": utama_ma,
+               "kandidat": ub[pilih].to_dict("records")}
+        if pertama is None:
+            kb = kepekaan_bias(params, estimator, hujan, kandidat)
+            kb.to_csv(folder / "kepekaan_bias.csv", index=False, lineterminator="\n")
+            pertama = nama
+        if pindai:
+            ph = pindai_harian(params, estimator, hujan, kandidat)
+            ph.to_csv(folder / f"pindai_harian{akhiran}.csv", index=False, lineterminator="\n")
+            isi["pemisahan"] = metrik_pemisahan(ph, params)
+            for ma in params.uji_balik.get("varian_muka_air", []):
+                if ma == utama_ma:
+                    continue
+                ph2 = pindai_harian(params, estimator, hujan, kandidat, muka_air=ma)
+                ph2.to_csv(folder / f"pindai_harian{akhiran}_{ma}.csv", index=False, lineterminator="\n")
+                isi[f"pemisahan_{ma}"] = metrik_pemisahan(ph2, params)
+        ringkasan["per_sumber"][nama] = isi
+    if pertama is None:
+        raise ValueError("IMERG Late belum diunduh (python -m sensing.jalankan imerg)")
+    ringkasan["sumber_utama"] = pertama
+    ringkasan["kandidat"] = ringkasan["per_sumber"][pertama]["kandidat"]
     if pindai:
-        ph = pindai_harian(params, estimator, hujan, kandidat)
-        ph.to_csv(folder / "pindai_harian.csv", index=False, lineterminator="\n")
-        ringkasan["pemisahan"] = metrik_pemisahan(ph, params)
+        ringkasan["pemisahan"] = ringkasan["per_sumber"][pertama]["pemisahan"]
     with open(folder / "ringkasan.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(ringkasan, f, ensure_ascii=False, indent=1, default=str)
     return ringkasan
@@ -282,10 +342,14 @@ def main(argv: list[str] | None = None) -> None:
     r = jalankan(pindai=not arg.tanpa_pindai)
     kolom = ["id_kandidat", "t0", "hujan_aktual_hulu_72j", "hujan_hulu_3h_tersedia", "p_T-24", "p_T-0",
              "p_maks", "tindakan_sigap"]
-    print(pd.DataFrame(r["kandidat"]).reindex(columns=kolom).to_string(index=False))
-    if "pemisahan" in r:
-        for k, v in r["pemisahan"]["skor"].items():
-            print(f"{k:<26} AUC {v['auc']}")
+    for nama, isi in r["per_sumber"].items():
+        print(f"== {isi.get('nama', nama)}")
+        if "kandidat" not in isi:
+            print("  ", isi.get("catatan"))
+            continue
+        print(pd.DataFrame(isi["kandidat"]).reindex(columns=kolom).to_string(index=False))
+        for k, v in isi.get("pemisahan", {}).get("skor", {}).items():
+            print(f"  {k:<26} AUC {v['auc']}  selang 95% {v.get('auc_selang95')}")
 
 
 if __name__ == "__main__":

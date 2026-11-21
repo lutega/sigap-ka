@@ -1,9 +1,1347 @@
 {
- "dibuat": "2026-11-22T01:48:15",
+ "dibuat": "2026-11-22T02:17:01",
  "status": "kandidat; model dilatih pada data sintetis; hasil bukan validasi resmi",
  "preset": "base",
  "prakiraan_utama": "persistensi",
  "jumlah_kandidat": 9,
+ "per_sumber": {
+  "harian": {
+   "nama": "IMERG Late harian (jeda 14-38 jam)",
+   "muka_air": "tertunda",
+   "kandidat": [
+    {
+     "id_kandidat": "K01",
+     "t0": "2024-02-06T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "terlambat",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 108.8,
+     "hujan_aktual_hulu_72j": 94.0,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1152,
+     "p_T-24": 0.1376,
+     "p_T-12": 0.124,
+     "p_T-6": 0.118,
+     "p_T-0": 0.246,
+     "p_maks": 0.246,
+     "hujan_lokal_1h_tersedia": 48.1,
+     "hujan_lokal_3h_tersedia": 66.7,
+     "hujan_hulu_3h_tersedia": 96.3,
+     "glapan_relatif_T0": -105.8,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K02",
+     "t0": "2025-01-21T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 91.4,
+     "hujan_aktual_hulu_72j": 90.2,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1601,
+     "p_T-24": 0.1089,
+     "p_T-12": 0.1019,
+     "p_T-6": 0.1,
+     "p_T-0": 0.1637,
+     "p_maks": 0.1637,
+     "hujan_lokal_1h_tersedia": 40.0,
+     "hujan_lokal_3h_tersedia": 56.0,
+     "hujan_hulu_3h_tersedia": 68.4,
+     "glapan_relatif_T0": -141.0,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-36",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K03",
+     "t0": "2025-01-24T22:25",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 28.1,
+     "hujan_aktual_hulu_72j": 41.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.5401,
+     "p_T-24": 0.2322,
+     "p_T-12": 0.2107,
+     "p_T-6": 0.2065,
+     "p_T-0": 0.0521,
+     "p_maks": 0.8418,
+     "hujan_lokal_1h_tersedia": 4.6,
+     "hujan_lokal_3h_tersedia": 12.9,
+     "hujan_hulu_3h_tersedia": 45.0,
+     "glapan_relatif_T0": -129.6,
+     "jumlah_tindakan": 3,
+     "tindakan_sigap": "T1@T-60; T2@T-6; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K04",
+     "t0": "2025-03-09T05:27",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 65.5,
+     "hujan_aktual_hulu_72j": 73.6,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0798,
+     "p_T-24": 0.1554,
+     "p_T-12": 0.1304,
+     "p_T-6": 0.1375,
+     "p_T-0": 0.129,
+     "p_maks": 0.1581,
+     "hujan_lokal_1h_tersedia": 13.7,
+     "hujan_lokal_3h_tersedia": 49.5,
+     "hujan_hulu_3h_tersedia": 35.0,
+     "glapan_relatif_T0": -148.9,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K05",
+     "t0": "2025-06-18T03:11",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 32.2,
+     "hujan_aktual_hulu_72j": 21.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0768,
+     "p_T-24": 0.0605,
+     "p_T-12": 0.0606,
+     "p_T-6": 0.071,
+     "p_T-0": 0.0702,
+     "p_maks": 0.0768,
+     "hujan_lokal_1h_tersedia": 8.6,
+     "hujan_lokal_3h_tersedia": 17.6,
+     "hujan_hulu_3h_tersedia": 9.8,
+     "glapan_relatif_T0": -197.7,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K06",
+     "t0": "2025-10-21T18:00",
+     "jam_diketahui": true,
+     "jenis_gangguan": "berhenti_sementara",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 49.8,
+     "hujan_aktual_hulu_72j": 36.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1206,
+     "p_T-24": 0.0814,
+     "p_T-12": 0.0619,
+     "p_T-6": 0.0618,
+     "p_T-0": 0.0617,
+     "p_maks": 0.1316,
+     "hujan_lokal_1h_tersedia": 1.3,
+     "hujan_lokal_3h_tersedia": 13.8,
+     "hujan_hulu_3h_tersedia": 9.2,
+     "glapan_relatif_T0": -199.8,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K07",
+     "t0": "2026-02-16T04:35",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 65.0,
+     "hujan_aktual_hulu_72j": 79.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.138,
+     "p_T-24": 0.0968,
+     "p_T-12": 0.095,
+     "p_T-6": 0.1119,
+     "p_T-0": 0.1124,
+     "p_maks": 0.2322,
+     "hujan_lokal_1h_tersedia": 15.7,
+     "hujan_lokal_3h_tersedia": 38.7,
+     "hujan_hulu_3h_tersedia": 39.8,
+     "glapan_relatif_T0": -156.4,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K08",
+     "t0": "2026-02-16T11:43",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 67.4,
+     "hujan_aktual_hulu_72j": 83.0,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.138,
+     "p_T-24": 0.0981,
+     "p_T-12": 0.1189,
+     "p_T-6": 0.1177,
+     "p_T-0": 0.1121,
+     "p_maks": 0.2312,
+     "hujan_lokal_1h_tersedia": 15.7,
+     "hujan_lokal_3h_tersedia": 38.7,
+     "hujan_hulu_3h_tersedia": 39.8,
+     "glapan_relatif_T0": -150.8,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K09",
+     "t0": "2026-04-03T01:45",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 25.4,
+     "hujan_aktual_hulu_72j": 50.6,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1321,
+     "p_T-24": 0.0839,
+     "p_T-12": 0.0807,
+     "p_T-6": 0.0795,
+     "p_T-0": 0.0864,
+     "p_maks": 0.1321,
+     "hujan_lokal_1h_tersedia": 2.4,
+     "hujan_lokal_3h_tersedia": 17.9,
+     "hujan_hulu_3h_tersedia": 43.1,
+     "glapan_relatif_T0": -158.9,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-36",
+     "catatan": ""
+    }
+   ],
+   "pemisahan": {
+    "n_kejadian": 8,
+    "n_lain": 992,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.796,
+      "auc_selang95": [
+       0.676,
+       0.91
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 97.2,
+       "2025-01-21": 93.1,
+       "2025-01-24": 95.6,
+       "2025-03-09": 87.8,
+       "2025-06-18": 57.5,
+       "2025-10-21": 50.6,
+       "2026-02-16": 83.5,
+       "2026-04-03": 71.2
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 7.7
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.5
+      }
+     },
+     "p_T-24": {
+      "auc": 0.734,
+      "auc_selang95": [
+       0.626,
+       0.842
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 84.4,
+       "2025-01-21": 74.6,
+       "2025-01-24": 98.8,
+       "2025-03-09": 87.3,
+       "2025-06-18": 47.1,
+       "2025-10-21": 60.8,
+       "2026-02-16": 71.4,
+       "2026-04-03": 62.5
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.125,
+       "hari_lain_per_tahun": 13.6
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 3.7
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.793,
+      "auc_selang95": [
+       0.654,
+       0.92
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 96.5,
+       "2025-01-24": 99.5,
+       "2025-03-09": 76.0,
+       "2025-06-18": 49.0,
+       "2025-10-21": 48.2,
+       "2026-02-16": 80.9,
+       "2026-04-03": 84.6
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.874,
+      "auc_selang95": [
+       0.758,
+       0.973
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.8,
+       "2025-01-21": 99.9,
+       "2025-01-24": 85.7,
+       "2025-03-09": 97.8,
+       "2025-06-18": 63.6,
+       "2025-10-21": 59.2,
+       "2026-02-16": 98.9,
+       "2026-04-03": 94.0
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.843,
+      "auc_selang95": [
+       0.746,
+       0.933
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.2,
+       "2025-01-24": 60.6,
+       "2025-03-09": 93.5,
+       "2025-06-18": 79.0,
+       "2025-10-21": 76.1,
+       "2026-02-16": 95.1,
+       "2026-04-03": 70.9
+      }
+     }
+    }
+   },
+   "pemisahan_waktu_nyata": {
+    "n_kejadian": 8,
+    "n_lain": 992,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.825,
+      "auc_selang95": [
+       0.734,
+       0.907
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 96.5,
+       "2025-01-21": 91.8,
+       "2025-01-24": 96.6,
+       "2025-03-09": 86.5,
+       "2025-06-18": 56.4,
+       "2025-10-21": 80.4,
+       "2026-02-16": 77.3,
+       "2026-04-03": 74.1
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 7.4
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.1
+      }
+     },
+     "p_T-24": {
+      "auc": 0.791,
+      "auc_selang95": [
+       0.689,
+       0.885
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 83.6,
+       "2025-01-21": 85.9,
+       "2025-01-24": 98.9,
+       "2025-03-09": 90.9,
+       "2025-06-18": 54.5,
+       "2025-10-21": 63.2,
+       "2026-02-16": 86.0,
+       "2026-04-03": 69.9
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.125,
+       "hari_lain_per_tahun": 10.7
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 2.9
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.793,
+      "auc_selang95": [
+       0.654,
+       0.92
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 96.5,
+       "2025-01-24": 99.5,
+       "2025-03-09": 76.0,
+       "2025-06-18": 49.0,
+       "2025-10-21": 48.2,
+       "2026-02-16": 80.9,
+       "2026-04-03": 84.6
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.874,
+      "auc_selang95": [
+       0.758,
+       0.973
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.8,
+       "2025-01-21": 99.9,
+       "2025-01-24": 85.7,
+       "2025-03-09": 97.8,
+       "2025-06-18": 63.6,
+       "2025-10-21": 59.2,
+       "2026-02-16": 98.9,
+       "2026-04-03": 94.0
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.843,
+      "auc_selang95": [
+       0.746,
+       0.933
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.2,
+       "2025-01-24": 60.6,
+       "2025-03-09": 93.5,
+       "2025-06-18": 79.0,
+       "2025-10-21": 76.1,
+       "2026-02-16": 95.1,
+       "2026-04-03": 70.9
+      }
+     }
+    }
+   }
+  },
+  "jam": {
+   "nama": "IMERG Late per jam (jeda sekitar 14 jam)",
+   "muka_air": "tertunda",
+   "kandidat": [
+    {
+     "id_kandidat": "K01",
+     "t0": "2024-02-06T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "terlambat",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 123.9,
+     "hujan_aktual_hulu_72j": 93.2,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0981,
+     "p_T-24": 0.117,
+     "p_T-12": 0.2997,
+     "p_T-6": 0.3507,
+     "p_T-0": 0.1795,
+     "p_maks": 0.3507,
+     "hujan_lokal_1h_tersedia": 48.6,
+     "hujan_lokal_3h_tersedia": 67.2,
+     "hujan_hulu_3h_tersedia": 96.3,
+     "glapan_relatif_T0": -54.3,
+     "jumlah_tindakan": 4,
+     "tindakan_sigap": "T1@T-36; T7@T-12; T2@T-6; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K02",
+     "t0": "2025-01-21T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 97.4,
+     "hujan_aktual_hulu_72j": 93.5,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1267,
+     "p_T-24": 0.0992,
+     "p_T-12": 0.3059,
+     "p_T-6": 0.1627,
+     "p_T-0": 0.1381,
+     "p_maks": 0.3059,
+     "hujan_lokal_1h_tersedia": 40.0,
+     "hujan_lokal_3h_tersedia": 56.0,
+     "hujan_hulu_3h_tersedia": 68.5,
+     "glapan_relatif_T0": -110.3,
+     "jumlah_tindakan": 3,
+     "tindakan_sigap": "T1@T-36; T7@T-12; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K03",
+     "t0": "2025-01-24T22:25",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 36.7,
+     "hujan_aktual_hulu_72j": 45.7,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.4626,
+     "p_T-24": 0.2351,
+     "p_T-12": 0.1221,
+     "p_T-6": 0.0549,
+     "p_T-0": 0.0487,
+     "p_maks": 0.8011,
+     "hujan_lokal_1h_tersedia": 4.0,
+     "hujan_lokal_3h_tersedia": 12.9,
+     "hujan_hulu_3h_tersedia": 45.0,
+     "glapan_relatif_T0": -162.6,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-42",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K04",
+     "t0": "2025-03-09T05:27",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 66.5,
+     "hujan_aktual_hulu_72j": 76.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.08,
+     "p_T-24": 0.1575,
+     "p_T-12": 0.1296,
+     "p_T-6": 0.1213,
+     "p_T-0": 0.1384,
+     "p_maks": 0.2724,
+     "hujan_lokal_1h_tersedia": 8.8,
+     "hujan_lokal_3h_tersedia": 49.4,
+     "hujan_hulu_3h_tersedia": 39.7,
+     "glapan_relatif_T0": -149.8,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K05",
+     "t0": "2025-06-18T03:11",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 34.6,
+     "hujan_aktual_hulu_72j": 20.6,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0708,
+     "p_T-24": 0.0606,
+     "p_T-12": 0.072,
+     "p_T-6": 0.0724,
+     "p_T-0": 0.0694,
+     "p_maks": 0.0834,
+     "hujan_lokal_1h_tersedia": 8.6,
+     "hujan_lokal_3h_tersedia": 17.3,
+     "hujan_hulu_3h_tersedia": 9.0,
+     "glapan_relatif_T0": -200.6,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K06",
+     "t0": "2025-10-21T18:00",
+     "jam_diketahui": true,
+     "jenis_gangguan": "berhenti_sementara",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 55.1,
+     "hujan_aktual_hulu_72j": 29.2,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0817,
+     "p_T-24": 0.0623,
+     "p_T-12": 0.0753,
+     "p_T-6": 0.0674,
+     "p_T-0": 0.0606,
+     "p_maks": 0.1268,
+     "hujan_lokal_1h_tersedia": 13.3,
+     "hujan_lokal_3h_tersedia": 15.1,
+     "hujan_hulu_3h_tersedia": 5.9,
+     "glapan_relatif_T0": -186.5,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K07",
+     "t0": "2026-02-16T04:35",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 67.1,
+     "hujan_aktual_hulu_72j": 84.5,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1362,
+     "p_T-24": 0.0955,
+     "p_T-12": 0.1067,
+     "p_T-6": 0.1028,
+     "p_T-0": 0.1011,
+     "p_maks": 0.1602,
+     "hujan_lokal_1h_tersedia": 15.6,
+     "hujan_lokal_3h_tersedia": 36.5,
+     "hujan_hulu_3h_tersedia": 39.1,
+     "glapan_relatif_T0": -154.7,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-36",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K08",
+     "t0": "2026-02-16T11:43",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 66.3,
+     "hujan_aktual_hulu_72j": 83.8,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1392,
+     "p_T-24": 0.1497,
+     "p_T-12": 0.1072,
+     "p_T-6": 0.1046,
+     "p_T-0": 0.0838,
+     "p_maks": 0.1548,
+     "hujan_lokal_1h_tersedia": 4.3,
+     "hujan_lokal_3h_tersedia": 29.5,
+     "hujan_hulu_3h_tersedia": 32.3,
+     "glapan_relatif_T0": -163.5,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K09",
+     "t0": "2026-04-03T01:45",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 27.6,
+     "hujan_aktual_hulu_72j": 54.1,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1495,
+     "p_T-24": 0.0787,
+     "p_T-12": 0.0929,
+     "p_T-6": 0.1133,
+     "p_T-0": 0.0724,
+     "p_maks": 0.1832,
+     "hujan_lokal_1h_tersedia": 2.4,
+     "hujan_lokal_3h_tersedia": 17.9,
+     "hujan_hulu_3h_tersedia": 43.1,
+     "glapan_relatif_T0": -141.6,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T5@T-6",
+     "catatan": ""
+    }
+   ],
+   "pemisahan": {
+    "n_kejadian": 8,
+    "n_lain": 993,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.76,
+      "auc_selang95": [
+       0.614,
+       0.903
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.3,
+       "2025-01-21": 99.3,
+       "2025-01-24": 60.1,
+       "2025-03-09": 98.0,
+       "2025-06-18": 48.0,
+       "2025-10-21": 51.2,
+       "2026-02-16": 65.3,
+       "2026-04-03": 86.6
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.375,
+       "hari_lain_per_tahun": 8.8
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.5
+      }
+     },
+     "p_T-24": {
+      "auc": 0.778,
+      "auc_selang95": [
+       0.637,
+       0.907
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 96.7,
+       "2025-01-21": 96.8,
+       "2025-01-24": 95.2,
+       "2025-03-09": 86.9,
+       "2025-06-18": 54.8,
+       "2025-10-21": 49.3,
+       "2026-02-16": 84.3,
+       "2026-04-03": 58.0
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.25,
+       "hari_lain_per_tahun": 15.4
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 4.8
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.798,
+      "auc_selang95": [
+       0.613,
+       0.954
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.3,
+       "2025-01-21": 99.3,
+       "2025-01-24": 94.2,
+       "2025-03-09": 97.8,
+       "2025-06-18": 39.7,
+       "2025-10-21": 42.0,
+       "2026-02-16": 72.8,
+       "2026-04-03": 93.3
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.848,
+      "auc_selang95": [
+       0.69,
+       0.967
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.7,
+       "2025-01-24": 86.1,
+       "2025-03-09": 97.9,
+       "2025-06-18": 64.2,
+       "2025-10-21": 42.6,
+       "2026-02-16": 98.7,
+       "2026-04-03": 89.1
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.816,
+      "auc_selang95": [
+       0.696,
+       0.932
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 98.8,
+       "2025-01-24": 55.4,
+       "2025-03-09": 94.7,
+       "2025-06-18": 79.2,
+       "2025-10-21": 58.4,
+       "2026-02-16": 94.5,
+       "2026-04-03": 71.8
+      }
+     }
+    }
+   },
+   "pemisahan_waktu_nyata": {
+    "n_kejadian": 8,
+    "n_lain": 993,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.732,
+      "auc_selang95": [
+       0.593,
+       0.877
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.5,
+       "2025-01-21": 97.6,
+       "2025-01-24": 60.1,
+       "2025-03-09": 92.8,
+       "2025-06-18": 48.3,
+       "2025-10-21": 47.8,
+       "2026-02-16": 67.3,
+       "2026-04-03": 71.6
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.125,
+       "hari_lain_per_tahun": 4.4
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.1
+      }
+     },
+     "p_T-24": {
+      "auc": 0.762,
+      "auc_selang95": [
+       0.624,
+       0.886
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 93.1,
+       "2025-01-21": 90.1,
+       "2025-01-24": 97.1,
+       "2025-03-09": 87.6,
+       "2025-06-18": 55.6,
+       "2025-10-21": 49.8,
+       "2026-02-16": 82.5,
+       "2026-04-03": 53.8
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 8.8
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.5
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.798,
+      "auc_selang95": [
+       0.613,
+       0.954
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.3,
+       "2025-01-21": 99.3,
+       "2025-01-24": 94.2,
+       "2025-03-09": 97.8,
+       "2025-06-18": 39.7,
+       "2025-10-21": 42.0,
+       "2026-02-16": 72.8,
+       "2026-04-03": 93.3
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.848,
+      "auc_selang95": [
+       0.69,
+       0.967
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.7,
+       "2025-01-24": 86.1,
+       "2025-03-09": 97.9,
+       "2025-06-18": 64.2,
+       "2025-10-21": 42.6,
+       "2026-02-16": 98.7,
+       "2026-04-03": 89.1
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.816,
+      "auc_selang95": [
+       0.696,
+       0.932
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 98.8,
+       "2025-01-24": 55.4,
+       "2025-03-09": 94.7,
+       "2025-06-18": 79.2,
+       "2025-10-21": 58.4,
+       "2026-02-16": 94.5,
+       "2026-04-03": 71.8
+      }
+     }
+    }
+   }
+  },
+  "harian_das": {
+   "nama": "IMERG Late harian, hulu = rerata 9 sel DAS Tuntang",
+   "muka_air": "tertunda",
+   "kandidat": [
+    {
+     "id_kandidat": "K01",
+     "t0": "2024-02-06T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "terlambat",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 108.8,
+     "hujan_aktual_hulu_72j": 91.1,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.119,
+     "p_T-24": 0.1315,
+     "p_T-12": 0.1193,
+     "p_T-6": 0.114,
+     "p_T-0": 0.2371,
+     "p_maks": 0.2371,
+     "hujan_lokal_1h_tersedia": 48.1,
+     "hujan_lokal_3h_tersedia": 66.7,
+     "hujan_hulu_3h_tersedia": 91.6,
+     "glapan_relatif_T0": -111.5,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K02",
+     "t0": "2025-01-21T00:00",
+     "jam_diketahui": false,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 91.4,
+     "hujan_aktual_hulu_72j": 83.5,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1414,
+     "p_T-24": 0.1017,
+     "p_T-12": 0.0968,
+     "p_T-6": 0.0954,
+     "p_T-0": 0.1599,
+     "p_maks": 0.1599,
+     "hujan_lokal_1h_tersedia": 40.0,
+     "hujan_lokal_3h_tersedia": 56.0,
+     "hujan_hulu_3h_tersedia": 59.0,
+     "glapan_relatif_T0": -152.9,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-36",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K03",
+     "t0": "2025-01-24T22:25",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "gerusan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 28.1,
+     "hujan_aktual_hulu_72j": 37.8,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.5203,
+     "p_T-24": 0.2234,
+     "p_T-12": 0.2033,
+     "p_T-6": 0.1993,
+     "p_T-0": 0.0516,
+     "p_maks": 0.8331,
+     "hujan_lokal_1h_tersedia": 4.6,
+     "hujan_lokal_3h_tersedia": 12.9,
+     "hujan_hulu_3h_tersedia": 43.3,
+     "glapan_relatif_T0": -133.3,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-54; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K04",
+     "t0": "2025-03-09T05:27",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 65.5,
+     "hujan_aktual_hulu_72j": 64.1,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0793,
+     "p_T-24": 0.1533,
+     "p_T-12": 0.129,
+     "p_T-6": 0.1363,
+     "p_T-0": 0.1282,
+     "p_maks": 0.1564,
+     "hujan_lokal_1h_tersedia": 13.7,
+     "hujan_lokal_3h_tersedia": 49.5,
+     "hujan_hulu_3h_tersedia": 32.9,
+     "glapan_relatif_T0": -152.6,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K05",
+     "t0": "2025-06-18T03:11",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 32.2,
+     "hujan_aktual_hulu_72j": 25.8,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.0815,
+     "p_T-24": 0.0609,
+     "p_T-12": 0.061,
+     "p_T-6": 0.0721,
+     "p_T-0": 0.0723,
+     "p_maks": 0.0815,
+     "hujan_lokal_1h_tersedia": 8.6,
+     "hujan_lokal_3h_tersedia": 17.6,
+     "hujan_hulu_3h_tersedia": 15.5,
+     "glapan_relatif_T0": -192.8,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K06",
+     "t0": "2025-10-21T18:00",
+     "jam_diketahui": true,
+     "jenis_gangguan": "berhenti_sementara",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 49.8,
+     "hujan_aktual_hulu_72j": 43.1,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1185,
+     "p_T-24": 0.0822,
+     "p_T-12": 0.062,
+     "p_T-6": 0.0619,
+     "p_T-0": 0.0618,
+     "p_maks": 0.1295,
+     "hujan_lokal_1h_tersedia": 1.3,
+     "hujan_lokal_3h_tersedia": 13.8,
+     "hujan_hulu_3h_tersedia": 9.2,
+     "glapan_relatif_T0": -198.7,
+     "jumlah_tindakan": 0,
+     "tindakan_sigap": "",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K07",
+     "t0": "2026-02-16T04:35",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 65.0,
+     "hujan_aktual_hulu_72j": 76.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1384,
+     "p_T-24": 0.095,
+     "p_T-12": 0.0935,
+     "p_T-6": 0.1114,
+     "p_T-0": 0.1123,
+     "p_maks": 0.2244,
+     "hujan_lokal_1h_tersedia": 15.7,
+     "hujan_lokal_3h_tersedia": 38.7,
+     "hujan_hulu_3h_tersedia": 39.1,
+     "glapan_relatif_T0": -158.1,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K08",
+     "t0": "2026-02-16T11:43",
+     "jam_diketahui": true,
+     "jenis_gangguan": "tutup_dua_jalur",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 67.4,
+     "hujan_aktual_hulu_72j": 79.9,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1384,
+     "p_T-24": 0.0964,
+     "p_T-12": 0.1184,
+     "p_T-6": 0.1176,
+     "p_T-0": 0.1119,
+     "p_maks": 0.2237,
+     "hujan_lokal_1h_tersedia": 15.7,
+     "hujan_lokal_3h_tersedia": 38.7,
+     "hujan_hulu_3h_tersedia": 39.1,
+     "glapan_relatif_T0": -152.2,
+     "jumlah_tindakan": 2,
+     "tindakan_sigap": "T1@T-36; T5@T-6",
+     "catatan": ""
+    },
+    {
+     "id_kandidat": "K09",
+     "t0": "2026-04-03T01:45",
+     "jam_diketahui": true,
+     "jenis_gangguan": "satu_jalur_bergantian",
+     "mekanisme": "genangan",
+     "cakupan_data": 1.0,
+     "hujan_aktual_lokal_72j": 25.4,
+     "hujan_aktual_hulu_72j": 48.3,
+     "prakiraan": "persistensi",
+     "muka_air": "tertunda",
+     "p_T-48": 0.1289,
+     "p_T-24": 0.0816,
+     "p_T-12": 0.0788,
+     "p_T-6": 0.0779,
+     "p_T-0": 0.084,
+     "p_maks": 0.1289,
+     "hujan_lokal_1h_tersedia": 2.4,
+     "hujan_lokal_3h_tersedia": 17.9,
+     "hujan_hulu_3h_tersedia": 39.3,
+     "glapan_relatif_T0": -163.5,
+     "jumlah_tindakan": 1,
+     "tindakan_sigap": "T1@T-36",
+     "catatan": ""
+    }
+   ],
+   "pemisahan": {
+    "n_kejadian": 8,
+    "n_lain": 992,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.795,
+      "auc_selang95": [
+       0.676,
+       0.907
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 97.1,
+       "2025-01-21": 93.2,
+       "2025-01-24": 95.1,
+       "2025-03-09": 87.5,
+       "2025-06-18": 59.0,
+       "2025-10-21": 50.7,
+       "2026-02-16": 83.6,
+       "2026-04-03": 69.5
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 7.7
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.5
+      }
+     },
+     "p_T-24": {
+      "auc": 0.727,
+      "auc_selang95": [
+       0.62,
+       0.837
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 83.9,
+       "2025-01-21": 72.3,
+       "2025-01-24": 98.8,
+       "2025-03-09": 86.7,
+       "2025-06-18": 46.6,
+       "2025-10-21": 62.2,
+       "2026-02-16": 70.2,
+       "2026-04-03": 61.2
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.125,
+       "hari_lain_per_tahun": 12.9
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 2.9
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.786,
+      "auc_selang95": [
+       0.651,
+       0.908
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 94.2,
+       "2025-01-24": 99.4,
+       "2025-03-09": 74.0,
+       "2025-06-18": 53.6,
+       "2025-10-21": 45.4,
+       "2026-02-16": 81.2,
+       "2026-04-03": 81.2
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.881,
+      "auc_selang95": [
+       0.788,
+       0.965
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.8,
+       "2025-01-21": 99.9,
+       "2025-01-24": 83.2,
+       "2025-03-09": 96.0,
+       "2025-06-18": 68.3,
+       "2025-10-21": 66.5,
+       "2026-02-16": 98.8,
+       "2026-04-03": 92.2
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.843,
+      "auc_selang95": [
+       0.746,
+       0.933
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.2,
+       "2025-01-24": 60.6,
+       "2025-03-09": 93.5,
+       "2025-06-18": 79.0,
+       "2025-10-21": 76.1,
+       "2026-02-16": 95.1,
+       "2026-04-03": 70.9
+      }
+     }
+    }
+   },
+   "pemisahan_waktu_nyata": {
+    "n_kejadian": 8,
+    "n_lain": 992,
+    "skor": {
+     "p_T-0": {
+      "auc": 0.815,
+      "auc_selang95": [
+       0.72,
+       0.901
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 96.4,
+       "2025-01-21": 91.5,
+       "2025-01-24": 96.2,
+       "2025-03-09": 86.6,
+       "2025-06-18": 57.2,
+       "2025-10-21": 80.4,
+       "2026-02-16": 76.7,
+       "2026-04-03": 66.9
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 7.4
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 1.1
+      }
+     },
+     "p_T-24": {
+      "auc": 0.79,
+      "auc_selang95": [
+       0.696,
+       0.878
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 83.2,
+       "2025-01-21": 84.4,
+       "2025-01-24": 98.8,
+       "2025-03-09": 89.5,
+       "2025-06-18": 56.0,
+       "2025-10-21": 65.8,
+       "2026-02-16": 85.1,
+       "2026-04-03": 68.8
+      },
+      "ambang_0.3": {
+       "porsi_kejadian": 0.125,
+       "hari_lain_per_tahun": 11.0
+      },
+      "ambang_0.5": {
+       "porsi_kejadian": 0.0,
+       "hari_lain_per_tahun": 2.9
+      }
+     },
+     "hujan_hulu_3h_tersedia": {
+      "auc": 0.786,
+      "auc_selang95": [
+       0.651,
+       0.908
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 94.2,
+       "2025-01-24": 99.4,
+       "2025-03-09": 74.0,
+       "2025-06-18": 53.6,
+       "2025-10-21": 45.4,
+       "2026-02-16": 81.2,
+       "2026-04-03": 81.2
+      }
+     },
+     "hujan_aktual_hulu_72j": {
+      "auc": 0.881,
+      "auc_selang95": [
+       0.788,
+       0.965
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.8,
+       "2025-01-21": 99.9,
+       "2025-01-24": 83.2,
+       "2025-03-09": 96.0,
+       "2025-06-18": 68.3,
+       "2025-10-21": 66.5,
+       "2026-02-16": 98.8,
+       "2026-04-03": 92.2
+      }
+     },
+     "hujan_aktual_lokal_72j": {
+      "auc": 0.843,
+      "auc_selang95": [
+       0.746,
+       0.933
+      ],
+      "persentil_kejadian": {
+       "2024-02-06": 99.6,
+       "2025-01-21": 99.2,
+       "2025-01-24": 60.6,
+       "2025-03-09": 93.5,
+       "2025-06-18": 79.0,
+       "2025-10-21": 76.1,
+       "2026-02-16": 95.1,
+       "2026-04-03": 70.9
+      }
+     }
+    }
+   }
+  }
+ },
+ "sumber_utama": "harian",
  "kandidat": [
   {
    "id_kandidat": "K01",
@@ -15,16 +1353,17 @@
    "hujan_aktual_lokal_72j": 108.8,
    "hujan_aktual_hulu_72j": 94.0,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1141,
-   "p_T-24": 0.1705,
-   "p_T-12": 0.1174,
-   "p_T-6": 0.1126,
-   "p_T-0": 0.2007,
-   "p_maks": 0.2007,
+   "muka_air": "tertunda",
+   "p_T-48": 0.1152,
+   "p_T-24": 0.1376,
+   "p_T-12": 0.124,
+   "p_T-6": 0.118,
+   "p_T-0": 0.246,
+   "p_maks": 0.246,
    "hujan_lokal_1h_tersedia": 48.1,
    "hujan_lokal_3h_tersedia": 66.7,
    "hujan_hulu_3h_tersedia": 96.3,
-   "glapan_relatif_T0": -87.6,
+   "glapan_relatif_T0": -105.8,
    "jumlah_tindakan": 2,
    "tindakan_sigap": "T1@T-36; T5@T-6",
    "catatan": ""
@@ -39,18 +1378,19 @@
    "hujan_aktual_lokal_72j": 91.4,
    "hujan_aktual_hulu_72j": 90.2,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1501,
-   "p_T-24": 0.1266,
-   "p_T-12": 0.1378,
-   "p_T-6": 0.1343,
-   "p_T-0": 0.1856,
-   "p_maks": 0.1856,
+   "muka_air": "tertunda",
+   "p_T-48": 0.1601,
+   "p_T-24": 0.1089,
+   "p_T-12": 0.1019,
+   "p_T-6": 0.1,
+   "p_T-0": 0.1637,
+   "p_maks": 0.1637,
    "hujan_lokal_1h_tersedia": 40.0,
    "hujan_lokal_3h_tersedia": 56.0,
    "hujan_hulu_3h_tersedia": 68.4,
-   "glapan_relatif_T0": -41.0,
-   "jumlah_tindakan": 2,
-   "tindakan_sigap": "T1@T-36; T5@T-6",
+   "glapan_relatif_T0": -141.0,
+   "jumlah_tindakan": 1,
+   "tindakan_sigap": "T1@T-36",
    "catatan": ""
   },
   {
@@ -63,18 +1403,19 @@
    "hujan_aktual_lokal_72j": 28.1,
    "hujan_aktual_hulu_72j": 41.3,
    "prakiraan": "persistensi",
-   "p_T-48": 0.4803,
-   "p_T-24": 0.2186,
-   "p_T-12": 0.223,
-   "p_T-6": 0.2247,
-   "p_T-0": 0.057,
-   "p_maks": 0.8203,
+   "muka_air": "tertunda",
+   "p_T-48": 0.5401,
+   "p_T-24": 0.2322,
+   "p_T-12": 0.2107,
+   "p_T-6": 0.2065,
+   "p_T-0": 0.0521,
+   "p_maks": 0.8418,
    "hujan_lokal_1h_tersedia": 4.6,
    "hujan_lokal_3h_tersedia": 12.9,
    "hujan_hulu_3h_tersedia": 45.0,
-   "glapan_relatif_T0": -142.5,
+   "glapan_relatif_T0": -129.6,
    "jumlah_tindakan": 3,
-   "tindakan_sigap": "T1@T-42; T2@T-6; T5@T-6",
+   "tindakan_sigap": "T1@T-60; T2@T-6; T5@T-6",
    "catatan": ""
   },
   {
@@ -87,16 +1428,17 @@
    "hujan_aktual_lokal_72j": 65.5,
    "hujan_aktual_hulu_72j": 73.6,
    "prakiraan": "persistensi",
-   "p_T-48": 0.0925,
-   "p_T-24": 0.1453,
-   "p_T-12": 0.148,
-   "p_T-6": 0.1603,
-   "p_T-0": 0.154,
-   "p_maks": 0.1603,
+   "muka_air": "tertunda",
+   "p_T-48": 0.0798,
+   "p_T-24": 0.1554,
+   "p_T-12": 0.1304,
+   "p_T-6": 0.1375,
+   "p_T-0": 0.129,
+   "p_maks": 0.1581,
    "hujan_lokal_1h_tersedia": 13.7,
    "hujan_lokal_3h_tersedia": 49.5,
    "hujan_hulu_3h_tersedia": 35.0,
-   "glapan_relatif_T0": -81.8,
+   "glapan_relatif_T0": -148.9,
    "jumlah_tindakan": 1,
    "tindakan_sigap": "T5@T-6",
    "catatan": ""
@@ -111,16 +1453,17 @@
    "hujan_aktual_lokal_72j": 32.2,
    "hujan_aktual_hulu_72j": 21.3,
    "prakiraan": "persistensi",
-   "p_T-48": 0.0715,
-   "p_T-24": 0.0613,
-   "p_T-12": 0.072,
-   "p_T-6": 0.0832,
-   "p_T-0": 0.0815,
-   "p_maks": 0.0832,
+   "muka_air": "tertunda",
+   "p_T-48": 0.0768,
+   "p_T-24": 0.0605,
+   "p_T-12": 0.0606,
+   "p_T-6": 0.071,
+   "p_T-0": 0.0702,
+   "p_maks": 0.0768,
    "hujan_lokal_1h_tersedia": 8.6,
    "hujan_lokal_3h_tersedia": 17.6,
    "hujan_hulu_3h_tersedia": 9.8,
-   "glapan_relatif_T0": -150.1,
+   "glapan_relatif_T0": -197.7,
    "jumlah_tindakan": 0,
    "tindakan_sigap": "",
    "catatan": ""
@@ -135,16 +1478,17 @@
    "hujan_aktual_lokal_72j": 49.8,
    "hujan_aktual_hulu_72j": 36.3,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1142,
-   "p_T-24": 0.0853,
-   "p_T-12": 0.0646,
-   "p_T-6": 0.1017,
-   "p_T-0": 0.0996,
-   "p_maks": 0.1246,
+   "muka_air": "tertunda",
+   "p_T-48": 0.1206,
+   "p_T-24": 0.0814,
+   "p_T-12": 0.0619,
+   "p_T-6": 0.0618,
+   "p_T-0": 0.0617,
+   "p_maks": 0.1316,
    "hujan_lokal_1h_tersedia": 1.3,
    "hujan_lokal_3h_tersedia": 13.8,
    "hujan_hulu_3h_tersedia": 9.2,
-   "glapan_relatif_T0": -90.5,
+   "glapan_relatif_T0": -199.8,
    "jumlah_tindakan": 0,
    "tindakan_sigap": "",
    "catatan": ""
@@ -159,16 +1503,17 @@
    "hujan_aktual_lokal_72j": 65.0,
    "hujan_aktual_hulu_72j": 79.3,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1307,
-   "p_T-24": 0.1064,
-   "p_T-12": 0.1441,
-   "p_T-6": 0.1543,
-   "p_T-0": 0.1466,
-   "p_maks": 0.2227,
+   "muka_air": "tertunda",
+   "p_T-48": 0.138,
+   "p_T-24": 0.0968,
+   "p_T-12": 0.095,
+   "p_T-6": 0.1119,
+   "p_T-0": 0.1124,
+   "p_maks": 0.2322,
    "hujan_lokal_1h_tersedia": 15.7,
    "hujan_lokal_3h_tersedia": 38.7,
    "hujan_hulu_3h_tersedia": 39.8,
-   "glapan_relatif_T0": -38.7,
+   "glapan_relatif_T0": -156.4,
    "jumlah_tindakan": 2,
    "tindakan_sigap": "T1@T-36; T5@T-6",
    "catatan": ""
@@ -183,16 +1528,17 @@
    "hujan_aktual_lokal_72j": 67.4,
    "hujan_aktual_hulu_72j": 83.0,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1401,
-   "p_T-24": 0.138,
-   "p_T-12": 0.1661,
-   "p_T-6": 0.1532,
-   "p_T-0": 0.1038,
-   "p_maks": 0.2123,
+   "muka_air": "tertunda",
+   "p_T-48": 0.138,
+   "p_T-24": 0.0981,
+   "p_T-12": 0.1189,
+   "p_T-6": 0.1177,
+   "p_T-0": 0.1121,
+   "p_maks": 0.2312,
    "hujan_lokal_1h_tersedia": 15.7,
    "hujan_lokal_3h_tersedia": 38.7,
    "hujan_hulu_3h_tersedia": 39.8,
-   "glapan_relatif_T0": -62.9,
+   "glapan_relatif_T0": -150.8,
    "jumlah_tindakan": 2,
    "tindakan_sigap": "T1@T-36; T5@T-6",
    "catatan": ""
@@ -207,16 +1553,17 @@
    "hujan_aktual_lokal_72j": 25.4,
    "hujan_aktual_hulu_72j": 50.6,
    "prakiraan": "persistensi",
-   "p_T-48": 0.1241,
-   "p_T-24": 0.0936,
-   "p_T-12": 0.0927,
-   "p_T-6": 0.0909,
-   "p_T-0": 0.0884,
-   "p_maks": 0.1305,
+   "muka_air": "tertunda",
+   "p_T-48": 0.1321,
+   "p_T-24": 0.0839,
+   "p_T-12": 0.0807,
+   "p_T-6": 0.0795,
+   "p_T-0": 0.0864,
+   "p_maks": 0.1321,
    "hujan_lokal_1h_tersedia": 2.4,
    "hujan_lokal_3h_tersedia": 17.9,
    "hujan_hulu_3h_tersedia": 43.1,
-   "glapan_relatif_T0": -118.9,
+   "glapan_relatif_T0": -158.9,
    "jumlah_tindakan": 1,
    "tindakan_sigap": "T1@T-36",
    "catatan": ""
@@ -227,49 +1574,61 @@
   "n_lain": 992,
   "skor": {
    "p_T-0": {
-    "auc": 0.825,
+    "auc": 0.796,
+    "auc_selang95": [
+     0.676,
+     0.91
+    ],
     "persentil_kejadian": {
-     "2024-02-06": 96.5,
-     "2025-01-21": 91.8,
-     "2025-01-24": 96.6,
-     "2025-03-09": 86.5,
-     "2025-06-18": 56.4,
-     "2025-10-21": 80.4,
-     "2026-02-16": 77.3,
-     "2026-04-03": 74.1
+     "2024-02-06": 97.2,
+     "2025-01-21": 93.1,
+     "2025-01-24": 95.6,
+     "2025-03-09": 87.8,
+     "2025-06-18": 57.5,
+     "2025-10-21": 50.6,
+     "2026-02-16": 83.5,
+     "2026-04-03": 71.2
     },
     "ambang_0.3": {
      "porsi_kejadian": 0.0,
-     "hari_lain_per_tahun": 7.4
+     "hari_lain_per_tahun": 7.7
     },
     "ambang_0.5": {
      "porsi_kejadian": 0.0,
-     "hari_lain_per_tahun": 1.1
+     "hari_lain_per_tahun": 1.5
     }
    },
    "p_T-24": {
-    "auc": 0.791,
+    "auc": 0.734,
+    "auc_selang95": [
+     0.626,
+     0.842
+    ],
     "persentil_kejadian": {
-     "2024-02-06": 83.6,
-     "2025-01-21": 85.9,
-     "2025-01-24": 98.9,
-     "2025-03-09": 90.9,
-     "2025-06-18": 54.5,
-     "2025-10-21": 63.2,
-     "2026-02-16": 86.0,
-     "2026-04-03": 69.9
+     "2024-02-06": 84.4,
+     "2025-01-21": 74.6,
+     "2025-01-24": 98.8,
+     "2025-03-09": 87.3,
+     "2025-06-18": 47.1,
+     "2025-10-21": 60.8,
+     "2026-02-16": 71.4,
+     "2026-04-03": 62.5
     },
     "ambang_0.3": {
      "porsi_kejadian": 0.125,
-     "hari_lain_per_tahun": 10.7
+     "hari_lain_per_tahun": 13.6
     },
     "ambang_0.5": {
      "porsi_kejadian": 0.0,
-     "hari_lain_per_tahun": 2.9
+     "hari_lain_per_tahun": 3.7
     }
    },
    "hujan_hulu_3h_tersedia": {
     "auc": 0.793,
+    "auc_selang95": [
+     0.654,
+     0.92
+    ],
     "persentil_kejadian": {
      "2024-02-06": 99.6,
      "2025-01-21": 96.5,
@@ -283,6 +1642,10 @@
    },
    "hujan_aktual_hulu_72j": {
     "auc": 0.874,
+    "auc_selang95": [
+     0.758,
+     0.973
+    ],
     "persentil_kejadian": {
      "2024-02-06": 99.8,
      "2025-01-21": 99.9,
@@ -296,6 +1659,10 @@
    },
    "hujan_aktual_lokal_72j": {
     "auc": 0.843,
+    "auc_selang95": [
+     0.746,
+     0.933
+    ],
     "persentil_kejadian": {
      "2024-02-06": 99.6,
      "2025-01-21": 99.2,

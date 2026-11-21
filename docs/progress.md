@@ -371,3 +371,35 @@ Metrik deteksi LOEO (100 episode, base): SIGAP POD 0,84 FAR 0,46 CSI 0,49; atura
 - Verifikasi K01–K09 dan pemetaannya ke E1–E6.
 - Konfirmasi T−0 22.25 untuk episode 24 Jan 2025.
 - Kalibrasi peluang dengan label nyata.
+
+---
+
+## Perbaikan lanjutan 22 Nov 2026 · Langkah 4–7: realisme generator, IMERG per jam, rerata DAS, muka air tertunda, dasbor
+
+**Yang dikerjakan**
+- **Realisme generator** (`simulation/realisme_generator.py`): episode latih lapis I jauh lebih basah daripada hari nyata (median hujan hulu 72 jam 81 mm ≈ persentil 98). Ini menjelaskan peluang absolut yang rendah pada data nyata (A-061). Parameter generator tidak diubah; perubahannya keputusan tim.
+- **IMERG Late per jam** (`imerg --produk late_jam`): 25.288 jam × 3 titik dari produk setengah jam lewat Giovanni (A-064). Jumlah hariannya identik dengan produk harian.
+- **Rerata DAS Tuntang** (`sensing/hujan_imerg_das.py`, `imerg-das`): 9 sel IMERG (A-063). Korelasi harian dengan sel titik hulu 0,97.
+- **Muka air sintetis tertunda** (A-062). Uji balik sebelumnya memakai muka air sintetis tanpa latensi, padahal dihitung dari hujan satelit yang belum tersedia (terlalu optimistis). Uji balik utama kini memakai muka air tertunda; varian waktu nyata tetap dilaporkan sebagai pembanding.
+- **Uji balik untuk tiga sumber hujan** (harian, jam, harian_das) dengan selang 95% bootstrap AUC (`docs/uji-balik.md`).
+- **Prakiraan persistensi** kini memakai rerata 24 jam terakhir yang tersedia, sehingga berlaku untuk data harian maupun per jam.
+- **Dasbor:** bagian *Evaluasi pada data nyata* di tab Data, lewat `GET /data/evaluasi-nyata` (`simulation/ringkasan_nyata.py`). Isinya validasi IMERG vs BMKG, grafik AUC dengan selang 95%, tabel kandidat dan rencana SIGAP, serta realisme generator. Tautan berita tidak diteruskan, hanya domainnya.
+- **Database:** memuat ulang sumber manual kini mengganti baris lama (titik Glapan 24/1 23.00 terhapus). Data per jam dan DAS ikut dimuat (`obs_hujan` 85.169 baris). Episode demo dibangun ulang dengan T−0 22.25.
+
+**Temuan utama**
+- AUC peluang T−0 0,80 (0,68–0,91) pada sumber harian. Nilai ini setara hujan hulu tersedia tanpa model (0,79).
+- Data per jam dan rerata DAS tidak menaikkan AUC.
+- Hujan aktual yang belum tersedia memberi 0,87. Artinya yang dibutuhkan adalah pengamatan waktu nyata (pos hujan atau TMA BBWS), bukan sekadar satelit dengan jeda lebih pendek.
+
+**Berkas berubah:** `sensing/hujan_gpm_imerg.py`, `sensing/hujan_imerg_das.py`, `sensing/jalankan.py`, `simulation/episode.py`, `simulation/uji_balik.py`, `simulation/realisme_generator.py`, `simulation/ringkasan_nyata.py`, `api/routers/data.py`, `db/repositori.py`, `dashboard/src/komponen/EvaluasiNyata.jsx`, `dashboard/src/tab/TabData.jsx`, `dashboard/src/gaya.css`, `config/params.json` (latensi baru, `das_tuntang`, `uji_balik`), tes (`test_uji_balik.py`, `test_realisme_generator.py`, `test_sensing_sumber.py`, `test_db_model.py`, `test_api.py`, `konsol.test.jsx`), data olahan (`hujan_gpm_imerg_jam.csv`, `hujan_gpm_imerg_das.csv`, `uji_balik/*`), `docs/uji-balik.md`, `docs/asumsi.md` (A-061–A-064), `docs/data-input-model.md`, `README.md`.
+
+**Hasil tes:**
+- `pytest -m "not db"` → 240 lulus.
+- `vitest` → 9 lulus.
+- `vite build` → berhasil.
+- Tes database lewat layanan `uji` (Docker) → semua lulus pada langkah sebelumnya; diulang sesudah commit ini.
+
+**Keputusan manusia:**
+- Pilihan kalibrasi: (a) kalibrasi keluaran atau (b) parameterisasi ulang generator.
+- Verifikasi kotak sel DAS dengan poligon BBWS.
+- Pemeriksaan visual bagian evaluasi di dasbor.
